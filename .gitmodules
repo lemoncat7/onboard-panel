@@ -1,0 +1,3 @@
+[submodule "modules/novels"]
+	path = modules/novels
+	url = https://github.com/lemoncat7/onboard-novels.git
