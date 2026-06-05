@@ -1,0 +1,6 @@
+# Runtime state & logs
+.history.json
+.services.json
+.supervisor.log
+.supervisor.pid
+.onboard.pid
