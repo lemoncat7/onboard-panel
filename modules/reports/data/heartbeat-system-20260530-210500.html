@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>系统巡检报告 - 2026-05-30</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', sans-serif;
+      background: #0a0a0a;
+      color: #e0e0e0;
+      padding: 2rem;
+      line-height: 1.6;
+    }
+    .container { max-width: 900px; margin: 0 auto; }
+    h1 { font-size: 1.8rem; margin-bottom: 0.5rem; color: #fff; }
+    .subtitle { color: #888; font-size: 0.9rem; margin-bottom: 2rem; }
+    .card {
+      background: #141414;
+      border: 1px solid #222;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .card h2 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .status-ok { color: #4ade80; }
+    .status-warn { color: #fbbf24; }
+    .status-danger { color: #f87171; }
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+    .metric {
+      background: #1a1a1a;
+      border-radius: 8px;
+      padding: 1rem;
+    }
+    .metric-label { font-size: 0.8rem; color: #888; margin-bottom: 0.3rem; }
+    .metric-value { font-size: 1.4rem; font-weight: 600; color: #fff; }
+    .metric-detail { font-size: 0.8rem; color: #666; margin-top: 0.3rem; }
+    pre {
+      background: #0d0d0d;
+      border-radius: 8px;
+      padding: 1rem;
+      overflow-x: auto;
+      font-size: 0.85rem;
+      color: #aaa;
+      border: 1px solid #222;
+    }
+    .issue-item {
+      background: #1a1a1a;
+      border-radius: 6px;
+      padding: 0.75rem;
+      margin-bottom: 0.5rem;
+      border-left: 3px solid #fbbf24;
+    }
+    .footer {
+      text-align: center;
+      color: #555;
+      font-size: 0.8rem;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>⚡ 系统巡检报告</h1>
+    <div class="subtitle">2026-05-30 21:05 Asia/Shanghai | 莫殇巡逻完成</div>
+
+    <div class="card">
+      <h2><span class="status-ok">✓</span> 系统资源</h2>
+      <div class="metric-grid">
+        <div class="metric">
+          <div class="metric-label">磁盘使用 (主分区)</div>
+          <div class="metric-value status-ok">15%</div>
+          <div class="metric-detail">535G / 3.7T 可用</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">内存可用</div>
+          <div class="metric-value">5.2 Gi</div>
+          <div class="metric-detail">10G / 15G 已用</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">系统负载</div>
+          <div class="metric-value status-ok">1.97</div>
+          <div class="metric-detail">1m / 5m / 15m: 1.97 / 1.74 / 1.77</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">僵尸进程</div>
+          <div class="metric-value status-warn">2</div>
+          <div class="metric-detail">建议清理</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="status-warn">⚠</span> Swap 使用偏高</h2>
+      <p>Swap 已使用 7.7 Gi / 9.7 Gi (79%)，内存压力较大。建议关注内存密集型进程。</p>
+    </div>
+
+    <div class="card">
+      <h2><span class="status-ok">✓</span> Wiki Vault 状态</h2>
+      <div class="metric-grid">
+        <div class="metric">
+          <div class="metric-label">Pages</div>
+          <div class="metric-value">78</div>
+          <div class="metric-detail">sources</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Entities</div>
+          <div class="metric-value">2</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Syntheses</div>
+          <div class="metric-value">1</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Lint Issues</div>
+          <div class="metric-value status-warn">3</div>
+          <div class="metric-detail">0 errors, 3 warnings</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="status-warn">⚠</span> Wiki Lint Warnings</h2>
+      <div class="issue-item">
+        Broken wikilink: <code>reply_to_current</code> in dreaming-light-2026-05-23
+      </div>
+      <div class="issue-item">
+        Broken wikilink: <code>url</code> in dreaming-light-2026-05-23
+      </div>
+      <div class="issue-item">
+        Broken wikilink: <code>reply_to_current</code> in dreaming-light-2026-05-24
+      </div>
+      <p style="margin-top: 1rem; color: #888; font-size: 0.85rem;">
+        均为 bridge 导入消息中的格式标记，非内容错误，可忽略或批量替换。
+      </p>
+    </div>
+
+    <div class="card">
+      <h2><span class="status-ok">✓</span> 运行时间</h2>
+      <p>系统已稳定运行 <strong>7 天 6 小时</strong>，无重启记录。</p>
+    </div>
+
+    <div class="footer">
+      莫殇巡逻中 👀⚡ | 报告生成时间: 2026-05-30 21:05:00+08:00
+    </div>
+  </div>
+</body>
+</html>

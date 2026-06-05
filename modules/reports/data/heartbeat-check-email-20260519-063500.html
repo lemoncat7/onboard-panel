@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>AgentMail 检查报告</title>
+<style>
+  body { font-family: system-ui, -apple-system, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #333; }
+  h1 { font-size: 20px; border-bottom: 2px solid #e74c3c; padding-bottom: 8px; }
+  .badge { display: inline-block; padding: 4px 12px; border-radius: 12px; font-size: 13px; font-weight: 600; }
+  .fail { background: #fdecea; color: #c0392b; }
+  .info { background: #eef6ff; color: #2980b9; }
+  pre { background: #f8f9fa; padding: 12px; border-radius: 6px; overflow-x: auto; font-size: 13px; }
+  .meta { color: #888; font-size: 13px; margin-top: 24px; }
+</style>
+</head>
+<body>
+<h1>📧 AgentMail 邮箱检查报告</h1>
+<p><span class="badge fail">❌ 检查失败</span></p>
+
+<h2>任务</h2>
+<p>检查 <code>moshang@agentmail.to</code> 未读邮件并标记已读。</p>
+
+<h2>结果</h2>
+<p>AgentMail API 返回 <strong>403 Forbidden</strong>（CloudFront 拦截），无法获取邮件列表。</p>
+
+<h2>尝试的方法</h2>
+<ul>
+  <li>直接 HTTP GET <code>api.agentmail.to/v0/inboxes/moshang@agentmail.to/messages</code></li>
+  <li>Node.js SDK (<code>agentmail</code> npm 包) 调用 <code>client.inboxes.messages.list()</code></li>
+  <li>带 <code>Accept: application/json</code> 与标准 User-Agent 的请求</li>
+</ul>
+<p>所有方式均被 CloudFront 返回 403 Request blocked。</p>
+
+<h2>可能原因</h2>
+<ul>
+  <li>API Token 已过期或被吊销</li>
+  <li>当前出口 IP 被 CloudFront WAF 规则拦截</li>
+  <li>AgentMail 服务当前存在可用性问题</li>
+  <li>账号或 Pod 已被停用</li>
+</ul>
+
+<h2>建议</h2>
+<ol>
+  <li>在 AgentMail Dashboard 检查 Token 状态与额度</li>
+  <li>尝试从其他网络环境访问确认是否为 IP 封锁</li>
+  <li>如长期不可用，考虑更换邮件通知渠道（如 Bark / 企业邮箱）</li>
+</ol>
+
+<p class="meta">生成时间: 2026-05-19 06:35 CST</p>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>系统巡检报告 - 2026-05-21 17:35</title>
+<style>
+body { font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; max-width: 900px; margin: 40px auto; padding: 20px; color: #333; }
+h1 { border-bottom: 2px solid #4CAF50; padding-bottom: 10px; }
+.status-ok { color: #4CAF50; font-weight: bold; }
+table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+th { background: #f5f5f5; font-weight: 600; }
+.metric { font-size: 1.2em; font-weight: bold; }
+</style>
+</head>
+<body>
+<h1>🖥️ 系统巡检报告</h1>
+<p><strong>时间：</strong>2026-05-21 17:35 (Asia/Shanghai)</p>
+<p><strong>主机：</strong>0b46b1dadf88 | 运行 18 天 21 小时</p>
+
+<h2>📊 磁盘空间</h2>
+<table>
+<tr><th>挂载点</th><th>总容量</th><th>已用</th><th>可用</th><th>使用率</th></tr>
+<tr><td>/</td><td>3.7T</td><td>530G</td><td>3.2T</td><td class="status-ok">15% ✅</td></tr>
+<tr><td>/home/root/.cache</td><td>917G</td><td>179G</td><td>737G</td><td class="status-ok">20% ✅</td></tr>
+</table>
+
+<h2>🧠 内存使用</h2>
+<table>
+<tr><th>类型</th><th>总量</th><th>已用</th><th>可用</th></tr>
+<tr><td>物理内存</td><td>15 GiB</td><td>10 GiB</td><td>5.4 GiB</td></tr>
+<tr><td>Swap</td><td>9.7 GiB</td><td>6.5 GiB</td><td>3.2 GiB</td></tr>
+</table>
+
+<h2>⚡ 系统负载</h2>
+<table>
+<tr><th>1分钟</th><th>5分钟</th><th>15分钟</th></tr>
+<tr><td>3.30</td><td>2.67</td><td>2.15</td></tr>
+</table>
+
+<h2>👻 僵尸进程</h2>
+<p class="status-ok">0 个僵尸进程 ✅</p>
+
+<h2>📚 Wiki 状态</h2>
+<table>
+<tr><th>项目</th><th>数值</th></tr>
+<tr><td>Sources</td><td>50</td></tr>
+<tr><td>Entities</td><td>2</td></tr>
+<tr><td>Concepts</td><td>3</td></tr>
+<tr><td>Syntheses</td><td>1</td></tr>
+<tr><td>Reports</td><td>10</td></tr>
+<tr><td>Lint 问题</td><td class="status-ok">0 ✅</td></tr>
+<tr><td>编译状态</td><td class="status-ok">成功 ✅</td></tr>
+</table>
+
+<p style="margin-top:40px;color:#888;font-size:0.9em;">由 Heartbeat 自动生成</p>
+</body>
+</html>

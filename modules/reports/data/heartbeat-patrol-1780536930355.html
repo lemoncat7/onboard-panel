@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>莫殇巡检报告 · 2026-06-04 09:35</title>
+  <style>
+    body { font-family: system-ui, -apple-system, sans-serif; background: #f5f5f7; padding: 24px; margin: 0; }
+    .card { background: #fff; border-radius: 12px; padding: 20px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+    h2 { margin: 0 0 12px; font-size: 18px; color: #1d1d1f; }
+    .status { display: inline-block; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+    .ok { background: #d4edda; color: #155724; }
+    .warn { background: #fff3cd; color: #856404; }
+    .bad { background: #f8d7da; color: #721c24; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .metric { text-align: center; padding: 12px; background: #f8f9fa; border-radius: 8px; }
+    .metric-value { font-size: 24px; font-weight: 700; color: #1d1d1f; }
+    .metric-label { font-size: 12px; color: #86868b; margin-top: 4px; }
+    .section { font-size: 14px; color: #333; line-height: 1.6; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>🖥️ 系统巡检</h2>
+    <div class="grid">
+      <div class="metric">
+        <div class="metric-value">15%</div>
+        <div class="metric-label">磁盘使用率</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">6.3G</div>
+        <div class="metric-label">可用内存</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">3.73</div>
+        <div class="metric-label">系统负载</div>
+      </div>
+    </div>
+    <div class="section" style="margin-top:12px">
+      <span class="status ok">磁盘正常</span>
+      <span class="status ok">内存正常</span>
+      <span class="status ok">负载正常</span>
+      <span class="status ok">僵尸进程: 0</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📚 Wiki 巡检</h2>
+    <div class="grid">
+      <div class="metric">
+        <div class="metric-value">99</div>
+        <div class="metric-label">Sources</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">3</div>
+        <div class="metric-label">Warnings</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">0</div>
+        <div class="metric-label">Errors</div>
+      </div>
+    </div>
+    <div class="section" style="margin-top:12px">
+      <span class="status ok">编译正常</span>
+      <span class="status ok">0 矛盾</span>
+      <span class="status ok">0 来源缺失</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📧 邮件检查</h2>
+    <div class="section">
+      <span class="status ok">✅ 无新邮件</span> stalwart 收件箱全部已读
+    </div>
+  </div>
+
+  <div class="card" style="text-align:center;color:#86868b;font-size:12px">
+    莫殇巡逻完成 ⚡ 2026-06-04 09:35
+  </div>
+</body>
+</html>

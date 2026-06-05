@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OpenClaw 更新通知 - v2026.5.28</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; background: #f5f5f7; color: #333; }
+  .card { background: white; border-radius: 16px; padding: 32px; box-shadow: 0 4px 24px rgba(0,0,0,0.08); }
+  h1 { margin-top: 0; font-size: 28px; color: #1a1a1a; }
+  .badge { display: inline-block; background: #007AFF; color: white; padding: 6px 14px; border-radius: 20px; font-size: 14px; font-weight: 600; margin-bottom: 16px; }
+  .meta { color: #666; font-size: 14px; margin-bottom: 24px; }
+  .highlights { background: #f0f7ff; border-left: 4px solid #007AFF; padding: 20px; border-radius: 8px; margin: 20px 0; }
+  .highlights h2 { margin-top: 0; font-size: 18px; color: #007AFF; }
+  .highlights ul { margin: 12px 0; padding-left: 20px; }
+  .highlights li { margin: 8px 0; line-height: 1.6; }
+  .changes { margin-top: 24px; }
+  .changes h2 { font-size: 18px; color: #1a1a1a; border-bottom: 1px solid #eee; padding-bottom: 8px; }
+  .changes ul { margin: 12px 0; padding-left: 20px; }
+  .changes li { margin: 6px 0; line-height: 1.6; color: #444; }
+  .footer { margin-top: 32px; padding-top: 20px; border-top: 1px solid #eee; font-size: 13px; color: #888; text-align: center; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="badge">新版本</div>
+  <h1>OpenClaw v2026.5.28 已发布</h1>
+  <div class="meta">当前运行版本: 2026.5.6 · 发布时间: 2026-05-28</div>
+
+  <div class="highlights">
+    <h2>🚀 Highlights</h2>
+    <ul>
+      <li><strong>Agent & Codex 运行时恢复更稳健：</strong>子代理保持 cwd/workspace 隔离，hook 上下文本地化，会话锁在超时中止时释放，OpenClaw 锁在清理时保留，避免过时的重启延续，Codex 应用服务器/辅助程序故障不再破坏共享运行时状态。</li>
+      <li><strong>频道投递与会话身份更安全：</strong>跨出站插件钩子、Matrix 房间 ID、iMessage 反应/审批、Slack 最终回复、Discord 恢复的工具警告、运行时配置消息操作、WhatsApp 个人资料认证根、Telegram 轮询和 Microsoft Teams 服务 URL 信任检查。</li>
+      <li><strong>移动端和聊天界面刷新：</strong>iOS Pro UI、托管推送中继默认、实时 Talk 标签播放、Gateway 聊天传输、 onboarding、Talk 权限、WebChat 重新连接投递和会话选择器行为在重新连接和空搜索时保留更多状态。</li>
+      <li><strong>浏览器、频道和自动化输入更严格：</strong>浏览器工具超时、视口/标签索引、Gateway 端口、cron 重试处理、Discord 组件 ID、模式数组引用、Telegram 回调页面和频道进度回调现在更早拒绝畸形值并保留预期投递上下文。</li>
+      <li><strong>提供商、媒体和文档覆盖扩展：</strong>Claude Opus 4.8、Fal Krea 图像模式、NVIDIA 精选模型、MiniMax 流式音乐响应、加密 PDF 提取、语音模型目录、GitHub Copilot 代理运行时支持，以及用于委托 Codex 工作流的 Codex Supervisor 插件路径。</li>
+      <li><strong>CLI、认证、doctor 和提供商路径更快失败、更清晰恢复：</strong>畸形数字/版本选项被拒绝，workspace dotenv 提供商凭证被忽略，心跳默认值、OAuth/令牌生命周期和本地服务启动请求有边界，代理认证健康标签更清晰，旧版 <code>api_key</code> 认证配置文件迁移到规范形式，重启指导可操作。</li>
+      <li><strong>插件和 Gateway 热路径减少重复工作：</strong>同时保留安装记录、配置 JSON 解析、工具搜索目录、会话存储、清单模型行、自动启用插件配置、浏览器令牌、查看器资产和 release-split 外部插件包的缓存正确性。</li>
+      <li><strong>发布、QA 和 E2E 验证：</strong>现在限制更多日志、工件、工具和跨操作系统等待，以便失败的通道产生证据而不是挂起或误报绿色。</li>
+    </ul>
+  </div>
+
+  <div class="changes">
+    <h2>📝 其他变更</h2>
+    <ul>
+      <li>Status: 在状态输出中显示活动子代理详情。</li>
+      <li>Diffs: 拆分默认语言包并扩展默认 Diffs 语言覆盖范围，同时保持主机底线对齐。</li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    莫殇巡逻报告 ⚡ · 生成于 2026-05-31 06:05
+  </div>
+</div>
+</body>
+</html>

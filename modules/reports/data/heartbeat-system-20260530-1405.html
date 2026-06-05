@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Heartbeat Report - 2026-05-30 14:05</title>
+<style>
+body { font-family: system-ui, -apple-system, sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; background: #f5f5f5; }
+.card { background: white; border-radius: 12px; padding: 24px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.card h2 { margin-top: 0; font-size: 18px; color: #333; }
+.status-ok { color: #22c55e; }
+.status-warn { color: #f59e0b; }
+.status-err { color: #ef4444; }
+pre { background: #f8f9fa; padding: 12px; border-radius: 8px; overflow-x: auto; font-size: 13px; }
+table { width: 100%; border-collapse: collapse; }
+td, th { padding: 8px 12px; text-align: left; border-bottom: 1px solid #eee; }
+.badge { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+.badge-green { background: #dcfce7; color: #166534; }
+.badge-yellow { background: #fef3c7; color: #92400e; }
+</style>
+</head>
+<body>
+<h1>🔍 系统巡检报告 <span style="font-size:14px;color:#666">2026-05-30 14:05 CST</span></h1>
+
+<div class="card">
+<h2>📧 邮件检查</h2>
+<p><span class="badge badge-green">正常</span> 无新邮件，全部已读</p>
+</div>
+
+<div class="card">
+<h2>🖥️ 系统状态</h2>
+<table>
+<tr><td>磁盘使用</td><td class="status-ok">15% (534G / 3.7T)</td></tr>
+<tr><td>内存使用</td><td class="status-warn">10Gi / 15Gi (67%)</td></tr>
+<tr><td>Swap</td><td class="status-warn">6.9Gi / 9.7Gi (71%)</td></tr>
+<tr><td>负载</td><td class="status-ok">2.08 / 1.93 / 1.89</td></tr>
+<tr><td>僵尸进程</td><td class="status-ok">0</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h2>📚 Wiki 巡检</h2>
+<p><span class="badge badge-yellow">已修复</span> 发现 62 个空目录以 .md 文件名存在于 sources/ 中，已清理</p>
+<p>Wiki 编译正常：94 pages, 0 issues</p>
+<pre>Vault: ready (78 exported artifacts)
+Pages: 78 sources, 2 entities, 3 concepts, 1 syntheses, 10 reports</pre>
+</div>
+
+</body>
+</html>

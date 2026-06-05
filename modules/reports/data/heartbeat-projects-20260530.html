@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚡ 今日好玩项目发现</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background: #f5f7fa; margin: 0; padding: 20px; color: #333; }
+  .container { max-width: 640px; margin: 0 auto; background: #fff; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); overflow: hidden; }
+  .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff; padding: 32px 24px; text-align: center; }
+  .header h1 { margin: 0; font-size: 24px; letter-spacing: 1px; }
+  .header .date { opacity: 0.85; margin-top: 8px; font-size: 14px; }
+  .content { padding: 24px; }
+  .card { background: #fafbfc; border: 1px solid #e8ecf1; border-radius: 12px; padding: 20px; margin-bottom: 16px; transition: transform 0.15s; }
+  .card:hover { transform: translateY(-2px); border-color: #d0d7e0; }
+  .card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .card-title { font-size: 18px; font-weight: 700; color: #2d3748; margin: 0; }
+  .card-stars { background: #ffecb3; color: #f57c00; font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 20px; }
+  .card-link { font-size: 13px; color: #667eea; word-break: break-all; display: block; margin-bottom: 8px; text-decoration: none; }
+  .card-link:hover { text-decoration: underline; }
+  .card-desc { font-size: 14px; color: #4a5568; line-height: 1.6; margin: 0 0 8px 0; }
+  .card-highlight { font-size: 13px; color: #38a169; background: #f0fff4; padding: 6px 10px; border-radius: 6px; margin-top: 8px; }
+  .card-meta { font-size: 12px; color: #a0aec0; margin-top: 10px; }
+  .footer { text-align: center; padding: 20px 24px 32px; color: #a0aec0; font-size: 12px; }
+  .emoji { font-size: 20px; margin-right: 4px; vertical-align: middle; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>⚡ 今日好玩项目发现</h1>
+    <div class="date">2026-05-30 · 莫殇精选</div>
+  </div>
+  <div class="content">
+
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title"><span class="emoji">🤖</span>OpenClaw</h2>
+        <span class="card-stars">⭐ 346,000+</span>
+      </div>
+      <a class="card-link" href="https://github.com/openclaw/openclaw">github.com/openclaw/openclaw</a>
+      <p class="card-desc">完全本地化运行的自主 AI 助手框架，支持 50+ 消息平台，24/7 守护进程运行。可执行 Shell、浏览器自动化、API 调用、智能家居控制。</p>
+      <div class="card-highlight">🔥 60天突破25万 stars，320万月活用户，50万+运行实例</div>
+      <div class="card-meta">TypeScript/Go · 本地优先 · 持久化守护进程</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title"><span class="emoji">🛠️</span>mattpocock/skills</h2>
+        <span class="card-stars">⭐ 75,700+</span>
+      </div>
+      <a class="card-link" href="https://github.com/mattpocock/skills">github.com/mattpocock/skills</a>
+      <p class="card-desc">Matt Pocock 将自己日常使用的 .claude/skills 目录完整开源，成为 Agent Skills 的事实标准。17个核心技能覆盖规划→编码→审查→调试全流程。</p>
+      <div class="card-highlight">💡 "Caveman Mode" 可减少75% token消耗，生产验证过的实战技能</div>
+      <div class="card-meta">Markdown/YAML · Agent Skills 标准 · 跨平台复用</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title"><span class="emoji">🔍</span>zilliztech/claude-context</h2>
+        <span class="card-stars">🔥 趋势热门</span>
+      </div>
+      <a class="card-link" href="https://github.com/zilliztech/claude-context">github.com/zilliztech/claude-context</a>
+      <p class="card-desc">语义代码搜索 MCP 服务器，将代码库索引到向量数据库，仅返回相关代码片段。解决大代码库上下文爆炸问题。</p>
+      <div class="card-highlight">⚡ BM25 + 稠密向量混合检索，30秒查询→即时响应，兼容所有 MCP 客户端</div>
+      <div class="card-meta">Python · 大型单体应用/微服务架构利器</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title"><span class="emoji">🧰</span>badlogic/pi-mono</h2>
+        <span class="card-stars">🔥 趋势热门</span>
+      </div>
+      <a class="card-link" href="https://github.com/badlogic/pi-mono">github.com/badlogic/pi-mono</a>
+      <p class="card-desc">统一 Agent 工具包，包含编程 Agent CLI、统一 LLM API、TUI/Web UI 组件库、Slack Bot。模块化可互换组件。</p>
+      <div class="card-highlight">🔗 统一 LLM API 抽象所有主流提供商（Anthropic/OpenAI/Google/Groq）</div>
+      <div class="card-meta">TypeScript/Go · 资深开发者 Mario Zechner 维护</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title"><span class="emoji">📰</span>DailyBrief</h2>
+        <span class="card-stars">🔥 趋势热门</span>
+      </div>
+      <a class="card-link" href="https://github.com/dailybrief/dailybrief">github.com/dailybrief/dailybrief</a>
+      <p class="card-desc">一键生成个性化 AI 日报，整合 23 个数据源（GitHub Trending、X 平台、OpenAI/DeepMind 动态）。技术聚合神器。</p>
+      <div class="card-highlight">📡 适合快速了解 AI 领域最新动态，信息茧房克星</div>
+      <div class="card-meta">Python/TypeScript · AI 日报 · 多数据源聚合</div>
+    </div>
+
+  </div>
+  <div class="footer">
+    由莫殇自动发现 · 通过 Stalwart 自建邮件发送 🚀<br>
+    moshang@mochencloud.cn
+  </div>
+</div>
+</body>
+</html>

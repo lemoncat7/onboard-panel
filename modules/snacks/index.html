@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>今天吃什么</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #f0f2f5;
+    color: #1a1a2e;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    min-height: 100vh;
+  }
+  .header {
+    background: #ffffff;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    padding: 20px 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    backdrop-filter: blur(20px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header h1 { font-size: 22px; color: #1a1a2e; }
+  .header .sub { font-size: 13px; color: #94a3b8; margin-left: auto; }
+  .btn-primary {
+    color: #ffffff;
+    color: #ffffff;
+    background: linear-gradient(135deg, #00d4aa, #00a8ff);
+    border: none;
+    border-radius: 12px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-primary:hover { transform: scale(1.05); box-shadow: 0 4px 20px rgba(0,212,170,0.3); }
+  .btn-secondary {
+    background: #ffffff;
+    color: #1a1a2e;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 12px;
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-secondary:hover { background: #f1f5f9; }
+  .columns {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 24px 32px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .col {
+    background: #ffffff;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 16px;
+    padding: 20px;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+  }
+  .col-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .col-title { font-size: 15px; font-weight: 600; }
+  .col-count {
+    margin-left: auto;
+    background: rgba(255,255,255,0.08);
+    border-radius: 999px;
+    font-size: 11px;
+    padding: 2px 8px;
+  }
+  .col.available .col-title { color: #00d4aa; }
+  .col.untried .col-title { color: #00a8ff; }
+  .col.blacklisted .col-title { color: #ef4444; }
+  .item-list { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+  .item {
+    background: #ffffff;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 12px;
+    padding: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: visible;
+  }
+  .item:hover { background: rgba(0,0,0,0.04); transform: translateY(-1px); }
+  .item-img {
+    width: 100%;
+    height: 120px;
+    border-radius: 8px;
+    object-fit: cover;
+    margin-bottom: 10px;
+    background: #ffffff;
+  }
+  .item-name { font-size: 14px; font-weight: 600; color: #1a1a2e; margin-bottom: 4px; }
+  .item-meta { font-size: 11px; color: #94a3b8; display: flex; gap: 8px; flex-wrap: wrap; }
+  .item-meta .rating { color: #f59e0b; }
+  .item-tags { font-size: 11px; color: #64748b; margin-top: 4px; }
+  .item {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .item-check {
+    flex-shrink: 0;
+    padding-top: 4px;
+  }
+  .item-check input[type=checkbox] {
+    width: 16px;
+    height: 16px;
+    accent-color: #00d4aa;
+    cursor: pointer;
+  }
+  .item.selected {
+    background: rgba(239,68,68,0.08);
+    border-color: rgba(239,68,68,0.3);
+  }
+  .item-body { flex: 1; min-width: 0; }
+  .item-name { font-size: 14px; font-weight: 600; color: #1a1a2e; margin-bottom: 4px; }
+  .item-actions {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    display: flex;
+    gap: 4px;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .item-tooltip {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: #ffffff;
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 14px;
+    padding: 14px;
+    width: 260px;
+    z-index: 9999;
+    display: none;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.8);
+    pointer-events: none;
+  }
+  .tooltip-img img { width: 100%; max-height: 160px; object-fit: cover; border-radius: 8px; }
+  .tooltip-name { font-size: 15px; font-weight: 700; color: #1a1a2e; margin-bottom: 6px; }
+  .tooltip-meta { font-size: 12px; color: #64748b; margin-bottom: 6px; display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+  .tooltip-row { font-size: 12px; color: #94a3b8; margin-bottom: 4px; }
+  .tooltip-note { font-size: 12px; color: #94a3b8; font-style: italic; margin-top: 6px; }
+  .tooltip-tags { margin-top: 6px; font-size: 11px; color: #00d4aa; }
+  .delete-bar {
+    position: sticky;
+    bottom: 0;
+    background: #ef4444;
+    border-radius: 12px;
+    padding: 10px 16px;
+    margin-top: 8px;
+    display: none;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    color: #1a1a2e;
+    backdrop-filter: blur(10px);
+  }
+  .delete-bar.active { display: flex; }
+  .delete-bar .count { font-weight: 700; }
+  .delete-bar button {
+    background: rgba(255,255,255,0.2);
+    border: none;
+    border-radius: 8px;
+    padding: 6px 14px;
+    color: #1a1a2e;
+    font-size: 12px;
+    cursor: pointer;
+  }
+  .delete-bar button:hover { background: rgba(255,255,255,0.3); }
+  .delete-bar .btn-confirm { background: rgba(255,255,255,0.3); font-weight: 700; }
+  .item:hover .item-actions { opacity: 1; }
+  .action-btn {
+    background: #ffffff;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 11px;
+    color: #1a1a2e;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  }
+  .action-btn:hover { background: #f1f5f9; border-color: rgba(0,0,0,0.15); }
+  .action-btn.move { color: #00a8ff; }
+  .action-btn.blacklist { color: #ef4444; }
+  .action-btn.restore { color: #10b981; }
+  .action-btn.delete { color: #ef4444; }
+  .add-btn {
+    border: 1px dashed rgba(0,0,0,0.15);
+    border-radius: 12px;
+    padding: 12px;
+    text-align: center;
+    color: #94a3b8;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: auto;
+  }
+  .add-btn:hover { border-color: rgba(255,255,255,0.3); color: #64748b; }
+  .empty-state { text-align: center; padding: 40px 20px; color: #94a3b8; font-size: 13px; }
+
+  /* Modal */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+  }
+  .modal-overlay.active { opacity: 1; pointer-events: all; }
+  .modal {
+    background: #ffffff;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 28px;
+    width: 480px;
+    max-height: 90vh;
+    overflow-y: auto;
+    transform: scale(0.95);
+    transition: transform 0.2s;
+  }
+  .modal-overlay.active .modal { transform: scale(1); }
+  .modal h2 { font-size: 18px; color: #1a1a2e; margin-bottom: 20px; }
+  .form-row { margin-bottom: 14px; }
+  .form-row label { display: block; font-size: 12px; color: #64748b; margin-bottom: 6px; }
+  .form-row input, .form-row textarea, .form-row select {
+    width: 100%;
+    background: #f8fafc;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 10px;
+    padding: 10px 14px;
+    color: #1a1a2e;
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-row option { background: #ffffff; color: #1a1a2e; }
+  .form-row input:focus, .form-row textarea:focus, .form-row select:focus { border-color: rgba(0,212,170,0.4); }
+  .form-row textarea { resize: vertical; min-height: 60px; }
+  .form-row .hint { font-size: 11px; color: #94a3b8; margin-top: 4px; }
+  .rating-input { display: flex; gap: 4px; }
+  .rating-input span {
+    font-size: 20px;
+    cursor: pointer;
+    color: #94a3b8;
+    transition: color 0.2s;
+  }
+  .rating-input span.active { color: #f59e0b; }
+  .img-upload-area {
+    border: 2px dashed rgba(255,255,255,0.15);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .img-upload-area:hover { border-color: rgba(0,212,170,0.4); }
+  .img-upload-area.dragover { border-color: #00d4aa; background: rgba(0,212,170,0.05); }
+  .img-upload-area img { max-width: 100%; max-height: 150px; border-radius: 8px; margin-top: 8px; }
+  .img-upload-area input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+  .modal-actions { display: flex; gap: 10px; margin-top: 20px; }
+  .modal-actions .btn-primary {
+    color: #ffffff;
+    color: #fff; flex: 1; }
+  .modal-actions .btn-secondary { flex: 1; }
+
+  /* Result Modal */
+  .result-modal .modal { text-align: center; }
+  .result-img { width: 100%; height: 200px; object-fit: cover; border-radius: 16px; margin-bottom: 16px; background: #ffffff; }
+  .result-name { font-size: 24px; font-weight: 700; color: #1a1a2e; margin-bottom: 8px; }
+  .result-meta { font-size: 13px; color: #64748b; margin-bottom: 8px; }
+  .result-note { font-size: 13px; color: #94a3b8; font-style: italic; margin-top: 12px; }
+  .result-tags { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin-top: 10px; }
+  .result-tag { background: rgba(0,212,170,0.15); color: #00d4aa; border-radius: 6px; padding: 4px 10px; font-size: 12px; }
+  .result-actions { display: flex; gap: 10px; margin-top: 20px; }
+  .result-actions button { flex: 1; padding: 12px; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer; border: none; transition: all 0.2s; }
+  .result-actions .btn-yes { background: linear-gradient(135deg, #00d4aa, #00a8ff); color: #1a1a2e; }
+  .result-actions .btn-no { background: #f1f5f9; color: #1a1a2e; border: 1px solid rgba(0,0,0,0.08); }
+
+  /* Back link */
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #94a3b8;
+    font-size: 13px;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.2s;
+    margin: 16px 32px;
+  }
+  .back-link:hover { color: #64748b; background: #ffffff; }
+
+  /* Confirm overlay */
+  .confirm-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+  }
+  .confirm-overlay.active { opacity: 1; pointer-events: all; }
+  .confirm-box {
+    background: #ffffff;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 16px;
+    padding: 24px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.15);
+  }
+  .confirm-box p { color: #1a1a2e; margin-bottom: 20px; font-size: 14px; }
+  .confirm-box .btns { display: flex; gap: 10px; }
+  .confirm-box .btns button { flex: 1; padding: 10px; border-radius: 10px; font-size: 13px; cursor: pointer; border: none; }
+  .confirm-box .btn-cancel { background: rgba(0,0,0,0.04); color: #64748b; }
+  .confirm-box .btn-ok { background: rgba(239,68,68,0.1); color: #ef4444; }
+  option { background: #ffffff !important; color: #1a1a2e !important; }
+</style>
+</head>
+<body>
+<a class="back-link" href="/onboard/">
+  <span>←</span> 返回看板
+</a>
+
+<div class="header">
+  <h1>🍽️ 今天吃什么</h1>
+  <div class="discover-wrap">
+    <input type="text" id="base-address" placeholder="输入地址，如：深圳科技园" style="background:#f8fafc;border:1px solid rgba(0,0,0,0.1);border-radius:8px;padding:8px 12px;color:#1a1a2e;font-size:13px;width:200px;outline:none;">
+    <button class="btn-secondary" onclick="discoverNew()">🔍 发现附近新店</button>
+  </div>
+  <button class="btn-primary" onclick="randomPick(false)">🎲 随机选一个</button>
+  <button class="btn-secondary" onclick="randomPick(true)">🆕 来个新店</button>
+  <div class="sub">共 <span id="total-count">0</span> 家餐厅</div>
+</div>
+
+<div class="columns">
+  <div class="col available">
+    <div class="col-header">
+      <span>🍴</span>
+      <span class="col-title">可选</span>
+      <span class="col-count" id="available-count">0</span>
+    </div>
+    <div class="item-list" id="available-list"></div>
+    <div class="add-btn" onclick="openAddModal('available')">+ 添加餐厅</div>
+  </div>
+
+  <div class="col untried">
+    <div class="col-header">
+      <span>🆕</span>
+      <span class="col-title">未尝试</span>
+      <span class="col-count" id="untried-count">0</span>
+    </div>
+    <div class="item-list" id="untried-list"></div>
+    <div class="add-btn" onclick="openAddModal('untried')">+ 添加餐厅</div>
+  </div>
+
+  <div class="col blacklisted">
+    <div class="col-header">
+      <span>❌</span>
+      <span class="col-title">拉黑</span>
+      <span class="col-count" id="blacklist-count">0</span>
+    </div>
+    <div class="item-list" id="blacklist-list"></div>
+    <div class="add-btn" style="display:none;" id="blacklist-empty">暂无拉黑餐厅</div>
+  </div>
+</div>
+
+<!-- Add/Edit Modal -->
+<div class="modal-overlay" id="add-modal">
+  <div class="modal">
+    <h2 id="modal-title">🍽️ 添加餐厅</h2>
+    <input type="hidden" id="edit-id">
+    <input type="hidden" id="edit-list">
+
+    <div class="form-row">
+      <label>餐厅名称 *</label>
+      <input type="text" id="add-name" placeholder="输入餐厅名称">
+    </div>
+
+    <div class="form-row">
+      <label>分类</label>
+      <input type="text" id="add-category" placeholder="如：湘菜、川菜、日料、火锅">
+    </div>
+
+    <div class="form-row">
+      <label>人均消费 (¥)</label>
+      <input type="text" id="add-price" placeholder="如：50">
+    </div>
+
+    <div class="form-row">
+      <label>评分</label>
+      <div class="rating-input" id="rating-input">
+        <span onclick="setRating(1)">★</span>
+        <span onclick="setRating(2)">★</span>
+        <span onclick="setRating(3)">★</span>
+        <span onclick="setRating(4)">★</span>
+        <span onclick="setRating(5)">★</span>
+      </div>
+      <input type="hidden" id="add-rating" value="0">
+    </div>
+
+    <div class="form-row">
+      <label>地址</label>
+      <input type="text" id="add-address" placeholder="餐厅地址">
+    </div>
+
+    <div class="form-row">
+      <label>图片 (粘贴、拖拽或点击上传)</label>
+      <div class="img-upload-area" id="img-upload-area" onclick="document.getElementById('img-file-input').click()">
+        <div id="upload-placeholder">点击或拖拽图片到这里<br><span style="font-size:11px;color:#555;">支持粘贴截图、拖拽文件、点击选择</span></div>
+        <img id="upload-preview" style="display:none;">
+        <input type="file" id="img-file-input" accept="image/*" style="display:none;" onchange="handleFileSelect(event)">
+      </div>
+      <input type="hidden" id="add-image">
+    </div>
+
+    <div class="form-row">
+      <label>备注</label>
+      <textarea id="add-note" placeholder="口味、特色、推荐菜..."></textarea>
+    </div>
+
+    <div class="form-row">
+      <label>标签 (逗号分隔)</label>
+      <input type="text" id="add-tags" placeholder="如：辣、清淡、适合一人">
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeAddModal()">取消</button>
+      <button class="btn-primary" onclick="saveItem()">保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- Result Modal -->
+<div class="modal-overlay result-modal" id="result-modal">
+  <div class="modal">
+    <img class="result-img" id="result-img" src="" alt="">
+    <div class="result-name" id="result-name"></div>
+    <div class="result-meta" id="result-meta"></div>
+    <div class="result-tags" id="result-tags"></div>
+    <div class="result-note" id="result-note"></div>
+    <div class="result-actions">
+      <button class="btn-yes" onclick="confirmResult()">就这家了 🍽️</button>
+      <button class="btn-no" onclick="randomPick(currentNewShop)">换一个</button>
+    </div>
+    <div style="margin-top:12px;font-size:12px;color:#555;">
+      移动到：<button class="action-btn move" onclick="moveResult('available')">可选</button>
+      <button class="action-btn move" onclick="moveResult('untried')">未尝试</button>
+      <button class="action-btn blacklist" onclick="moveResult('blacklisted')">拉黑</button>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm Delete -->
+<div class="confirm-overlay" id="confirm-delete">
+  <div class="confirm-box">
+    <p>确定删除这家餐厅？</p>
+    <div class="btns">
+      <button class="btn-cancel" onclick="closeConfirmDelete()">取消</button>
+      <button class="btn-ok" onclick="doDelete()">删除</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let foodData = { available: [], untried: [], blacklisted: [] };
+let deleteTarget = null;
+let currentNewShop = false;
+let currentPick = null;
+
+const api = (url, opts = {}) => fetch(url, opts).then(r => r.json());
+
+async function loadData() {
+  try {
+    foodData = await api('/onboard/api/food');
+    render();
+  } catch (e) { console.error(e); }
+}
+
+function render() {
+  document.getElementById('available-count').textContent = foodData.available.length;
+  document.getElementById('untried-count').textContent = foodData.untried.length;
+  document.getElementById('blacklist-count').textContent = foodData.blacklisted.length;
+  document.getElementById('total-count').textContent = foodData.available.length + foodData.untried.length;
+
+  renderList('available-list', foodData.available, 'available');
+  renderList('untried-list', foodData.untried, 'untried');
+  renderList('blacklist-list', foodData.blacklisted, 'blacklisted');
+
+  document.getElementById('blacklist-empty').style.display = foodData.blacklisted.length ? 'none' : '';
+}
+
+let selectedForDelete = new Set();
+
+function renderList(elId, items, listName) {
+  const el = document.getElementById(elId);
+  if (!items.length) {
+    el.innerHTML = '<div class="empty-state">暂无餐厅</div>';
+    return;
+  }
+  el.innerHTML = items.map(item => {
+    const tags = item.tags ? item.tags.split(',').filter(t => t.trim()).map(t => `<span class="item-tags">#${t.trim()}</span>`).join('') : '';
+    const rating = item.rating ? '<span class="rating">' + '★'.repeat(Math.round(item.rating)) + '☆'.repeat(5-Math.round(item.rating)) + '</span>' : '';
+    const tooltip = `<div class="item-tooltip" style="position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);background:#0a0a14 !important;border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:14px;width:260px;z-index:9999;box-shadow:0 8px 32px rgba(0,0,0,0.6);pointer-events:none;">
+      ${item.image ? `<div style="margin-bottom:8px;"><img src="${item.image}" style="width:100%;height:120px;object-fit:cover;border-radius:8px;" onerror="this.parentElement.style.display='none'"></div>` : ''}
+      <div style="font-size:15px;font-weight:700;color:#1a1a2e;margin-bottom:6px;">${item.name}</div>
+      <div style="font-size:12px;color:#888;margin-bottom:6px;">${rating}${item.price ? ' · ¥'+item.price+'/人' : ''}${item.category ? ' · '+item.category.replace(/,/g,' · ') : ''}</div>
+      ${item.address ? `<div style="font-size:12px;color:#666;margin-bottom:4px;">📍 ${item.address}</div>` : ''}
+      ${item.note ? `<div style="font-size:12px;color:#555;font-style:italic;margin-top:6px;">"${item.note}"</div>` : ''}
+      ${tags ? `<div style="margin-top:6px;font-size:11px;">${tags}</div>` : ''}
+    </div>`;
+    return `<div class="item" data-id="${item.id}" data-list="${listName}" onmouseenter="showTooltip(this, ${JSON.stringify(item).replace(/"/g, '&quot;')})" onmouseleave="hideTooltip(this)" onclick="toggleDeleteSelect(this, '${listName}', ${item.id})">
+      <div class="item-check">
+        <input type="checkbox" onclick="event.stopPropagation();toggleDeleteSelect(this.parentElement.parentElement, '${listName}', ${item.id})">
+      </div>
+      <div class="item-body">
+        ${item.image ? `<img class="item-img" src="${item.image}" alt="${item.name}" onerror="this.style.display='none'">` : ''}
+        <div class="item-name">${item.name}</div>
+        <div class="item-meta">
+          ${item.rating ? `<span class="rating">${'★'.repeat(item.rating)}${'☆'.repeat(5-item.rating)}</span>` : ''}
+          ${item.price ? `<span>¥${item.price}/人</span>` : ''}
+          ${item.category ? `<span>${item.category.replace(/,/g,' · ')}</span>` : ''}
+        </div>
+        ${tags ? `<div class="item-tags">${tags}</div>` : ''}
+      </div><div class="item-actions">
+        ${listName === 'available' ? `<button class="action-btn move" onclick="event.stopPropagation();moveItem(${item.id},'available','untried')">→未尝试</button>` : ''}
+        ${listName === 'untried' ? `<button class="action-btn move" onclick="event.stopPropagation();moveItem(${item.id},'untried','available')">→可选</button>` : ''}
+        ${listName !== 'blacklisted' ? `<button class="action-btn blacklist" onclick="event.stopPropagation();moveItem(${item.id},'${listName}','blacklisted')">❌拉黑</button>` : `<button class="action-btn restore" onclick="event.stopPropagation();moveItem(${item.id},'blacklisted','available')">恢复</button>`}
+        <button class="action-btn delete" onclick="event.stopPropagation();openDelete(${item.id})">🗑</button>
+      </div>
+    </div>`;
+  }).join('');
+  // add batch delete bar at bottom
+  const barId = listName + '-delete-bar';
+  const existingBar = document.getElementById(barId);
+  if (existingBar) existingBar.remove();
+}
+
+async function randomPick(newShop) {
+  currentNewShop = newShop;
+  const d = await api('/onboard/api/food', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ action: 'random', newShop })
+  });
+  if (!d.pick) {
+    alert('还没有餐厅，请先添加！');
+    return;
+  }
+  currentPick = d.pick;
+  const item = d.pick;
+  const tags = item.tags ? item.tags.split(',').filter(t => t.trim()).map(t => `<span class="result-tag">#${t.trim()}</span>`).join('') : '';
+  document.getElementById('result-img').src = item.image || '';
+  document.getElementById('result-img').style.display = item.image ? '' : 'none';
+  document.getElementById('result-name').textContent = item.name;
+  let meta = [];
+  if (item.rating) meta.push('★'.repeat(item.rating));
+  if (item.price) meta.push('¥' + item.price + '/人');
+  if (item.category) meta.push(item.category);
+  if (item.address) meta.push(item.address);
+  document.getElementById('result-meta').textContent = meta.join(' · ');
+  document.getElementById('result-tags').innerHTML = tags;
+  document.getElementById('result-note').textContent = item.note || '';
+  document.getElementById('result-modal').classList.add('active');
+}
+
+function confirmResult() {
+  document.getElementById('result-modal').classList.remove('active');
+}
+
+async function moveResult(to) {
+  if (!currentPick) return;
+  await api('/onboard/api/food', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ action: 'move', id: currentPick.id, from: 'available', to })
+  });
+  document.getElementById('result-modal').classList.remove('active');
+  loadData();
+}
+
+async function moveItem(id, from, to) {
+  await api('/onboard/api/food', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ action: 'move', id, from, to })
+  });
+  loadData();
+}
+
+function openAddModal(list) {
+  document.getElementById('edit-id').value = '';
+  document.getElementById('edit-list').value = list;
+  document.getElementById('modal-title').textContent = '🍽️ 添加餐厅';
+  document.getElementById('add-name').value = '';
+  document.getElementById('add-category').value = '';
+  document.getElementById('add-price').value = '';
+  document.getElementById('add-address').value = '';
+  document.getElementById('add-note').value = '';
+  document.getElementById('add-tags').value = '';
+  document.getElementById('add-image').value = '';
+  document.getElementById('upload-preview').style.display = 'none';
+  document.getElementById('upload-preview').src = '';
+  document.getElementById('upload-placeholder').style.display = '';
+  setRating(0);
+  document.getElementById('add-modal').classList.add('active');
+}
+
+function closeAddModal() {
+  document.getElementById('add-modal').classList.remove('active');
+}
+
+function setRating(n) {
+  document.getElementById('add-rating').value = n;
+  document.querySelectorAll('.rating-input span').forEach((s, i) => {
+    s.classList.toggle('active', i < n);
+  });
+}
+
+async function saveItem() {
+  const name = document.getElementById('add-name').value.trim();
+  if (!name) { alert('请输入餐厅名称'); return; }
+  const list = document.getElementById('edit-list').value;
+  await api('/onboard/api/food', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      action: 'add',
+      list,
+      name,
+      category: document.getElementById('add-category').value.trim(),
+      price: document.getElementById('add-price').value.trim(),
+      rating: parseInt(document.getElementById('add-rating').value) || 0,
+      address: document.getElementById('add-address').value.trim(),
+      image: document.getElementById('add-image').value,
+      note: document.getElementById('add-note').value.trim(),
+      tags: document.getElementById('add-tags').value.trim()
+    })
+  });
+  closeAddModal();
+  loadData();
+}
+
+// Image upload handling
+const uploadArea = document.getElementById('img-upload-area');
+uploadArea.addEventListener('dragover', e => { e.preventDefault(); uploadArea.classList.add('dragover'); });
+uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('dragover'));
+uploadArea.addEventListener('drop', e => {
+  e.preventDefault();
+  uploadArea.classList.remove('dragover');
+  const file = e.dataTransfer.files[0];
+  if (file) processFile(file);
+});
+document.addEventListener('paste', e => {
+  const file = e.clipboardData.files[0];
+  if (file) processFile(file);
+});
+function handleFileSelect(e) {
+  const file = e.target.files[0];
+  if (file) processFile(file);
+}
+function processFile(file) {
+  const reader = new FileReader();
+  reader.onload = async e => {
+    const base64 = e.target.result;
+    try {
+      const d = await api('/onboard/api/food', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'upload', image: base64 })
+      });
+      if (d.url) {
+        document.getElementById('add-image').value = d.url;
+        document.getElementById('upload-preview').src = d.url;
+        document.getElementById('upload-preview').style.display = 'block';
+        document.getElementById('upload-placeholder').style.display = 'none';
+      }
+    } catch (e) { console.error('upload error', e); }
+  };
+  reader.readAsDataURL(file);
+}
+
+function openDelete(id) {
+  deleteTarget = id;
+  document.getElementById('confirm-delete').classList.add('active');
+}
+function closeConfirmDelete() {
+  deleteTarget = null;
+  document.getElementById('confirm-delete').classList.remove('active');
+}
+async function doDelete() {
+  if (!deleteTarget) return;
+  for (const list of ['available','untried','blacklisted']) {
+    await api('/onboard/api/food', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'remove', id: deleteTarget, list })
+    });
+  }
+  closeConfirmDelete();
+  loadData();
+}
+
+
+let discoveredItems = [];
+let selectedItems = new Set();
+
+async function loadBaseAddress() {
+  const d = await api('/onboard/api/food', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({action:'getAddress'}) });
+  if (d.address) document.getElementById('base-address').value = d.address;
+}
+
+async function discoverNew() {
+  const addr = document.getElementById('base-address').value.trim();
+  if (!addr) { toast('请输入地址', 'warn'); return; }
+  await api('/onboard/api/food', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({action:'setAddress', address:addr}) });
+  const d = await api('/onboard/api/food', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({action:'discover', address:addr, radius:2000}) });
+  if (!d.success) { toast(d.error || '发现失败', 'error'); return; }
+  if (!d.items || !d.items.length) { toast('附近没有发现新餐厅', 'warn'); return; }
+  discoveredItems = d.items;
+  selectedItems = new Set();
+  const info = document.getElementById('discover-info');
+  info.textContent = addr + ' 附近发现 ' + d.total + ' 家新店（已排除已有餐厅）';
+  const list = document.getElementById('discover-list');
+  list.innerHTML = discoveredItems.map((item, idx) => `
+    <div class="discover-item" data-idx="${idx}" onclick="toggleDiscoverItem(${idx})">
+      <div class="discover-name">${item.name}</div>
+      <div class="discover-meta">${item.category} · ${item.address || '地址未知'}</div>
+      <div class="discover-tags">${item.location ? '📍 ' + item.location : ''}</div>
+    </div>
+  `).join('');
+  document.getElementById('discover-modal').classList.add('active');
+}
+
+function toggleDiscoverItem(idx) {
+  const el = document.querySelector('.discover-item[data-idx="'+idx+'"]');
+  if (selectedItems.has(idx)) { selectedItems.delete(idx); el.classList.remove('selected'); }
+  else { selectedItems.add(idx); el.classList.add('selected'); }
+}
+
+async function saveDiscovered() {
+  if (!selectedItems.size) { toast('请选择要添加的餐厅', 'warn'); return; }
+  const list = document.getElementById('discover-target').value;
+  const items = [...selectedItems].map(i => discoveredItems[i]);
+  const d = await api('/onboard/api/food', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({action:'saveDiscovered', items, list}) });
+  if (d.success) { toast('已添加 ' + d.count + ' 家餐厅', 'success'); closeDiscoverModal(); loadData(); }
+  else { toast('保存失败', 'error'); }
+}
+
+function closeDiscoverModal() { document.getElementById('discover-modal').classList.remove('active'); }
+
+function selectAllDiscover() {
+  discoveredItems.forEach((_, i) => selectedItems.add(i));
+  document.querySelectorAll('.discover-item').forEach(el => el.classList.add('selected'));
+}
+function deselectAllDiscover() {
+  selectedItems.clear();
+  document.querySelectorAll('.discover-item').forEach(el => el.classList.remove('selected'));
+}
+
+
+function toast(msg, type='info') {
+  const colors = { info:'#667eea', success:'#10b981', warn:'#f59e0b', error:'#ef4444' };
+  const el = document.createElement('div');
+  el.style = 'position:fixed;bottom:24px;right:24px;background:' + (colors[type]||colors.info) + ';color:#fff;padding:10px 18px;border-radius:10px;font-size:13px;z-index:9999;box-shadow:0 4px 12px rgba(0,0,0,0.3);transition:opacity 0.3s;';
+  el.textContent = msg;
+  document.body.appendChild(el);
+  setTimeout(() => { el.style.opacity='0'; setTimeout(() => el.remove(), 300); }, 2500);
+}
+
+
+let deleteSelection = {}; // { listName: Set(ids) }
+
+
+let _gtip = null;
+
+function showTooltip(el, item) {
+  const rect = el.getBoundingClientRect();
+  if (!_gtip) {
+    _gtip = document.createElement('div');
+    _gtip.style.cssText = 'position:fixed;background:#ffffff;border:1px solid rgba(255,255,255,0.18);border-radius:14px;padding:14px;width:260px;z-index:99999;box-shadow:0 8px 32px rgba(0,0,0,0.8);pointer-events:none;display:none;';
+    document.body.appendChild(_gtip);
+  }
+  const rating = item.rating ? '<span class="rating">' + '★'.repeat(Math.round(item.rating)) + '☆'.repeat(5-Math.round(item.rating)) + '</span>' : '';
+  const tags = item.tags ? item.tags.split(',').filter(t=>t.trim()).map(t=>`<span style="color:#00d4aa;">#${t.trim()}</span>`).join(' ') : '';
+  _gtip.innerHTML = (
+    (item.image ? `<div style="margin-bottom:8px;"><img src="${item.image}" style="width:100%;height:120px;object-fit:cover;border-radius:8px;" onerror="this.parentElement.style.display='none'"></div>` : '') +
+    `<div style="font-size:15px;font-weight:700;color:#1a1a2e;margin-bottom:6px;">${item.name}</div>` +
+    `<div style="font-size:12px;color:#888;margin-bottom:6px;">${rating}${item.price ? ' · ¥'+item.price+'/人' : ''}${item.category ? ' · '+item.category.replace(/,/g,' · ') : ''}</div>` +
+    (item.address ? `<div style="font-size:12px;color:#666;margin-bottom:4px;">📍 ${item.address}</div>` : '') +
+    (item.note ? `<div style="font-size:12px;color:#555;font-style:italic;margin-top:6px;">"${item.note}"</div>` : '') +
+    (tags ? `<div style="margin-top:6px;font-size:11px;">${tags}</div>` : '')
+  );
+  _gtip.style.display = 'block';
+  _gtip.style.left = (rect.left + rect.width / 2) + 'px';
+  _gtip.style.top = (rect.bottom + 10) + 'px';
+  _gtip.style.transform = 'translateX(-50%)';
+}
+
+function hideTooltip(el) {
+  if (_gtip) _gtip.style.display = 'none';
+}
+
+function toggleDeleteSelect(el, listName, id) {
+  if (!deleteSelection[listName]) deleteSelection[listName] = new Set();
+  const checkbox = el.querySelector('input[type=checkbox]');
+  if (deleteSelection[listName].has(id)) {
+    deleteSelection[listName].delete(id);
+    el.classList.remove('selected');
+    checkbox.checked = false;
+  } else {
+    deleteSelection[listName].add(id);
+    el.classList.add('selected');
+    checkbox.checked = true;
+  }
+  updateDeleteBar(listName);
+}
+
+function updateDeleteBar(listName) {
+  const count = deleteSelection[listName]?.size || 0;
+  let bar = document.getElementById(listName + '-delete-bar');
+  if (!bar) {
+    const listEl = document.getElementById(listName + '-list');
+    bar = document.createElement('div');
+    bar.className = 'delete-bar';
+    bar.id = listName + '-delete-bar';
+    bar.innerHTML = `<span class="count">已选 0 项</span>
+      <button onclick="confirmBatchDelete('${listName}')" class="btn-confirm">删除所选</button>
+      <button onclick="clearBatchDelete('${listName}')">取消</button>`;
+    listEl.parentElement.appendChild(bar);
+  }
+  bar.querySelector('.count').textContent = '已选 ' + count + ' 项';
+  bar.classList.toggle('active', count > 0);
+}
+
+function confirmBatchDelete(listName) {
+  const ids = [...(deleteSelection[listName] || [])];
+  if (!ids.length) return;
+  Promise.all(ids.map(id => api('/onboard/api/food', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({action:'remove', id, list:listName}) }))).then(() => {
+    toast('已删除 ' + ids.length + ' 项', 'success');
+    deleteSelection[listName] = new Set();
+    loadData();
+  });
+}
+
+function clearBatchDelete(listName) {
+  deleteSelection[listName] = new Set();
+  document.querySelectorAll('.item.selected').forEach(el => el.classList.remove('selected'));
+  document.querySelectorAll('#' + listName + '-list input[type=checkbox]').forEach(cb => cb.checked = false);
+  const bar = document.getElementById(listName + '-delete-bar');
+  if (bar) bar.classList.remove('active');
+}
+
+
+loadData();
+loadBaseAddress();
+</script>
+
+<!-- Discover Modal -->
+<div class="modal-overlay" id="discover-modal">
+  <div class="modal" style="width:560px;">
+    <h2>🔍 附近发现的新店</h2>
+    <div id="discover-info" style="font-size:12px;color:#666;margin-bottom:12px;"></div>
+    <div id="discover-list" style="max-height:400px;overflow-y:auto;display:flex;flex-direction:column;gap:8px;"></div>
+    <div style="margin-top:16px;display:flex;gap:8px;align-items:center;">
+      <button class="btn-secondary" onclick="selectAllDiscover()" style="font-size:12px;padding:6px 12px;">全选</button>
+      <button class="btn-secondary" onclick="deselectAllDiscover()" style="font-size:12px;padding:6px 12px;">取消</button>
+      <label style="font-size:12px;color:#888;margin-left:8px;">添加到：</label>
+      <select id="discover-target" style="background:#f8fafc;border:1px solid rgba(0,0,0,0.1);border-radius:8px;padding:6px 10px;color:#1a1a2e;font-size:13px;">
+        <option value="untried">未尝试</option>
+        <option value="available">可选</option>
+      </select>
+      <button class="btn-primary" onclick="saveDiscovered()" style="margin-left:auto;">保存所选</button>
+      <button class="btn-secondary" onclick="closeDiscoverModal()">关闭</button>
+    </div>
+  </div>
+</div>
+
+<style>
+.discover-wrap { display:flex;gap:8px;align-items:center;margin-right:12px; }
+.discover-item { background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:14px;cursor:pointer;transition:all 0.2s; }
+.discover-item:hover { background:rgba(255,255,255,0.08); }
+.discover-item.selected { border-color:#00d4aa;background:rgba(0,212,170,0.08); }
+.discover-item input[type=checkbox] { margin-right:10px;accent-color:#00d4aa; }
+.discover-name { font-size:14px;font-weight:600;color:#1a1a2e;margin-bottom:4px; }
+.discover-meta { font-size:11px;color:#888; }
+.discover-tags { font-size:11px;color:#555;margin-top:4px; }
+</style>
+</body>
+</html>

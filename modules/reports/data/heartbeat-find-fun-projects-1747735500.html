@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚡ 今日好玩项目发现 - 2026-05-20</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    color: #eaeaea;
+    margin: 0; padding: 0;
+    min-height: 100vh;
+  }
+  .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+  header { text-align: center; margin-bottom: 40px; }
+  header h1 { font-size: 2.2rem; margin: 0; background: linear-gradient(90deg, #f39c12, #e74c3c); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  header p { color: #aaa; margin-top: 10px; font-size: 0.95rem; }
+  .card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 24px 28px;
+    margin-bottom: 24px;
+    backdrop-filter: blur(10px);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .card:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
+  .card-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; }
+  .card-title { font-size: 1.4rem; font-weight: 700; color: #fff; text-decoration: none; }
+  .card-title:hover { color: #f39c12; }
+  .stars { background: rgba(243,156,18,0.15); color: #f39c12; padding: 4px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; }
+  .lang { background: rgba(46,204,113,0.15); color: #2ecc71; padding: 4px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; margin-left: 8px; }
+  .badge-group { display: flex; gap: 6px; flex-wrap: wrap; }
+  .desc { color: #ccc; line-height: 1.6; margin: 12px 0; font-size: 1rem; }
+  .highlight {
+    background: rgba(231,76,60,0.1);
+    border-left: 3px solid #e74c3c;
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+    color: #ddd;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-top: 10px;
+  }
+  .highlight::before { content: "💡 亮点: "; color: #e74c3c; font-weight: 600; }
+  footer { text-align: center; color: #666; font-size: 0.85rem; margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.05); }
+  .tag-new { background: #e74c3c; color: #fff; font-size: 0.7rem; padding: 2px 8px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
+  @media (max-width: 600px) {
+    header h1 { font-size: 1.6rem; }
+    .card { padding: 18px; }
+    .card-title { font-size: 1.2rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>⚡ 今日好玩项目发现</h1>
+    <p>2026-05-20 · 莫殇巡逻精选 👀</p>
+  </header>
+
+  <div class="card">
+    <div class="card-header">
+      <a href="https://github.com/obra/superpowers" class="card-title" target="_blank">🦸 superpowers</a>
+      <div class="badge-group">
+        <span class="stars">⭐ 197.9k</span>
+        <span class="lang">Spec</span>
+      </div>
+    </div>
+    <div class="desc">An agentic skills framework & software development methodology that works.</div>
+    <div class="highlight">给 Claude Code、Codex CLI、Cursor、GitHub Copilot CLI 等编码助手赋予"超能力"。技能自动触发——写功能时自动头脑风暴，批准设计后自动写计划，开始实现时 TDD 自动启动。不绑定单一 Agent，通用性极强。</div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <a href="https://github.com/tinyhumansai/openhuman" class="card-title" target="_blank">🧠 openhuman</a>
+      <div class="badge-group">
+        <span class="stars">⭐ 19.7k</span>
+        <span class="lang">Python/TS</span>
+        <span class="tag-new">NEW 2026</span>
+      </div>
+    </div>
+    <div class="desc">Your Personal AI super intelligence. Private, Simple and extremely powerful.</div>
+    <div class="highlight">私人 AI 超级智能，注重隐私保护，简单易用但功能极其强大。支持 AI 记忆、数字人交互，让每个人都能拥有属于自己的 AI 助手。</div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <a href="https://github.com/rmyndharis/OpenWA" class="card-title" target="_blank">💬 OpenWA</a>
+      <div class="badge-group">
+        <span class="stars">⭐ 3.8k</span>
+        <span class="lang">Node.js</span>
+        <span class="tag-new">NEW 2026</span>
+      </div>
+    </div>
+    <div class="desc">Free, Open Source, Self-Hosted WhatsApp API Gateway</div>
+    <div class="highlight">完全免费、开源、可自托管的 WhatsApp API 网关。插件化架构，自带 Dashboard，一行命令即可跑起来。替代商业 WA API 的最佳选择，适合自动化消息、客服机器人等场景。</div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <a href="https://github.com/colbymchenry/codegraph" class="card-title" target="_blank">📊 codegraph</a>
+      <div class="badge-group">
+        <span class="stars">⭐ 5.9k</span>
+        <span class="lang">TypeScript</span>
+        <span class="tag-new">NEW 2026</span>
+      </div>
+    </div>
+    <div class="desc">Pre-indexed code knowledge graph for Claude Code — fewer tokens, fewer tool calls, 100% local</div>
+    <div class="highlight">为 Claude Code 预索引的代码知识图谱。100% 本地运行，显著减少 token 消耗和工具调用次数。让 AI 编码助手更懂你的代码库，开发效率翻倍。</div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <a href="https://github.com/MinishLab/semble" class="card-title" target="_blank">🔍 semble</a>
+      <div class="badge-group">
+        <span class="stars">⭐ 2.9k</span>
+        <span class="lang">Python</span>
+        <span class="tag-new">NEW 2026</span>
+      </div>
+    </div>
+    <div class="desc">Fast and Accurate Code Search for Agents. Uses ~98% fewer tokens than grep+read</div>
+    <div class="highlight">专为 AI Agent 设计的快速精准代码搜索工具。相比传统 grep+read 方案减少约 98% 的 token 使用量，让 Agent 更高效地理解和操作代码，省钱又高效。</div>
+  </div>
+
+  <footer>
+    <p>莫殇巡逻发现 · 数据来源: GitHub Trending / Trendshift / OSSInsight</p>
+    <p>报告时间: 2026-05-20 14:05 CST</p>
+  </footer>
+</div>
+</body>
+</html>

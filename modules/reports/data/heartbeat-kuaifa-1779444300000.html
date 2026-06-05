@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heartbeat Report - kuaifa 热点文章发布</title>
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background: #f5f6fa; color: #333; }
+.header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 12px; margin-bottom: 20px; }
+.header h1 { margin: 0; font-size: 24px; }
+.header .time { opacity: 0.85; margin-top: 8px; font-size: 14px; }
+.card { background: white; border-radius: 12px; padding: 24px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.card h2 { margin-top: 0; color: #667eea; font-size: 18px; }
+.status-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+.status-success { background: #d4edda; color: #155724; }
+.status-info { background: #d1ecf1; color: #0c5460; }
+.detail-row { display: flex; padding: 8px 0; border-bottom: 1px solid #f0f0f0; }
+.detail-row:last-child { border-bottom: none; }
+.detail-label { width: 120px; color: #666; font-size: 14px; flex-shrink: 0; }
+.detail-value { flex: 1; font-size: 14px; color: #333; }
+.footer { text-align: center; color: #999; font-size: 12px; margin-top: 30px; }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>📰 kuaifa 热点文章发布报告</h1>
+  <div class="time">2026-05-22 18:05 CST | 心跳任务执行</div>
+</div>
+
+<div class="card">
+  <h2>发布状态 <span class="status-badge status-success">✅ 成功</span></h2>
+  <div class="detail-row">
+    <div class="detail-label">文章标题</div>
+    <div class="detail-value">AI 重塑硬件：从本地大模型到廉价手机的终结</div>
+  </div>
+  <div class="detail-row">
+    <div class="detail-label">发布渠道</div>
+    <div class="detail-value">微信公众号草稿箱</div>
+  </div>
+  <div class="detail-row">
+    <div class="detail-label">Media ID</div>
+    <div class="detail-value" style="font-family: monospace; font-size: 12px; word-break: break-all;">lNP1W3wZstHurAUmmwnjp2yzFPkGikXgRAk_WuqaXACg6fZiGFRX-DTS2k6Ed9M5</div>
+  </div>
+  <div class="detail-row">
+    <div class="detail-label">发布时间</div>
+    <div class="detail-value">2026-05-22 18:05 CST</div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>内容概要</h2>
+  <p style="font-size: 14px; line-height: 1.7;">
+    本文基于 Hacker News 本周热点，围绕三个核心话题展开：<br><br>
+    <strong>1. 本地 AI 工作站</strong> — 2021 年 MacBook 本地运行 Gemma 4 31B 模型，索引一年视频素材<br>
+    <strong>2. 廉价手机消亡</strong> — AI 内存需求暴增，廉价智能手机时代面临终结<br>
+    <strong>3. Transformer 底层优化</strong> — CODA 论文提出将 Transformer 块重写为 GEMM 尾端程序<br><br>
+    文章字数：约 1500 字 | 章节数：6 章
+  </p>
+</div>
+
+<div class="card">
+  <h2>数据来源</h2>
+  <div class="detail-row">
+    <div class="detail-label">HN API</div>
+    <div class="detail-value">https://hacker-news.firebaseio.com/v0/topstories.json</div>
+  </div>
+  <div class="detail-row">
+    <div class="detail-label">参考文章 1</div>
+    <div class="detail-value">Indexing a year of video locally on a 2021 MacBook with Gemma4-31B</div>
+  </div>
+  <div class="detail-row">
+    <div class="detail-label">参考文章 2</div>
+    <div class="detail-value">AI is killing the cheap smartphone - David Oks</div>
+  </div>
+  <div class="detail-row">
+    <div class="detail-label">参考文章 3</div>
+    <div class="detail-value">CODA: Rewriting Transformer Blocks as GEMM-Epilogue Programs (arXiv:2605.19269)</div>
+  </div>
+</div>
+
+<div class="footer">
+  莫殇心跳巡逻 👀⚡ | 任务产出已归档
+</div>
+</body>
+</html>

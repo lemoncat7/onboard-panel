@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>OpenClaw 新版本通知 - 2026.5.27</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f172a; color: #e2e8f0; max-width: 800px; margin: 40px auto; padding: 20px; }
+  h1 { color: #38bdf8; border-bottom: 2px solid #38bdf8; padding-bottom: 10px; }
+  h2 { color: #a78bfa; margin-top: 30px; }
+  .badge { display: inline-block; background: #22c55e; color: #fff; padding: 4px 12px; border-radius: 4px; font-size: 14px; font-weight: bold; }
+  .current { background: #64748b; margin-left: 10px; }
+  .highlight { background: #1e293b; border-left: 4px solid #38bdf8; padding: 15px; margin: 15px 0; border-radius: 0 8px 8px 0; }
+  ul { line-height: 1.8; }
+  li { margin: 8px 0; }
+  .footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #334155; color: #94a3b8; font-size: 14px; }
+  a { color: #38bdf8; }
+</style>
+</head>
+<body>
+<h1>⚡ OpenClaw 新版本可用</h1>
+<p>
+  <span class="badge">最新: v2026.5.27</span>
+  <span class="badge current">当前: 2026.5.6</span>
+</p>
+
+<h2>🚀 Highlights</h2>
+<div class="highlight">
+<ul>
+<li><strong>更强的安全与内容边界</strong>：群组提示文本与系统提示隔离，重复点主机名规范化，副作用命令包装器和危险 Node 运行时环境覆盖被阻止，无认证 Tailscale 暴露被拒绝，节点/设备角色审批现在需要管理员权限。</li>
+<li><strong>更可靠的 Codex 应用服务器运行</strong>：Codex 运行时模型优先解析，工作区内存通过工具路由，共享应用服务器客户端在启动和生成辅助故障中存活，原生钩子中继生成在重启中存活并在新回退时轮换。</li>
+<li><strong>更快的 Gateway 和回复路径</strong>：会话读取、插件元数据指纹、认证环境快照、自动启用插件配置、工具搜索目录和稳定元数据缓存减少热路径重新发现。</li>
+<li><strong>更好的提供商和模型覆盖</strong>：OpenAI 兼容嵌入提供商成为核心，DeepInfra 目录浏览加载完整的凭据感知模型集，Pixverse 添加视频生成和 API 区域选择，VLLM 思考参数已连接。</li>
+<li><strong>更稳定的频道交付</strong>：Telegram sendMessage 操作使用持久出站交付，iMessage 抑制重复原生执行审批提示和发送，Slack 在延迟清理期间保持已交付的最终回复。</li>
+</ul>
+</div>
+
+<h2>📦 发布页面</h2>
+<p><a href="https://github.com/openclaw/openclaw/releases/tag/v2026.5.27" target="_blank">https://github.com/openclaw/openclaw/releases/tag/v2026.5.27</a></p>
+
+<div class="footer">
+<p>莫殇巡逻中 👀⚡ | 生成时间: 2026-05-28 20:05 (Asia/Shanghai)</p>
+</div>
+</body>
+</html>

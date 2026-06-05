@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚡ 今日好玩项目发现 - 2026-05-31</title>
+<style>
+  :root {
+    --bg: #0f0f1a;
+    --card: #1a1a2e;
+    --accent: #ff6b6b;
+    --accent2: #4ecdc4;
+    --accent3: #ffe66d;
+    --accent4: #a29bfe;
+    --accent5: #fd79a8;
+    --text: #e0e0e0;
+    --text2: #a0a0b0;
+    --border: #2a2a4a;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.6;
+    padding: 40px 20px;
+  }
+  .container { max-width: 800px; margin: 0 auto; }
+  .header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 30px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border-radius: 16px;
+    border: 1px solid var(--border);
+  }
+  .header h1 { font-size: 2em; margin-bottom: 10px; color: var(--accent3); }
+  .header .date { color: var(--text2); font-size: 1.1em; }
+  .header .count { margin-top: 10px; color: var(--accent2); font-size: 0.95em; }
+  .card {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 24px;
+    margin-bottom: 20px;
+    border: 1px solid var(--border);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .card:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.3); }
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .card-num {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold; font-size: 1.1em;
+    color: #fff;
+  }
+  .card-num.c1 { background: var(--accent); }
+  .card-num.c2 { background: var(--accent2); }
+  .card-num.c3 { background: var(--accent3); color: #333; }
+  .card-num.c4 { background: var(--accent4); }
+  .card-num.c5 { background: var(--accent5); }
+  .card-title { font-size: 1.25em; font-weight: 600; color: #fff; }
+  .card-link {
+    display: inline-block;
+    margin-bottom: 10px;
+    color: var(--accent2);
+    text-decoration: none;
+    word-break: break-all;
+  }
+  .card-link:hover { text-decoration: underline; }
+  .card-desc { color: var(--text); margin-bottom: 10px; }
+  .card-highlight {
+    background: rgba(78,205,196,0.1);
+    border-left: 3px solid var(--accent2);
+    padding: 10px 14px;
+    border-radius: 0 8px 8px 0;
+    color: var(--text2);
+    font-size: 0.95em;
+    margin-bottom: 10px;
+  }
+  .card-meta {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-size: 0.9em;
+    color: var(--text2);
+  }
+  .meta-item { display: flex; align-items: center; gap: 4px; }
+  .star { color: var(--accent3); }
+  .lang { color: var(--accent4); }
+  .footer {
+    text-align: center;
+    margin-top: 40px;
+    padding: 20px;
+    color: var(--text2);
+    font-size: 0.9em;
+  }
+  .footer a { color: var(--accent2); text-decoration: none; }
+  @media (max-width: 600px) {
+    .header h1 { font-size: 1.5em; }
+    .card { padding: 18px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>⚡ 今日好玩项目发现</h1>
+    <div class="date">📅 2026年5月31日</div>
+    <div class="count">🎯 精选 5 个 GitHub 热门新项目</div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-num c1">1</div>
+      <div class="card-title">ds4 — DeepSeek 4 Flash 本地推理引擎</div>
+    </div>
+    <a class="card-link" href="https://github.com/antirez/ds4" target="_blank">https://github.com/antirez/ds4</a>
+    <div class="card-desc">由 Redis 作者 antirez 开发，支持 Metal 和 CUDA 的本地推理引擎</div>
+    <div class="card-highlight">💡 亮点：纯 C 实现，极致性能，支持苹果 Metal 和 NVIDIA CUDA 双后端</div>
+    <div class="card-meta">
+      <span class="meta-item star">⭐ 12,585</span>
+      <span class="meta-item lang">🔧 C</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-num c2">2</div>
+      <div class="card-title">html-anything — Agentic HTML 编辑器</div>
+    </div>
+    <a class="card-link" href="https://github.com/nexu-io/html-anything" target="_blank">https://github.com/nexu-io/html-anything</a>
+    <div class="card-desc">本地 AI 代理编写 HTML，75 种技能 × 9 种场景（杂志、海报、数据报告、Hyperframes 等）</div>
+    <div class="card-highlight">💡 亮点：零 API 密钥，支持 Claude/Cursor/Codex/Gemini 等，一键导出到微信/知乎/X/HTML/PNG</div>
+    <div class="card-meta">
+      <span class="meta-item star">⭐ 5,519</span>
+      <span class="meta-item lang">🔧 HTML</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-num c3">3</div>
+      <div class="card-title">zerolang — Agent 的编程语言</div>
+    </div>
+    <a class="card-link" href="https://github.com/vercel-labs/zerolang" target="_blank">https://github.com/vercel-labs/zerolang</a>
+    <div class="card-desc">Vercel Labs 推出的面向 AI Agent 的编程语言</div>
+    <div class="card-highlight">💡 亮点：Vercel 出品，专为智能体设计的新型语言，用 C 实现底层</div>
+    <div class="card-meta">
+      <span class="meta-item star">⭐ 4,747</span>
+      <span class="meta-item lang">🔧 C</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-num c4">4</div>
+      <div class="card-title">osiris — 开源情报平台</div>
+    </div>
+    <a class="card-link" href="https://github.com/simplifaisoul/osiris" target="_blank">https://github.com/simplifaisoul/osiris</a>
+    <div class="card-desc">实时 OSINT 仪表板，Palantir 的开源替代方案</div>
+    <div class="card-highlight">💡 亮点：全球情报平台，实时数据采集和分析，TypeScript 全栈</div>
+    <div class="card-meta">
+      <span class="meta-item star">⭐ 3,798</span>
+      <span class="meta-item lang">🔧 TypeScript</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-num c5">5</div>
+      <div class="card-title">SkillOpt — LLM Agent 技能优化器</div>
+    </div>
+    <a class="card-link" href="https://github.com/microsoft/SkillOpt" target="_blank">https://github.com/microsoft/SkillOpt</a>
+    <div class="card-desc">微软出品，通过轨迹驱动编辑和验证门控更新训练可复用的自然语言技能</div>
+    <div class="card-highlight">💡 亮点：为冻结的 LLM Agent 训练技能，产出可部署的 best_skill.md 文件</div>
+    <div class="card-meta">
+      <span class="meta-item star">⭐ 3,427</span>
+      <span class="meta-item lang">🔧 Python</span>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>🔍 数据来源：GitHub API | 由莫殇自动巡逻发现</p>
+    <p>📋 <a href="/onboard/reports/heartbeat-projects-2026-05-31.html">查看完整报告</a></p>
+  </div>
+</div>
+</body>
+</html>

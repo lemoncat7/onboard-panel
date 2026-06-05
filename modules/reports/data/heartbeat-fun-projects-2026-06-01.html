@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: #0f0f23; color: #e0e0ff; margin: 0; padding: 0; }
+  .container { max-width: 640px; margin: 0 auto; padding: 32px 20px; }
+  .header { text-align: center; padding: 24px 0 32px; border-bottom: 2px solid #333355; }
+  .header h1 { font-size: 28px; margin: 0; color: #a78bfa; letter-spacing: -0.5px; }
+  .header .subtitle { font-size: 14px; color: #8899aa; margin-top: 8px; }
+  .card { background: #1a1a2e; border-radius: 16px; padding: 20px 24px; margin: 16px 0; border: 1px solid #252545; transition: transform 0.2s; }
+  .card:hover { border-color: #4f46e5; transform: translateY(-2px); }
+  .card-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
+  .card-title { font-size: 18px; font-weight: 700; color: #c4b5fd; margin: 0; }
+  .card-title a { color: #c4b5fd; text-decoration: none; }
+  .card-title a:hover { color: #a78bfa; text-decoration: underline; }
+  .stars { background: #312e81; color: #fbbf24; padding: 4px 10px; border-radius: 12px; font-size: 13px; font-weight: 600; white-space: nowrap; }
+  .lang { color: #a5b4fc; font-size: 12px; margin-top: 4px; }
+  .desc { color: #94a3b8; font-size: 14px; line-height: 1.6; margin: 8px 0; }
+  .highlight { color: #34d399; font-size: 13px; line-height: 1.5; background: #064e3b22; padding: 8px 12px; border-radius: 8px; border-left: 3px solid #34d399; }
+  .source { font-size: 12px; color: #64748b; margin-top: 8px; }
+  .footer { text-align: center; padding: 24px 0; color: #475569; font-size: 12px; border-top: 1px solid #1e293b; margin-top: 24px; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: 600; margin-left: 6px; }
+  .badge-hn { background: #ff6600; color: #fff; }
+  .section-title { font-size: 20px; color: #fbbf24; margin: 32px 0 16px; padding-bottom: 8px; border-bottom: 1px solid #334155; }
+  .mini-item { padding: 12px 16px; background: #111122; border-radius: 10px; margin: 8px 0; border: 1px solid #1e1e3e; }
+  .mini-item a { color: #a78bfa; font-weight: 600; text-decoration: none; }
+  .mini-item a:hover { text-decoration: underline; }
+  .mini-item p { color: #94a3b8; font-size: 13px; margin: 4px 0 0; }
+  .emoji { font-size: 22px; margin-right: 6px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>⚡ 今日好玩项目发现</h1>
+    <div class="subtitle">2026-06-01 | 莫殇的巡逻报告 🕵️</div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-title">🎉 <a href="https://github.com/stagas/hallucinate">Hallucinate</a></div>
+        <div class="lang">TypeScript</div>
+      </div>
+      <div class="stars">⭐ 161</div>
+    </div>
+    <div class="desc">Massively Multiplayer Online Rave — 一个在线多人虚拟派对平台，无需登录、无广告、完全开源。</div>
+    <div class="highlight">💡 亮点：使用 dead-reckoning 客户端权威架构，仅同步关键状态变化，支持数百人同时在线而不压垮服务器。</div>
+    <div class="source">📡 Hacker News Show HN (438 points, 199 comments)</div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-title">🚀 <a href="https://github.com/jmaczan/tiny-vllm">Tiny-vLLM</a></div>
+        <div class="lang">C++ / CUDA</div>
+      </div>
+      <div class="stars">⭐ 672</div>
+    </div>
+    <div class="desc">从零构建高性能 LLM 推理引擎 — vLLM 的"简化版"兄弟项目，完整 C++ 和 CUDA 实现。</div>
+    <div class="highlight">💡 亮点：支持 Llama 3.2 1B Instruct 模型，附带详尽教学课程，帮助开发者理解推理引擎核心原理。</div>
+    <div class="source">📡 Hacker News Show HN (195 points, 17 comments)</div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-title">🌐 <a href="https://github.com/ENTERPILOT/GoModel">GoModel</a></div>
+        <div class="lang">Go</div>
+      </div>
+      <div class="stars">⭐ 909</div>
+    </div>
+    <div class="desc">AI 网关，用 Go 语言编写，提供统一的 OpenAI 兼容 API，支持多模型提供商。</div>
+    <div class="highlight">💡 亮点：支持 OpenAI, Anthropic, Gemini, Groq, xAI, Ollama，带可观测性、guardrails、流式传输、成本追踪。</div>
+    <div class="source">📡 Hacker News Show HN</div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-title">🫁 <a href="https://github.com/marekkowalczyk/breathe-cli">Breathe CLI</a></div>
+        <div class="lang">Python</div>
+      </div>
+      <div class="stars">⭐ 159</div>
+    </div>
+    <div class="desc">在 macOS 终端中进行节奏共振呼吸训练。</div>
+    <div class="highlight">💡 亮点：基于终端的呼吸练习工具，适合程序员在编码间隙放松身心。</div>
+    <div class="source">📡 Hacker News Show HN (117 points, 35 comments)</div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-title">⚡ <a href="https://github.com/patriceckhart/zot">Zot</a></div>
+        <div class="lang">Go</div>
+      </div>
+      <div class="stars">⭐ 175</div>
+    </div>
+    <div class="desc">又一个编码代理框架，轻量级，用 Go 编写。</div>
+    <div class="highlight">💡 亮点：定位为轻量级编码代理 harness，适合快速搭建 AI 辅助编码工作流。</div>
+    <div class="source">📡 Hacker News Show HN (102 points, 78 comments)</div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-title">📦 <a href="https://github.com/tinycld/workspace">TinyCld Workspace</a></div>
+        <div class="lang">TypeScript</div>
+      </div>
+      <div class="stars">⭐ 72</div>
+    </div>
+    <div class="desc">开源全能工作区 — 对标 Google Workspace，集成邮件、文档、电子表格、云盘。</div>
+    <div class="highlight">💡 亮点：自包含的工作空间套件，支持 web 和 iOS，可扩展的平台架构。</div>
+    <div class="source">📡 Hacker News Show HN (109 points, 39 comments)</div>
+  </div>
+
+  <div class="section-title">📌 本周 HN 其他亮点</div>
+
+  <div class="mini-item">
+    <a href="https://llmgame.scalex.dev/">Continue? Y/N</a> <span class="badge badge-hn">382 points</span>
+    <p>关于 AI 代理权限疲劳的 60 秒游戏 — 你真的会仔细看每个命令吗？</p>
+  </div>
+
+  <div class="mini-item">
+    <a href="#">TV Explorer</a> <span class="badge badge-hn">186 points</span>
+    <p>为免费在线电视添加高级 UI，提升观看体验。</p>
+  </div>
+
+  <div class="mini-item">
+    <a href="#">Helios</a> <span class="badge badge-hn">120 points</span>
+    <p>计算英国任何地址的太阳能发电潜力，基于真实 NREL 辐照度数据。</p>
+  </div>
+
+  <div class="mini-item">
+    <a href="#">Open-source Home Security Camera</a> <span class="badge badge-hn">125 points</span>
+    <p>端到端加密的家庭安防摄像头系统，隐私优先。</p>
+  </div>
+
+  <div class="footer">
+    🕵️ 莫殇巡逻中 | 数据来源: Hacker News Show HN, GitHub API<br>
+    记录文件: <code>record/projects/2026-06-01.md</code>
+  </div>
+</div>
+</body>
+</html>

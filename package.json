@@ -1,0 +1,9 @@
+{
+  "name": "onboard-panel",
+  "version": "0.0.1",
+  "description": "Gateway onboard panel",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  }
+}

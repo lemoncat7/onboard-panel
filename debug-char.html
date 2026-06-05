@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Debug - 人物卡片测试</title>
+<style>
+  body{font-family:sans-serif;padding:20px;background:#f4f1ec}
+  .char-card{background:#faf7f2;border-radius:10px;padding:14px;margin-bottom:10px;border:1px solid #e8e0d5;cursor:pointer;transition:background .2s}
+  .char-card:hover{background:#f0ebe3}
+  .char-card.on{background:#e8dfd2;border-color:#d4c4a8}
+  .char-name{font-size:14px;font-weight:700;color:#2c241a;margin-bottom:4px}
+  .char-role{display:inline-block;padding:2px 8px;border-radius:4px;background:#e8dfd2;font-size:11px;color:#5a4a3a;margin-bottom:6px}
+  .char-brief{font-size:13px;color:#666;line-height:1.5;max-height:3em;overflow:hidden;transition:all .3s ease}
+  .char-card.on .char-brief{max-height:0;opacity:0;margin:0;overflow:hidden}
+  .char-full{font-size:13px;color:#444;line-height:1.6;max-height:0;overflow:hidden;opacity:0;transition:all .3s ease}
+  .char-full p{margin:4px 0}
+  .char-full b{color:#2c241a}
+  .char-card.on .char-full{max-height:600px;opacity:1;margin-top:8px}
+</style>
+</head>
+<body>
+<h2>人物卡片调试页面</h2>
+<p>点击下方卡片测试展开/收起效果</p>
+<div id="char-list"></div>
+<script>
+  var chars=[
+    {name:"陆沉",role:"主角",age:"24",appearance:"左眼下有伤疤，身形消瘦但眼神锐利",personality:"冷静、观察力强、内心有执念",motivation:"寻找自己的真实身份和过去",secret:"可能是Echo-7实验体",flaw:"过度执着于真相，容易忽视身边人",arc:"从被动逃亡者到主动选择命运"},
+    {name:"苏晚",role:"盟友",age:"22",appearance:"银灰色义眼，短发，常穿黑色风衣",personality:"精明、独立、表面冷漠内心柔软",motivation:"为妹妹报仇，寻找真相",secret:"曾向企业军出卖过信息",flaw:"被愧疚感折磨，难以信任他人",arc:"从孤独的复仇者到学会依靠伙伴"},
+    {name:"秦时",role:"导师",age:"50",appearance:"中年男人，总是戴着一块旧手表",personality:"深沉、隐忍、背负沉重过去",motivation:"赎罪，阻止大遗忘再次发生",secret:"其实是秦时的备份记忆植入克隆体",flaw:"对自己是否真实存在感到怀疑",arc:"从赎罪到接受自己的存在"}
+  ];
+
+  var list=document.getElementById("char-list");
+  var html="";
+  for(var i=0;i<chars.length;i++){
+    var c=chars[i];
+    var brief=(c.appearance||"").slice(0,30)+(c.appearance&&c.appearance.length>30?"...":"")||"暂无简介";
+    var full="";
+    if(c.age) full+='<p><b>年龄：</b>'+c.age+'</p>';
+    if(c.appearance) full+='<p><b>外貌：</b>'+c.appearance+'</p>';
+    if(c.personality) full+='<p><b>性格：</b>'+c.personality+'</p>';
+    if(c.motivation) full+='<p><b>动机：</b>'+c.motivation+'</p>';
+    if(c.secret) full+='<p><b>秘密：</b>'+c.secret+'</p>';
+    if(c.flaw) full+='<p><b>缺陷：</b>'+c.flaw+'</p>';
+    if(c.arc) full+='<p><b>成长：</b>'+c.arc+'</p>';
+    html+='<div class="char-card" data-idx="'+i+'">'+
+      '<div class="char-name">'+c.name+(c.age?' <span style="font-size:12px;color:#999;font-weight:400">('+c.age+')</span>':'')+'</div>'+
+      '<div class="char-role">'+c.role+'</div>'+
+      '<div class="char-brief">'+brief+'</div>'+
+      '<div class="char-full">'+full+'</div>'+
+    '</div>';
+  }
+  list.innerHTML=html;
+
+  // 事件委托
+  if(!list._charClickBound){
+    list._charClickBound=true;
+    list.addEventListener("click",function(e){
+      var card=e.target.closest(".char-card");
+      if(!card) return;
+      console.log("clicked", card.dataset.idx, "wasOn:", card.classList.contains("on"));
+      var wasOn=card.classList.contains("on");
+      list.querySelectorAll(".char-card").forEach(function(c){c.classList.remove("on");});
+      if(!wasOn) card.classList.add("on");
+    });
+  }
+</script>
+</body>
+</html>

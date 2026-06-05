@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>系统巡检 & Wiki 巡检 - 2026-05-29</title>
+<style>
+  body { font-family: system-ui, -apple-system, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; background: #0f0f1a; color: #e0e0e0; }
+  h1 { color: #ff6b6b; border-bottom: 2px solid #ff6b6b; padding-bottom: 10px; }
+  h2 { color: #4ecdc4; margin-top: 30px; }
+  .ok { color: #51cf66; }
+  .warn { color: #ffd43b; }
+  .error { color: #ff6b6b; }
+  pre { background: #1a1a2e; padding: 15px; border-radius: 8px; overflow-x: auto; font-size: 13px; }
+  .section { background: #16162a; padding: 20px; border-radius: 10px; margin: 15px 0; }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { padding: 8px 12px; text-align: left; border-bottom: 1px solid #2a2a4a; }
+  th { color: #4ecdc4; }
+</style>
+</head>
+<body>
+<h1>🔍 系统巡检 & Wiki 巡检报告</h1>
+<p>生成时间: 2026-05-29 05:05 (Asia/Shanghai)</p>
+
+<div class="section">
+<h2>📊 系统状态</h2>
+<table>
+<tr><th>指标</th><th>状态</th><th>详情</th></tr>
+<tr><td>磁盘空间</td><td class="ok">✅ 正常</td><td>主分区 15% (534G/3.7T)，缓存分区 20% (181G/917G)</td></tr>
+<tr><td>内存</td><td class="ok">✅ 正常</td><td>9.7Gi / 15Gi 使用，可用 5.7Gi</td></tr>
+<tr><td>负载</td><td class="ok">✅ 正常</td><td>1.60 / 1.82 / 1.76 (5min/10min/15min)</td></tr>
+<tr><td>僵尸进程</td><td class="ok">✅ 无</td><td>0 个僵尸进程</td></tr>
+<tr><td>运行时间</td><td class="ok">✅</td><td>5 days, 14:11</td></tr>
+</table>
+</div>
+
+<div class="section">
+<h2>📚 Wiki 状态</h2>
+<table>
+<tr><th>检查项</th><th>状态</th><th>详情</th></tr>
+<tr><td>编译</td><td class="ok">✅ 成功</td><td>16 pages, 0 indexes updated</td></tr>
+<tr><td>Lint</td><td class="ok">✅ 通过</td><td>0 issues</td></tr>
+<tr><td>Wiki Status</td><td class="error">❌ 异常</td><td>无法写入 source page：bridge-workspace-ae26912a-memory-2d62c497.md</td></tr>
+</table>
+</div>
+
+<div class="section">
+<h2>⚠️ 需要关注</h2>
+<p class="error"><strong>Wiki 文件系统异常：</strong></p>
+<pre>
+错误: Refusing to write imported source page over non-file
+路径: sources/bridge-workspace-ae26912a-memory-2d62c497.md
+原因: 该路径实际是一个目录，而不是文件
+</pre>
+<p>建议操作：</p>
+<ol>
+<li>检查 <code>record/wiki/sources/bridge-workspace-ae26912a-memory-2d62c497.md</code></li>
+<li>将该目录重命名或删除，使其不干扰 wiki 编译</li>
+<li>如果这是预期的目录结构，请调整 wiki 配置以适配</li>
+</ol>
+</div>
+
+<div class="section">
+<h2>📋 总结</h2>
+<p>系统整体运行正常，但 Wiki vault 存在一个文件系统异常需要修复。</p>
+</div>
+
+</body>
+</html>

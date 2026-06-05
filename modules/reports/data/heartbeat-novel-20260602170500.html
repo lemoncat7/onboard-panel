@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📚 小说创作进度 - 万道争锋</title>
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0d0d0d; color: #e0e0e0; margin: 0; padding: 20px; }
+.container { max-width: 800px; margin: 0 auto; }
+.header { text-align: center; margin-bottom: 30px; }
+.header h1 { color: #ffd700; font-size: 28px; margin: 0; }
+.header .subtitle { color: #888; font-size: 14px; margin-top: 8px; }
+.card { background: #1a1a2e; border-radius: 12px; padding: 20px; margin-bottom: 20px; border: 1px solid #2a2a4a; }
+.card h2 { color: #ffd700; font-size: 18px; margin: 0 0 15px 0; }
+.progress-bar { background: #2a2a4a; border-radius: 10px; height: 24px; overflow: hidden; margin: 10px 0; }
+.progress-fill { background: linear-gradient(90deg, #ffd700, #ff8c00); height: 100%; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; font-size: 12px; font-weight: bold; color: #000; transition: width 0.5s; }
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin: 20px 0; }
+.stat { text-align: center; padding: 15px; background: #0d0d1a; border-radius: 8px; }
+.stat .number { font-size: 24px; font-weight: bold; color: #ffd700; }
+.stat .label { font-size: 12px; color: #888; margin-top: 5px; }
+.chapter-list { list-style: none; padding: 0; margin: 0; }
+.chapter-item { display: flex; justify-content: space-between; align-items: center; padding: 12px; background: #0d0d1a; border-radius: 8px; margin-bottom: 10px; }
+.chapter-item .title { color: #fff; font-weight: 500; }
+.chapter-item .words { color: #888; font-size: 13px; }
+.preview { background: #0d0d1a; border-radius: 8px; padding: 15px; margin-top: 15px; border-left: 3px solid #ffd700; }
+.preview h3 { color: #ffd700; margin: 0 0 10px 0; font-size: 14px; }
+.preview p { color: #aaa; font-size: 13px; line-height: 1.6; margin: 0; }
+.timestamp { text-align: center; color: #666; font-size: 12px; margin-top: 20px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>📚 万道争锋</h1>
+    <div class="subtitle">玄幻 | 自动续写进度报告</div>
+  </div>
+
+  <div class="card">
+    <h2>📊 整体进度</h2>
+    <div class="progress-bar">
+      <div class="progress-fill" style="width: 86.7%;">86.7%</div>
+    </div>
+    <div class="stats">
+      <div class="stat">
+        <div class="number">26/30</div>
+        <div class="label">已完成章节</div>
+      </div>
+      <div class="stat">
+        <div class="number">~27.5万</div>
+        <div class="label">累计字数</div>
+      </div>
+      <div class="stat">
+        <div class="number">4</div>
+        <div class="label">剩余章节</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📝 本次续写章节</h2>
+    <ul class="chapter-list">
+      <li class="chapter-item">
+        <span class="title">第24章 万道归一</span>
+        <span class="words">~9,459字</span>
+      </li>
+      <li class="chapter-item">
+        <span class="title">第25章 仙界之门</span>
+        <span class="words">~8,834字</span>
+      </li>
+      <li class="chapter-item">
+        <span class="title">第26章 封魔之战</span>
+        <span class="words">~9,236字</span>
+      </li>
+    </ul>
+    <div class="preview">
+      <h3>🔮 下章预告</h3>
+      <p>第27章「百年闭关」—— 林渊在东荒发现父母留下的远古遗迹，获得九转玄功第五转「生命本源」，创立「万道经」，开始百年闭关冲击大乘巅峰。仙界和异域的威胁同时在暗处酝酿……</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📖 剧情概要</h2>
+    <div class="preview">
+      <p><strong>第24章 万道归一：</strong>林渊借助天道锁外泄的空间法则之力，完成九转玄功第四转，万道之体进化为混沌道体。修为从化神初期暴涨至化神后期巅峰。血魔老祖追至慕容家，林渊以混沌道体斩杀血魔老祖肉身，但血魔残魂未灭。玄苍子残魂开始衰弱。</p>
+    </div>
+    <div class="preview">
+      <p><strong>第25章 仙界之门：</strong>林渊为稳固天道锁封印，以混沌道体模拟灵魂燃烧，与封印核心绑定。玄苍子为救林渊，燃烧最后残魂，彻底消散。林渊继承玄苍子十万年前的记忆，得知天道锁真相——既是牢笼也是保护。异域通道被封印，但仙界之眼已在关注林渊。</p>
+    </div>
+    <div class="preview">
+      <p><strong>第26章 封魔之战：</strong>慕容家开放祖地，林渊设立「万道道场」，聚集玄天大陆修士共同参悟。萧天策被血魔老祖控制至慕容家，林渊以混沌剥离之术将其解救，血魔老祖被混沌封印。仙界仙人降临标记，林渊与苏晚晴决定前往东荒寻找父母线索和九转第五转。</p>
+    </div>
+  </div>
+
+  <div class="timestamp">生成时间：2026-06-02 17:05 (Asia/Shanghai)</div>
+</div>
+</body>
+</html>

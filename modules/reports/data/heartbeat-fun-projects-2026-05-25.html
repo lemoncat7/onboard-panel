@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>⚡ 今日好玩项目发现 - 2026-05-25</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      color: #e8e8e8;
+      line-height: 1.6;
+      padding: 40px 20px;
+      min-height: 100vh;
+    }
+    .container { max-width: 900px; margin: 0 auto; }
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding: 30px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .header h1 {
+      font-size: 2.2em;
+      color: #00d4ff;
+      margin-bottom: 10px;
+      text-shadow: 0 0 20px rgba(0,212,255,0.3);
+    }
+    .header .subtitle {
+      color: #8892b0;
+      font-size: 1em;
+    }
+    .header .date {
+      color: #64ffda;
+      font-size: 0.9em;
+      margin-top: 8px;
+    }
+    .card {
+      background: rgba(255,255,255,0.06);
+      border-radius: 16px;
+      padding: 28px;
+      margin-bottom: 24px;
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: all 0.3s ease;
+    }
+    .card:hover {
+      border-color: rgba(0,212,255,0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .card-icon {
+      font-size: 2em;
+    }
+    .card-title {
+      font-size: 1.4em;
+      color: #ccd6f6;
+      font-weight: 600;
+    }
+    .card-link {
+      display: inline-block;
+      color: #00d4ff;
+      text-decoration: none;
+      font-size: 0.9em;
+      margin-bottom: 12px;
+      word-break: break-all;
+    }
+    .card-link:hover { text-decoration: underline; }
+    .meta-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+    .tag {
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.8em;
+      font-weight: 500;
+    }
+    .tag-lang { background: #e6f3ff; color: #0066cc; }
+    .tag-stars { background: #fff3e6; color: #cc7700; }
+    .tag-trend { background: #e6ffe6; color: #007722; }
+    .description {
+      color: #a8b2d1;
+      margin-bottom: 14px;
+      font-size: 0.95em;
+    }
+    .highlights {
+      list-style: none;
+      padding-left: 0;
+    }
+    .highlights li {
+      padding: 6px 0 6px 24px;
+      position: relative;
+      color: #8892b0;
+      font-size: 0.92em;
+    }
+    .highlights li::before {
+      content: '✦';
+      position: absolute;
+      left: 0;
+      color: #64ffda;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px;
+      color: #8892b0;
+      font-size: 0.85em;
+    }
+    .footer .agent {
+      color: #64ffda;
+    }
+    @media (max-width: 600px) {
+      body { padding: 20px 12px; }
+      .header h1 { font-size: 1.6em; }
+      .card { padding: 20px; }
+      .card-title { font-size: 1.2em; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>⚡ 今日好玩项目发现</h1>
+      <div class="subtitle">GitHub Trending Weekly · 莫殇巡逻精选</div>
+      <div class="date">📅 2026年5月25日 星期一</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">🧠</span>
+        <span class="card-title">OpenHuman — 你的个人 AI 超智能</span>
+      </div>
+      <a class="card-link" href="https://github.com/tinyhumansai/openhuman" target="_blank">github.com/tinyhumansai/openhuman</a>
+      <div class="meta-tags">
+        <span class="tag tag-lang">🦀 Rust</span>
+        <span class="tag tag-stars">⭐ 27,111</span>
+        <span class="tag tag-trend">📈 +16,288 本周</span>
+      </div>
+      <div class="description">Your Personal AI super intelligence. Private, Simple and extremely powerful.</div>
+      <ul class="highlights">
+        <li>完全本地运行，数据不出设备</li>
+        <li>Rust 高性能实现，极致效率</li>
+        <li>隐私优先的个人 AI 助手新范式</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">🕸️</span>
+        <span class="card-title">CodeGraph — 预索引代码知识图谱</span>
+      </div>
+      <a class="card-link" href="https://github.com/colbymchenry/codegraph" target="_blank">github.com/colbymchenry/codegraph</a>
+      <div class="meta-tags">
+        <span class="tag tag-lang">📘 TypeScript</span>
+        <span class="tag tag-stars">⭐ 21,836</span>
+        <span class="tag tag-trend">📈 +15,909 本周</span>
+      </div>
+      <div class="description">Pre-indexed code knowledge graph for Claude Code, Codex, Cursor, OpenCode, and Hermes Agent — fewer tokens, fewer tool calls, 100% local</div>
+      <ul class="highlights">
+        <li>为 Claude Code / Cursor / Codex 等多款 AI 编程助手优化</li>
+        <li>大幅减少 token 消耗和 tool calls 次数</li>
+        <li>100% 本地运行，代码安全不出境</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">⚡</span>
+        <span class="card-title">n8n — AI 工作流自动化平台</span>
+      </div>
+      <a class="card-link" href="https://github.com/n8n-io/n8n" target="_blank">github.com/n8n-io/n8n</a>
+      <div class="meta-tags">
+        <span class="tag tag-lang">📘 TypeScript</span>
+        <span class="tag tag-stars">⭐ 186,000+</span>
+        <span class="tag tag-trend">🚀 90,000+ 活跃实例</span>
+      </div>
+      <div class="description">Fair-code workflow automation platform with native AI capabilities. Combine visual building with custom code, self-host or cloud, 400+ integrations.</div>
+      <ul class="highlights">
+        <li>400+ 集成，覆盖几乎所有常用服务</li>
+        <li>原生 AI 能力，支持 AI Agent 工作流编排</li>
+        <li>可自托管或云端，fair-code 许可证</li>
+        <li>视觉构建 + 自定义代码，技术团队友好</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">📚</span>
+        <span class="card-title">Academic Research Skills — 全自动学术写作流水线</span>
+      </div>
+      <a class="card-link" href="https://github.com/Imbad0202/academic-research-skills" target="_blank">github.com/Imbad0202/academic-research-skills</a>
+      <div class="meta-tags">
+        <span class="tag tag-lang">🐍 Python</span>
+        <span class="tag tag-stars">⭐ 20,558</span>
+        <span class="tag tag-trend">📈 +11,691 本周</span>
+      </div>
+      <div class="description">Academic Research Skills for Claude Code: research → write → review → revise → finalize</div>
+      <ul class="highlights">
+        <li>研究 → 写作 → 审阅 → 修订 → 定稿，全流程自动化</li>
+        <li>专为 Claude Code 设计的学术技能包</li>
+        <li>本周暴涨 11k+ stars，学术 AI 赛道爆发信号</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span class="card-icon">📡</span>
+        <span class="card-title">RuView — WiFi 信号变空间感知</span>
+      </div>
+      <a class="card-link" href="https://github.com/ruvnet/RuView" target="_blank">github.com/ruvnet/RuView</a>
+      <div class="meta-tags">
+        <span class="tag tag-lang">🔬 ML/IoT</span>
+        <span class="tag tag-stars">🌟 Trending</span>
+      </div>
+      <div class="description">RuView turns commodity WiFi signals into real-time spatial intelligence, vital sign monitoring, and presence detection</div>
+      <ul class="highlights">
+        <li>无需额外硬件，利用现有 WiFi 路由器</li>
+        <li>实时空间智能 + 生命体征监测 + 存在检测</li>
+        <li>科幻级应用落地，智能家居/安防潜力巨大</li>
+      </ul>
+    </div>
+
+    <div class="footer">
+      <p>🕵️ 巡逻完毕 · 以上项目均有实质性新内容</p>
+      <p class="agent">— 莫殇 (OpenClaw Agent) 2026-05-25</p>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚡ 今日好玩项目发现 - 2026-05-20</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            color: #e0e0e0;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            background: linear-gradient(90deg, #00d4ff, #7b2cbf, #ff006e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+        .header p {
+            color: #888;
+            font-size: 1.1em;
+        }
+        .project-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 24px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            backdrop-filter: blur(10px);
+        }
+        .project-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0,212,255,0.15);
+            border-color: rgba(0,212,255,0.3);
+        }
+        .project-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        .project-icon {
+            font-size: 2em;
+        }
+        .project-title {
+            font-size: 1.5em;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .project-title:hover {
+            color: #00d4ff;
+        }
+        .project-meta {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+        .meta-badge {
+            background: rgba(0,212,255,0.15);
+            color: #00d4ff;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 500;
+        }
+        .meta-badge.stars {
+            background: rgba(255,215,0,0.15);
+            color: #ffd700;
+        }
+        .project-desc {
+            color: #b0b0b0;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+        .highlights {
+            list-style: none;
+        }
+        .highlights li {
+            padding: 6px 0;
+            color: #ccc;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .highlights li::before {
+            content: '▸';
+            color: #00d4ff;
+            font-weight: bold;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #666;
+            font-size: 0.9em;
+        }
+        .footer a {
+            color: #00d4ff;
+            text-decoration: none;
+        }
+        @media (max-width: 600px) {
+            .header h1 { font-size: 1.8em; }
+            .project-card { padding: 20px; }
+            .project-title { font-size: 1.2em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚡ 今日好玩项目发现</h1>
+            <p>2026-05-20 | GitHub 热门精选 | 莫殇巡逻报告</p>
+        </div>
+
+        <div class="project-card">
+            <div class="project-header">
+                <span class="project-icon">🚀</span>
+                <a href="https://github.com/n8n-io/n8n" class="project-title" target="_blank">n8n</a>
+            </div>
+            <div class="project-meta">
+                <span class="meta-badge stars">⭐ 188,741</span>
+                <span class="meta-badge">TypeScript</span>
+                <span class="meta-badge">工作流自动化</span>
+            </div>
+            <p class="project-desc">Fair-code 工作流自动化平台，原生支持 AI 能力。可视化构建 + 自定义代码，400+ 集成，可自托管或云端部署。</p>
+            <ul class="highlights">
+                <li>🤖 原生 AI 能力（MCP 客户端/服务器支持）</li>
+                <li>🔌 400+ 开箱即用集成</li>
+                <li>🏠 支持自托管，数据完全掌控</li>
+                <li>💻 可视化编排 + 代码自定义</li>
+            </ul>
+        </div>
+
+        <div class="project-card">
+            <div class="project-header">
+                <span class="project-icon">⚡</span>
+                <a href="https://github.com/ultraworkers/claw-code" class="project-title" target="_blank">claw-code</a>
+            </div>
+            <div class="project-meta">
+                <span class="meta-badge stars">⭐ 192,013</span>
+                <span class="meta-badge">Rust</span>
+                <span class="meta-badge">现象级项目</span>
+            </div>
+            <p class="project-desc">历史上最快突破 100K stars 的仓库！Rust 构建，基于 oh-my-codex 技术栈，社区极度活跃。</p>
+            <ul class="highlights">
+                <li>🦀 Rust 高性能实现</li>
+                <li>🏆 史上最快达到 10 万 stars</li>
+                <li>🔥 192K+ stars，增长神话</li>
+            </ul>
+        </div>
+
+        <div class="project-card">
+            <div class="project-header">
+                <span class="project-icon">🤖</span>
+                <a href="https://github.com/affaan-m/ECC" class="project-title" target="_blank">ECC</a>
+            </div>
+            <div class="project-meta">
+                <span class="meta-badge stars">⭐ 187,165</span>
+                <span class="meta-badge">JavaScript</span>
+                <span class="meta-badge">AI Agent 工具</span>
+            </div>
+            <p class="project-desc">Agent Harness 性能优化系统。为 Claude Code、Codex、Opencode、Cursor 等 AI 开发工具提供技能、本能、记忆、安全与研究优先的开发方法论。</p>
+            <ul class="highlights">
+                <li>🧠 技能系统 + 本能优化</li>
+                <li>🔒 内置安全框架</li>
+                <li>📊 记忆管理系统</li>
+                <li>🔬 研究优先的开发模式</li>
+            </ul>
+        </div>
+
+        <div class="project-card">
+            <div class="project-header">
+                <span class="project-icon">🦞</span>
+                <a href="https://github.com/obra/superpowers" class="project-title" target="_blank">superpowers</a>
+            </div>
+            <div class="project-meta">
+                <span class="meta-badge stars">⭐ 198,330</span>
+                <span class="meta-badge">Shell</span>
+                <span class="meta-badge">代理框架</span>
+            </div>
+            <p class="project-desc">一个实用的 Agentic 技能框架与软件开发方法论，近 20 万 stars 认可。</p>
+            <ul class="highlights">
+                <li>🎯 代理技能系统框架</li>
+                <li>🛠️ 实际可用的开发方法论</li>
+                <li>📈 近 20 万 stars 社区认可</li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            <p>数据来源: GitHub API | 生成时间: 2026-05-20 07:35 CST</p>
+            <p>莫殇巡逻中... 👀⚡</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚡ 今日好玩项目发现 - 2026-05-23</title>
+<style>
+  :root {
+    --bg: #0f0f23;
+    --card: #16162a;
+    --accent: #ff6b9d;
+    --accent2: #c084fc;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --border: rgba(255,255,255,0.06);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+  }
+  .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+  header {
+    text-align: center; margin-bottom: 48px;
+  }
+  header h1 {
+    font-size: 2.2rem; margin: 0 0 8px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  header .date {
+    color: var(--muted); font-size: 0.95rem;
+  }
+  .theme-badge {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 6px 16px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, rgba(255,107,157,0.15), rgba(192,132,252,0.15));
+    border: 1px solid var(--border);
+    font-size: 0.85rem;
+    color: var(--accent);
+  }
+  .project {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 24px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .project:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(255,107,157,0.08);
+  }
+  .project-header {
+    display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  }
+  .project-title {
+    font-size: 1.25rem; font-weight: 700; margin: 0;
+    color: var(--text);
+  }
+  .project-title a {
+    color: inherit; text-decoration: none;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .project-title a:hover { opacity: 0.8; }
+  .stars {
+    display: flex; align-items: center; gap: 6px;
+    font-weight: 700; font-size: 1rem;
+    color: #fbbf24; white-space: nowrap;
+  }
+  .stars .delta {
+    color: #4ade80; font-size: 0.8rem; font-weight: 500;
+  }
+  .meta {
+    display: flex; gap: 12px; margin-top: 10px; flex-wrap: wrap;
+  }
+  .tag {
+    padding: 3px 10px; border-radius: 6px; font-size: 0.78rem; font-weight: 500;
+    background: rgba(255,255,255,0.05); color: var(--muted);
+    border: 1px solid var(--border);
+  }
+  .tag.lang { color: #60a5fa; }
+  .desc {
+    margin-top: 14px; color: var(--muted); font-size: 0.95rem;
+  }
+  .highlight {
+    margin-top: 16px;
+    padding: 14px 18px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(255,107,157,0.06), rgba(192,132,252,0.06));
+    border-left: 3px solid var(--accent);
+    font-size: 0.92rem;
+    color: #cbd5e1;
+  }
+  footer {
+    text-align: center; margin-top: 48px; color: var(--muted); font-size: 0.85rem;
+  }
+  footer .emoji { font-size: 1.2rem; }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>⚡ 今日好玩项目发现</h1>
+    <div class="date">2026-05-23 · GitHub Trending 精选</div>
+    <div class="theme-badge">🔥 本周主题：AI Agent Skills 大爆发</div>
+  </header>
+
+  <div class="project">
+    <div class="project-header">
+      <h2 class="project-title"><a href="https://github.com/mattpocock/skills" target="_blank">mattpocock/skills</a></h2>
+      <div class="stars">⭐ 100,696 <span class="delta">+1,618 本周</span></div>
+    </div>
+    <div class="meta">
+      <span class="tag lang">Shell</span>
+      <span class="tag">Skills</span>
+      <span class="tag">Claude Code</span>
+    </div>
+    <div class="desc">Skills for Real Engineers. Straight from my .claude directory.</div>
+    <div class="highlight">TypeScript 大神 Matt Pocock 把自己日常用 Claude Code 的 <code>.claude</code> 目录开源了！包含 TDD 技能、安全 guardrails、结构化调试流程等。这周 trending 的王者，直接带火了整个 "skills" 生态。</div>
+  </div>
+
+  <div class="project">
+    <div class="project-header">
+      <h2 class="project-title"><a href="https://github.com/farion1231/cc-switch" target="_blank">farion1231/cc-switch</a></h2>
+      <div class="stars">⭐ 78,110 <span class="delta">+690 本周</span></div>
+    </div>
+    <div class="meta">
+      <span class="tag lang">Rust</span>
+      <span class="tag">Desktop App</span>
+      <span class="tag">Cross-platform</span>
+    </div>
+    <div class="desc">A cross-platform desktop All-in-One assistant for Claude Code, Codex, OpenCode, OpenClaw, Gemini CLI & Hermes Agent.</div>
+    <div class="highlight">一个桌面工具搞定所有 AI coding agent 的环境切换！支持 Claude Code / Codex / OpenClaw 等。Rust 写的，跨平台。Claude Code 生态越来越成熟了。</div>
+  </div>
+
+  <div class="project">
+    <div class="project-header">
+      <h2 class="project-title"><a href="https://github.com/ruvnet/RuView" target="_blank">ruvnet/RuView</a></h2>
+      <div class="stars">⭐ 63,749 <span class="delta">+611 本周</span></div>
+    </div>
+    <div class="meta">
+      <span class="tag lang">Rust</span>
+      <span class="tag">IoT</span>
+      <span class="tag">Privacy</span>
+    </div>
+    <div class="desc">π RuView turns commodity WiFi signals into real-time spatial intelligence, vital sign monitoring, and presence detection — all without a single pixel of video.</div>
+    <div class="highlight">用普通 WiFi 信号做空间感知和生命体征监测，不需要摄像头！超酷的 IoT / 隐私友好型项目，Rust 实现。</div>
+  </div>
+
+  <div class="project">
+    <div class="project-header">
+      <h2 class="project-title"><a href="https://github.com/Lum1104/Understand-Anything" target="_blank">Lum1104/Understand-Anything</a></h2>
+      <div class="stars">⭐ 18,036 <span class="delta">+1,000 本周</span></div>
+    </div>
+    <div class="meta">
+      <span class="tag lang">TypeScript</span>
+      <span class="tag">Knowledge Graph</span>
+      <span class="tag">Visualization</span>
+    </div>
+    <div class="desc">Graphs that teach > graphs that impress. Turn any code into an interactive knowledge graph you can explore, search, and ask questions about.</div>
+    <div class="highlight">把任何代码库变成可交互的知识图谱！支持 Claude Code / Cursor / Copilot 等。看懂大型项目的新方式。</div>
+  </div>
+
+  <div class="project">
+    <div class="project-header">
+      <h2 class="project-title"><a href="https://github.com/colbymchenry/codegraph" target="_blank">colbymchenry/codegraph</a></h2>
+      <div class="stars">⭐ 16,065 <span class="delta">+2,500 本周</span></div>
+    </div>
+    <div class="meta">
+      <span class="tag lang">TypeScript</span>
+      <span class="tag">Local-First</span>
+      <span class="tag">AI Coding</span>
+    </div>
+    <div class="desc">Pre-indexed code knowledge graph for Claude Code, Codex, Cursor, and OpenCode — fewer tokens, fewer tool calls, 100% local.</div>
+    <div class="highlight">预索引的代码知识图谱，让 AI coding agent 少花 token、少调工具，而且 100% 本地运行！TypeScript 实现。</div>
+  </div>
+
+  <footer>
+    <span class="emoji">⚡🐾</span><br>
+    莫殇每日精选 · 数据来源 Trendshift.io & GitHub API · 2026-05-23
+  </footer>
+</div>
+</body>
+</html>

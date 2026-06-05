@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚠️ kuaifa-hotnews 任务状态 - 2026-05-25</title>
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); margin: 0; padding: 20px; min-height: 100vh; }
+.container { max-width: 800px; margin: 0 auto; }
+.header { text-align: center; color: #333; margin-bottom: 30px; }
+.header h1 { font-size: 2em; margin: 0; }
+.card { background: white; border-radius: 16px; padding: 24px; margin-bottom: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+.status-badge { display: inline-block; padding: 6px 16px; border-radius: 20px; font-size: 0.9em; font-weight: 600; }
+.status-blocked { background: #fff3cd; color: #856404; }
+.status-ok { background: #d4edda; color: #155724; }
+.section-title { font-size: 1.2em; font-weight: bold; color: #333; margin-bottom: 12px; }
+.config-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+.config-table th, .config-table td { padding: 10px; text-align: left; border-bottom: 1px solid #eee; }
+.config-table th { color: #666; font-weight: 500; }
+.config-table td { color: #333; }
+.missing { color: #dc3545; font-weight: 600; }
+.hn-preview { background: #f8f9fa; padding: 16px; border-radius: 8px; margin-top: 10px; }
+.hn-item { padding: 8px 0; border-bottom: 1px dashed #ddd; }
+.hn-item:last-child { border-bottom: none; }
+.hn-score { color: #ff6600; font-weight: 600; }
+.footer { text-align: center; color: #999; margin-top: 30px; font-size: 0.9em; }
+</style>
+</head>
+<body>
+<div class="container">
+<div class="header">
+<h1>📰 kuaifa-hotnews 任务状态报告</h1>
+<p>2026-05-25 10:05 CST · 任务执行结果</p>
+</div>
+
+<div class="card">
+<div class="section-title">任务执行状态</div>
+<p><span class="status-badge status-blocked">⏸️ 阻塞 — 配置缺失</span></p>
+<p style="color: #666; line-height: 1.6; margin-top: 12px;">
+任务已触发，但 <b>kuaifa CLI</b> 尚未配置微信凭据，无法发布到公众号草稿箱。
+</p>
+</div>
+
+<div class="card">
+<div class="section-title">缺失配置项</div>
+<table class="config-table">
+<tr><th>配置项</th><th>状态</th><th>说明</th></tr>
+<tr><td>api-key</td><td class="missing">❌ 未设置</td><td>kuaifa 平台 API Key</td></tr>
+<tr><td>appid</td><td class="missing">❌ 未设置</td><td>微信公众号 AppID</td></tr>
+<tr><td>appsecret</td><td class="missing">❌ 未设置</td><td>微信公众号 AppSecret</td></tr>
+<tr><td>default-author</td><td class="missing">❌ 未设置</td><td>默认作者名</td></tr>
+</table>
+<p style="color: #666; margin-top: 16px; font-size: 0.9em;">
+配置路径: <code>~/.kuaifa/config.json</code> · 请运行 <code>kuaifa config set &lt;key&gt; &lt;value&gt;</code> 进行设置
+</p>
+</div>
+
+<div class="card">
+<div class="section-title">已筛选的 HN 热点素材</div>
+<p style="color: #666; margin-bottom: 12px;">以下为本次任务已采集的热点内容，配置恢复后可直接用于文章：</p>
+<div class="hn-preview">
+<div class="hn-item">
+<span class="hn-score">296 分</span> · <b>Memory has grown to nearly two-thirds of AI chip component costs</b><br>
+<small>https://epoch.ai/data-insights/ai-chip-component-cost-shares · AI / Hardware</small>
+</div>
+<div class="hn-item">
+<span class="hn-score">177 分</span> · <b>Constraint Decay: The Fragility of LLM Agents in Back End Code Generation</b><br>
+<small>https://arxiv.org/abs/2605.06445 · Research / LLM</small>
+</div>
+<div class="hn-item">
+<span class="hn-score">177 分</span> · <b>Greg Brockman interview [video]</b><br>
+<small>https://fs.blog/knowledge-project-podcast/greg-brockman/ · Interview / OpenAI</small>
+</div>
+<div class="hn-item">
+<span class="hn-score">115 分</span> · <b>Build Adafruit projects right from Firefox</b><br>
+<small>https://www.firefox.com/en-US/landing/adafruit/ · Browser / IoT</small>
+</div>
+<div class="hn-item">
+<span class="hn-score">95 分</span> · <b>Defeating Git Rigour Fatigue with Jujutsu</b><br>
+<small>https://ikesau.co/blog/defeating-git-rigour-fatigue-with-jujutsu/ · Git / VCS</small>
+</div>
+</div>
+</div>
+
+<div class="card">
+<div class="section-title">恢复步骤</div>
+<ol style="color: #666; line-height: 1.8;">
+<li>注册 <a href="https://www.kuaifa.art" target="_blank">kuaifa.art</a> 获取 API Key</li>
+<li>从微信公众号后台 (mp.weixin.qq.com) 获取 AppID 和 AppSecret</li>
+<li>执行以下命令完成配置：<br>
+<code style="background: #f0f0f0; padding: 2px 6px; border-radius: 4px;">kuaifa config set api-key &lt;YOUR_KEY&gt;</code><br>
+<code style="background: #f0f0f0; padding: 2px 6px; border-radius: 4px;">kuaifa config set appid &lt;WECHAT_APPID&gt;</code><br>
+<code style="background: #f0f0f0; padding: 2px 6px; border-radius: 4px;">kuaifa config set appsecret &lt;WECHAT_APPSECRET&gt;</code><br>
+<code style="background: #f0f0f0; padding: 2px 6px; border-radius: 4px;">kuaifa config set default-author "你的名字"</code>
+</li>
+<li>验证配置：<code>kuaifa config list</code></li>
+</ol>
+</div>
+
+<div class="footer">
+<p>莫殇心跳巡逻报告 ⚡ 生成时间: 2026-05-25 10:05 CST</p>
+</div>
+</div>
+</body>
+</html>

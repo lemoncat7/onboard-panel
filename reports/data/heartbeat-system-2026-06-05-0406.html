@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>系统巡检报告 — 2026-06-05 04:06</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --ok: #22c55e;
+      --warn: #f59e0b;
+      --danger: #ef4444;
+      --border: #334155;
+    }
+    body {
+      margin: 0;
+      padding: 24px;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    h1 {
+      margin: 0 0 8px;
+      font-size: 1.5rem;
+      color: var(--accent);
+    }
+    .meta {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+    }
+    .card h2 {
+      margin: 0 0 12px;
+      font-size: 1.05rem;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+    .badge.ok { background: rgba(34,197,94,0.15); color: var(--ok); }
+    .badge.warn { background: rgba(245,158,11,0.15); color: var(--warn); }
+    .badge.danger { background: rgba(239,68,68,0.15); color: var(--danger); }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th, td {
+      text-align: left;
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .right { text-align: right; }
+    .summary {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+    .summary-item {
+      background: rgba(56,189,248,0.08);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 0.85rem;
+    }
+    .summary-item strong {
+      color: var(--accent);
+    }
+    pre {
+      background: rgba(15,23,42,0.6);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 0.85rem;
+      overflow-x: auto;
+      color: var(--text);
+      margin: 0;
+    }
+    .warn-list {
+      margin: 0;
+      padding-left: 18px;
+      font-size: 0.9rem;
+    }
+    .warn-list li {
+      margin-bottom: 6px;
+    }
+  </style>
+</head>
+<body>
+  <h1>系统巡检报告</h1>
+  <div class="meta">生成时间：2026-06-05 04:06 (GMT+8) &nbsp;|&nbsp; 主机：278b2226275e &nbsp;|&nbsp; 已运行：3 天 6 小时 29 分</div>
+
+  <div class="grid">
+    <div class="card">
+      <h2>磁盘空间 <span class="badge ok">正常</span></h2>
+      <table>
+        <tr><th>挂载点</th><th class="right">容量</th><th class="right">已用</th><th class="right">可用</th><th class="right">使用率</th></tr>
+        <tr><td>/</td><td class="right">3.7T</td><td class="right">533G</td><td class="right">3.1T</td><td class="right" style="color:var(--ok)">15%</td></tr>
+        <tr><td>/dev/shm</td><td class="right">64M</td><td class="right">0</td><td class="right">64M</td><td class="right" style="color:var(--ok)">0%</td></tr>
+        <tr><td>/usr/sbin/docker-init</td><td class="right">19G</td><td class="right">14G</td><td class="right">4.0G</td><td class="right" style="color:var(--warn)">78%</td></tr>
+        <tr><td>/home/root/.cache</td><td class="right">917G</td><td class="right">180G</td><td class="right">733G</td><td class="right" style="color:var(--ok)">20%</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>内存使用 <span class="badge ok">正常</span></h2>
+      <div class="summary">
+        <div class="summary-item">总内存 <strong>15 GiB</strong></div>
+        <div class="summary-item">已用 <strong>8.6 GiB</strong></div>
+        <div class="summary-item">可用 <strong>6.8 GiB</strong></div>
+        <div class="summary-item">缓存 <strong>6.6 GiB</strong></div>
+      </div>
+      <table style="margin-top:12px">
+        <tr><th>类型</th><th class="right">总量</th><th class="right">已用</th><th class="right">剩余</th></tr>
+        <tr><td>物理内存</td><td class="right">15 GiB</td><td class="right">8.6 GiB</td><td class="right">6.8 GiB</td></tr>
+        <tr><td>Swap</td><td class="right">9.7 GiB</td><td class="right">5.8 GiB</td><td class="right">3.9 GiB</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>系统负载 <span class="badge ok">正常</span></h2>
+      <div class="summary">
+        <div class="summary-item">1m <strong>4.42</strong></div>
+        <div class="summary-item">5m <strong>3.36</strong></div>
+        <div class="summary-item">15m <strong>3.03</strong></div>
+      </div>
+      <p style="color:var(--muted); font-size:0.85rem; margin-top:10px;">0 用户在线 · 负载呈下降趋势</p>
+    </div>
+
+    <div class="card">
+      <h2>僵尸进程 <span class="badge warn">2 个</span></h2>
+      <p style="color:var(--muted); font-size:0.9rem;">当前系统存在 2 个僵尸进程，数量较低，通常无需立即处理，但建议持续观察。</p>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h2>Wiki 状态 <span class="badge ok">就绪</span></h2>
+      <div class="summary">
+        <div class="summary-item">模式 <strong>bridge</strong></div>
+        <div class="summary-item">页面 <strong>104</strong></div>
+        <div class="summary-item">来源 <strong>102 bridge</strong></div>
+        <div class="summary-item">合成 <strong>1</strong></div>
+      </div>
+      <p style="color:var(--muted); font-size:0.85rem; margin-top:10px;">Vault: /home/root/.openclaw/workspace/record/wiki<br>Obsidian CLI: 未安装</p>
+    </div>
+
+    <div class="card">
+      <h2>Wiki 巡检 <span class="badge warn">3 警告</span></h2>
+      <ul class="warn-list">
+        <li><code>sources/bridge-workspace-ae26912a-memory-dreaming-light-2026-05-23-a3f20d86.md</code><br>损坏的 wikilink 目标：<code>reply_to_current</code></li>
+        <li><code>sources/bridge-workspace-ae26912a-memory-dreaming-light-2026-05-23-a3f20d86.md</code><br>损坏的 wikilink 目标：<code>url</code></li>
+        <li><code>sources/bridge-workspace-ae26912a-memory-dreaming-light-2026-05-24-be154bbd.md</code><br>损坏的 wikilink 目标：<code>reply_to_current</code></li>
+      </ul>
+      <p style="color:var(--muted); font-size:0.85rem; margin-top:10px;">0 错误 · 0 矛盾 · 0 来源缺失</p>
+    </div>
+  </div>
+</body>
+</html>

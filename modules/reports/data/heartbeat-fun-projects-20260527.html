@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚡ 今日好玩项目发现 - 2026-05-27</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    min-height: 100vh;
+    color: #e0e0e0;
+    padding: 40px 20px;
+  }
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 30px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .header h1 {
+    font-size: 2.5rem;
+    background: linear-gradient(90deg, #00d4ff, #7b2cbf);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 10px;
+  }
+  .header p {
+    color: #888;
+    font-size: 0.95rem;
+  }
+  .badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .badge-python { background: rgba(55,118,171,0.2); color: #3776ab; border: 1px solid rgba(55,118,171,0.3); }
+  .badge-ts { background: rgba(49,120,198,0.2); color: #3178c6; border: 1px solid rgba(49,120,198,0.3); }
+  .badge-js { background: rgba(240,219,79,0.15); color: #f0db4f; border: 1px solid rgba(240,219,79,0.3); }
+  .badge-stars { background: rgba(255,215,0,0.15); color: #ffd700; border: 1px solid rgba(255,215,0,0.3); }
+  .card {
+    background: rgba(255,255,255,0.04);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 24px;
+    border: 1px solid rgba(255,255,255,0.06);
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.06);
+  }
+  .card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  .card-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #fff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .card-title:hover {
+    color: #00d4ff;
+  }
+  .card-meta {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+  .card-desc {
+    color: #b0b0b0;
+    line-height: 1.7;
+    font-size: 0.95rem;
+    margin-bottom: 14px;
+  }
+  .card-highlights {
+    background: rgba(0,212,255,0.05);
+    border-left: 3px solid #00d4ff;
+    padding: 14px 18px;
+    border-radius: 0 10px 10px 0;
+    font-size: 0.9rem;
+    color: #c0c0c0;
+    line-height: 1.6;
+  }
+  .card-highlights strong {
+    color: #00d4ff;
+  }
+  .footer {
+    text-align: center;
+    margin-top: 50px;
+    padding: 24px;
+    color: #666;
+    font-size: 0.85rem;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  .emoji {
+    font-size: 1.3em;
+  }
+  @media (max-width: 600px) {
+    .header h1 { font-size: 1.8rem; }
+    .card { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>⚡ 今日好玩项目发现</h1>
+    <p>2026-05-27 · 莫殇巡逻采集 · GitHub Trending 精选</p>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <a href="https://github.com/open-webui/open-webui" class="card-title" target="_blank">
+        <span class="emoji">🤖</span> Open WebUI
+      </a>
+    </div>
+    <div class="card-meta">
+      <span class="badge badge-stars">⭐ 130k+</span>
+      <span class="badge badge-python">Python / Svelte</span>
+    </div>
+    <div class="card-desc">
+      本地AI的最强前端界面，把 Ollama、ChatGPT、各种本地大模型的操作统一进一个漂亮的网页界面。支持完全离线运行，是私有化AI部署的理想方案。
+    </div>
+    <div class="card-highlights">
+      <strong>亮点：</strong>自托管 · 完全离线 · 内置 RAG 推理引擎 · 多模型管理 · 对话分支 · 文件上传 · Docker 一键部署
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <a href="https://github.com/HeyPuter/puter" class="card-title" target="_blank">
+        <span class="emoji">🌐</span> Puter
+      </a>
+    </div>
+    <div class="card-meta">
+      <span class="badge badge-stars">⭐ 25.7k</span>
+      <span class="badge badge-js">JavaScript</span>
+    </div>
+    <div class="card-desc">
+      开源免费的"互联网计算机"，你的个人云电脑。一站式管理文件、应用、游戏，支持构建和发布 Web 应用，Google Drive / Dropbox 的强大替代方案。
+    </div>
+    <div class="card-highlights">
+      <strong>亮点：</strong>自托管 · 一键部署 · 网盘升级替代 · 文件/应用/游戏一站式管理 · 高度可扩展 · 支持 Web 应用开发
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <a href="https://github.com/twentyhq/twenty" class="card-title" target="_blank">
+        <span class="emoji">💼</span> Twenty CRM
+      </a>
+    </div>
+    <div class="card-meta">
+      <span class="badge badge-stars">⭐ 45.8k</span>
+      <span class="badge badge-ts">TypeScript</span>
+    </div>
+    <div class="card-desc">
+      开源的 Salesforce 替代品，专为 AI 设计的 CRM。给技术团队提供构建自定义 CRM 的积木，可以像代码一样构建、发布、版本控制你的客户关系系统。
+    </div>
+    <div class="card-highlights">
+      <strong>亮点：</strong>Salesforce 替代品 · AI 原生设计 · 技术团队友好 · 可自定义扩展 · 活跃社区 626+ 贡献者 · v2.2.0 持续迭代
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <a href="https://github.com/Skyvern-AI/skyvern" class="card-title" target="_blank">
+        <span class="emoji">🦅</span> Skyvern
+      </a>
+    </div>
+    <div class="card-meta">
+      <span class="badge badge-stars">⭐ Trending 🔥</span>
+      <span class="badge badge-python">Python</span>
+    </div>
+    <div class="card-desc">
+      用 AI 自动化浏览器工作流，替代传统 RPA 工具。通过计算机视觉和自然语言处理理解网页内容，自动完成复杂表单填写、数据提取等任务。
+    </div>
+    <div class="card-highlights">
+      <strong>亮点：</strong>AI Agent · 计算机视觉 + NLP · 无需人工编写选择器 · 浏览器工作流自动化 · 替代传统 RPA
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <a href="https://github.com/harry0703/MoneyPrinterTurbo" class="card-title" target="_blank">
+        <span class="emoji">🎬</span> MoneyPrinterTurbo
+      </a>
+    </div>
+    <div class="card-meta">
+      <span class="badge badge-stars">⭐ Trending 🔥</span>
+      <span class="badge badge-python">Python</span>
+    </div>
+    <div class="card-desc">
+      利用 AI 大模型，一键生成高清短视频。输入主题即可自动生成脚本、配音、字幕和画面，内容创作者的效率神器。
+    </div>
+    <div class="card-highlights">
+      <strong>亮点：</strong>AI 一键成片 · 中文支持好 · 全自动脚本+配音+字幕 · 高清输出 · 大模型驱动内容生成
+    </div>
+  </div>
+
+  <div class="footer">
+    莫殇巡逻中... 👀⚡ · 数据来源 GitHub Trending / Trendshift / tophub.today
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,10 @@
+services:
+  onboard:
+    build: .
+    container_name: onboard
+    ports:
+      - "3000:3000"
+    environment:
+      - ONBOARD_PASSWORD=openclaw
+      - PORT=3000
+    restart: unless-stopped

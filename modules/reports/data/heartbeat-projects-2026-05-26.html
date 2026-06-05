@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: #f5f5f7; margin: 0; padding: 20px; }
+  .container { max-width: 680px; margin: 0 auto; background: #fff; border-radius: 16px; box-shadow: 0 4px 24px rgba(0,0,0,0.08); overflow: hidden; }
+  .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 32px 28px; text-align: center; }
+  .header h1 { color: #fff; margin: 0; font-size: 22px; font-weight: 700; }
+  .header p { color: rgba(255,255,255,0.85); margin: 8px 0 0; font-size: 13px; }
+  .content { padding: 28px; }
+  .project-card { background: #fafbfc; border-radius: 12px; padding: 20px; margin-bottom: 16px; border-left: 4px solid #667eea; }
+  .project-card:nth-child(2) { border-left-color: #f093fb; }
+  .project-card:nth-child(3) { border-left-color: #4facfe; }
+  .project-card:nth-child(4) { border-left-color: #43e97b; }
+  .project-card:nth-child(5) { border-left-color: #fa709a; }
+  .project-title { font-size: 16px; font-weight: 700; color: #1a1a2e; margin: 0 0 6px; }
+  .project-title a { color: #667eea; text-decoration: none; }
+  .project-meta { font-size: 12px; color: #888; margin-bottom: 8px; }
+  .project-desc { font-size: 14px; color: #444; line-height: 1.6; margin: 0; }
+  .tag { display: inline-block; background: #eef2ff; color: #667eea; font-size: 11px; padding: 3px 10px; border-radius: 20px; margin-right: 6px; margin-top: 8px; }
+  .footer { background: #f5f5f7; padding: 20px 28px; text-align: center; font-size: 12px; color: #999; }
+  .highlight { background: linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%); padding: 2px 6px; border-radius: 4px; font-weight: 600; color: #1a472a; }
+  .summary { background: #fff8e1; border-radius: 10px; padding: 16px; margin-bottom: 20px; font-size: 13px; color: #5d4037; }
+  .summary strong { color: #e65100; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>⚡ 今日好玩项目发现</h1>
+    <p>2026-05-26 · GitHub Trending 精选</p>
+  </div>
+
+  <div class="content">
+    <div class="summary">
+      📊 <strong>本周主题</strong>：Skills + MCP + Spec Kit 协议标准化（~30%）| Coding Agent + Vibe Coding 2.0（~25%）| 端侧 LLM 训练加速（~15%）
+    </div>
+
+    <div class="project-card">
+      <div class="project-title">1️⃣ <a href="https://github.com/mattpocock/skills">mattpocock/skills</a></div>
+      <div class="project-meta">⭐ +1,618 stars/周 · TypeScript</div>
+      <div class="project-desc">AI agent skills 框架 —— 把个人 .claude 目录工程化。Matt Pocock（前 Vercel TypeScript 专家）开源了他的 agent skills，包含 TDD、guardrails、结构化调试等技能，直接引爆了 "skills 协议" 生态！</div>
+      <span class="tag">🥇 Trending 冠军</span>
+      <span class="tag">Skills 协议</span>
+    </div>
+
+    <div class="project-card">
+      <div class="project-title">2️⃣ <a href="https://github.com/NousResearch/hermes-agent">NousResearch/hermes-agent</a></div>
+      <div class="project-meta">⭐ 105,000+ total · Python · MIT</div>
+      <div class="project-desc">开源自主 AI agent 框架 —— "The agent that grows with you"。自改进记忆系统，跨平台支持，v0.11.0 刚合并 1,556 commits。长期工程任务的 persistent context 是它的杀手锏。</div>
+      <span class="tag">🧠 自主Agent</span>
+      <span class="tag">记忆系统</span>
+    </div>
+
+    <div class="project-card">
+      <div class="project-title">3️⃣ <a href="https://github.com/unslothai/unsloth">unslothai/unsloth</a></div>
+      <div class="project-meta">⭐ 57,204 · 655 stars/day · Python</div>
+      <div class="project-desc">LLM 训练加速工具 —— 本地 fine-tune Qwen / DeepSeek / Gemma 的利器。端侧 fine-tune 赛道的开源核心，indie 自己训练 vertical 小模型替代 API 推理的秘密武器。</div>
+      <span class="tag">🚀 训练加速</span>
+      <span class="tag">Local LLM</span>
+    </div>
+
+    <div class="project-card">
+      <div class="project-title">4️⃣ <a href="https://github.com/github/spec-kit">github/spec-kit</a></div>
+      <div class="project-meta">⭐ 79,078 · 352 stars/day · Python</div>
+      <div class="project-desc">Spec-Driven Development 工具包 —— 先写 spec，再让 AI 写代码。GitHub 官方出品，反 vibe coding 化的工程纪律 backlash 代表。79K stars 验证开发者对可靠工程方法的渴求。</div>
+      <span class="tag">📐 工程纪律</span>
+      <span class="tag">GitHub官方</span>
+    </div>
+
+    <div class="project-card">
+      <div class="project-title">5️⃣ <a href="https://github.com/shareAI-lab/learn-claude-code">shareAI-lab/learn-claude-code</a></div>
+      <div class="project-meta">⭐ 33,058 · 1,724 stars/day · TypeScript + Bash</div>
+      <div class="project-desc">中文圈 Claude Code 教学项目 —— 用 Bash 实现 nano Claude Code。连续 4 周霸榜 TypeScript trending 第一！中文 indie 涌入 Claude Code 生态的最强信号。</div>
+      <span class="tag">🇨🇳 中文圈</span>
+      <span class="tag">Claude Code</span>
+      <span class="tag">🔥 1724/day</span>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    莫殇发现 😈⚡ · 数据来源 GitHub Trending / DEV Community / 创趣数智<br>
+    <small>发现更多 → ~/.openclaw/workspace/record/projects/</small>
+  </div>
+</div>
+</body>
+</html>

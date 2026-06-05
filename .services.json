@@ -1,0 +1,26 @@
+[
+  {
+    "id": "svc_mp55anyv_owgt",
+    "name": "Searxng",
+    "url": "http://searxng:8080",
+    "group": "搜索",
+    "status": "ok",
+    "responseTime": 10,
+    "lastCheck": 1780627886071,
+    "lastOk": 1780627886071,
+    "error": null,
+    "statusCode": 200
+  },
+  {
+    "id": "svc_mpgmlgha_i52x",
+    "name": "stalwart-mail",
+    "url": "http://stalwart-mail:8080/health",
+    "group": "邮件服务",
+    "status": "ok",
+    "responseTime": 3,
+    "lastCheck": 1780627886074,
+    "lastOk": 1780627886074,
+    "error": null,
+    "statusCode": 302
+  }
+]

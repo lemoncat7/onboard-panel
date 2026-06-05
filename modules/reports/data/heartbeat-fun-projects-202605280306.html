@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>⚡ 今日好玩项目发现 - 2026-05-28</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      min-height: 100vh;
+      color: #e0e0e0;
+      padding: 40px 20px;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding: 30px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+    }
+    .header h1 {
+      font-size: 2.2em;
+      margin-bottom: 10px;
+      background: linear-gradient(90deg, #00d4ff, #7b2cbf);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .header .subtitle {
+      color: #a0a0b0;
+      font-size: 1.1em;
+    }
+    .card {
+      background: rgba(255,255,255,0.06);
+      border-radius: 16px;
+      padding: 28px;
+      margin-bottom: 24px;
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: transform 0.3s, box-shadow 0.3s;
+      backdrop-filter: blur(10px);
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,212,255,0.15);
+      border-color: rgba(0,212,255,0.3);
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .card-title {
+      font-size: 1.4em;
+      color: #00d4ff;
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .card-title:hover {
+      color: #7b2cbf;
+    }
+    .badges {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .badge {
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.8em;
+      font-weight: 600;
+    }
+    .badge-stars {
+      background: linear-gradient(135deg, #ffd700, #ff8c00);
+      color: #1a1a2e;
+    }
+    .badge-lang {
+      background: rgba(0,212,255,0.15);
+      color: #00d4ff;
+      border: 1px solid rgba(0,212,255,0.3);
+    }
+    .badge-new {
+      background: linear-gradient(135deg, #ff4757, #ff6b81);
+      color: #fff;
+    }
+    .card-desc {
+      color: #c0c0d0;
+      font-size: 1em;
+      line-height: 1.7;
+      margin-bottom: 14px;
+    }
+    .highlights {
+      list-style: none;
+    }
+    .highlights li {
+      padding: 6px 0 6px 24px;
+      position: relative;
+      color: #b0b0c0;
+      font-size: 0.95em;
+      line-height: 1.6;
+    }
+    .highlights li::before {
+      content: "✦";
+      position: absolute;
+      left: 0;
+      color: #00d4ff;
+    }
+    .insights {
+      margin-top: 40px;
+      padding: 28px;
+      background: linear-gradient(135deg, rgba(123,44,191,0.15), rgba(0,212,255,0.1));
+      border-radius: 16px;
+      border: 1px solid rgba(123,44,191,0.2);
+    }
+    .insights h2 {
+      font-size: 1.3em;
+      margin-bottom: 16px;
+      color: #ffd700;
+    }
+    .insights ul {
+      list-style: none;
+    }
+    .insights li {
+      padding: 8px 0 8px 28px;
+      position: relative;
+      line-height: 1.6;
+    }
+    .insights li::before {
+      content: "🔥";
+      position: absolute;
+      left: 0;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px;
+      color: #606070;
+      font-size: 0.85em;
+    }
+    @media (max-width: 600px) {
+      .header h1 { font-size: 1.6em; }
+      .card { padding: 20px; }
+      .card-title { font-size: 1.15em; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>⚡ 今日好玩项目发现</h1>
+      <p class="subtitle">2026-05-28 · GitHub Trending 精选</p>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <a href="https://github.com/Lum1104/Understand-Anything" class="card-title" target="_blank">📊 Understand-Anything</a>
+        <div class="badges">
+          <span class="badge badge-new">New 2026</span>
+          <span class="badge badge-stars">⭐ 2.9k</span>
+          <span class="badge badge-lang">Python</span>
+        </div>
+      </div>
+      <p class="card-desc">
+        将任意代码库转化为可交互知识图谱，支持可视化探索、搜索和问答。让 AI 不再"盲人摸象"，知识图谱是 AI 理解大型代码库的杀手级方案。
+      </p>
+      <ul class="highlights">
+        <li>支持 Claude Code、Codex、Cursor、Copilot、Gemini CLI 等主流 AI 编程工具</li>
+        <li>自动解析代码结构生成 AST 图谱，拖拽、缩放、筛选直观理解代码架构</li>
+        <li>AI 增强自然语言查询，可在知识图谱基础上直接提问</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <a href="https://github.com/harry0703/MoneyPrinterTurbo" class="card-title" target="_blank">🎬 MoneyPrinterTurbo</a>
+        <div class="badges">
+          <span class="badge badge-stars">⭐ 1.8k</span>
+          <span class="badge badge-lang">Python</span>
+        </div>
+      </div>
+      <p class="card-desc">
+        利用 AI 大模型一键生成高清短视频。输入主题，AI 自动生成脚本、画面、配音，几分钟内产出专业级短视频。
+      </p>
+      <ul class="highlights">
+        <li>一键生成，无需复杂操作，适合短视频批量创作</li>
+        <li>基于 AI LLM 自动生成脚本、画面素材、配音和字幕</li>
+        <li>内容营销、社交媒体运营的高效利器</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <a href="https://github.com/esengine/DeepSeek-Reasonix" class="card-title" target="_blank">🧠 DeepSeek-Reasonix</a>
+        <div class="badges">
+          <span class="badge badge-new">New 2026</span>
+          <span class="badge badge-stars">⭐ 1.3k</span>
+          <span class="badge badge-lang">Python</span>
+        </div>
+      </div>
+      <p class="card-desc">
+        DeepSeek 原生 AI 编码代理，专为终端设计。基于 prefix-cache 稳定性工程化设计，可长期驻留运行，持续提供智能编码辅助。
+      </p>
+      <ul class="highlights">
+        <li>DeepSeek 模型原生优化，推理效率高</li>
+        <li>prefix-cache 稳定性工程，保持上下文连贯</li>
+        <li>终端常驻运行，随叫随到的编码助手</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <a href="https://github.com/colbymchenry/codegraph" class="card-title" target="_blank">🕸️ CodeGraph</a>
+        <div class="badges">
+          <span class="badge badge-new">New 2026</span>
+          <span class="badge badge-stars">⭐ 1.7k</span>
+          <span class="badge badge-lang">TypeScript</span>
+        </div>
+      </div>
+      <p class="card-desc">
+        为 AI 编程助手提供预索引代码知识图谱。提前构建项目知识图谱，查询时无需反复 grep，大幅节省 Token 消耗和工具调用次数。
+      </p>
+      <ul class="highlights">
+        <li>预索引机制节省 60%-80% Token 消耗</li>
+        <li>100% 本地运行，代码永远不会离开本地环境</li>
+        <li>兼容 Claude Code、Codex、Cursor、OpenCode、Hermes Agent 等</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <a href="https://github.com/obra/superpowers" class="card-title" target="_blank">🦸 superpowers</a>
+        <div class="badges">
+          <span class="badge badge-stars">⭐ 1k</span>
+          <span class="badge badge-lang">Python</span>
+        </div>
+      </div>
+      <p class="card-desc">
+        Agentic skills 框架 & 软件开发方法论。提供可复用的自然语言技能，让 AI 编程助手从"能对话"走向"能干活"。
+      </p>
+      <ul class="highlights">
+        <li>可复用的自然语言技能框架，标准化 AI 编码流程</li>
+        <li>与 Claude Code、Codex、Cursor 等 AI 编程工具深度集成</li>
+        <li>强调实用的软件开发方法论，不止是提示词工程</li>
+      </ul>
+    </div>
+
+    <div class="insights">
+      <h2>🔥 今日趋势洞察</h2>
+      <ul>
+        <li><strong>AI Agent 技能生态全面爆发</strong> — Trending 榜单中超过 60% 的项目与 AI Agent / Skills 直接相关，Agent 已从"能对话"走向"能干活"</li>
+        <li><strong>知识图谱成为 AI 理解代码的标准方案</strong> — Understand-Anything 和 CodeGraph 双双上榜，结构化知识图谱正在取代反复扫描文件的旧模式</li>
+        <li><strong>巨头全面入场</strong> — Microsoft (Webwright, SkillOpt)、Google (Chrome DevTools MCP)、Anthropic (Claude Plugins) 纷纷推出 AI Agent 工具链</li>
+        <li><strong>垂直领域 Agent 加速落地</strong> — 金融、安全、演示文稿、视频生成等垂直场景的 AI 工具正在快速成熟</li>
+      </ul>
+    </div>
+
+    <div class="footer">
+      <p>🤖 由莫殇自动巡逻发现 · 数据来源: GitHub Trending / Trendshift / CSDN 开源社区</p>
+      <p>💡 点击查看完整报告: https://oclaw.mochencloud.cn:1443/onboard/reports/heartbeat-fun-projects-202605280306.html</p>
+    </div>
+  </div>
+</body>
+</html>

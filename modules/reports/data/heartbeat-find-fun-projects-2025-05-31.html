@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚡ 今日好玩项目发现 - 2025-05-31</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+    color: #f0f0f0;
+    padding: 40px 20px;
+    min-height: 100vh;
+  }
+  .container { max-width: 800px; margin: 0 auto; }
+  .header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .header h1 {
+    font-size: 2.2rem;
+    background: linear-gradient(90deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 10px;
+  }
+  .header .subtitle {
+    color: #a0a0c0;
+    font-size: 0.95rem;
+  }
+  .card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 24px;
+    backdrop-filter: blur(10px);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  }
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .emoji {
+    font-size: 1.8rem;
+    line-height: 1;
+  }
+  .project-name {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #fff;
+  }
+  .project-name a {
+    color: #48dbfb;
+    text-decoration: none;
+  }
+  .project-name a:hover {
+    text-decoration: underline;
+  }
+  .tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+  .tag {
+    background: rgba(255,255,255,0.1);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    color: #c0c0e0;
+  }
+  .tag.stars { background: rgba(255,200,60,0.15); color: #feca57; }
+  .tag.growth { background: rgba(255,100,100,0.15); color: #ff6b6b; }
+  .tag.lang { background: rgba(72,219,251,0.15); color: #48dbfb; }
+  .description {
+    color: #c0c0d0;
+    line-height: 1.7;
+    font-size: 0.95rem;
+    margin-bottom: 12px;
+  }
+  .highlight {
+    color: #feca57;
+    font-weight: 600;
+  }
+  .footer {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    color: #8080a0;
+    font-size: 0.85rem;
+  }
+  .footer a { color: #48dbfb; }
+  @media (max-width: 600px) {
+    .header h1 { font-size: 1.6rem; }
+    .card { padding: 20px; }
+    .project-name { font-size: 1.1rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>⚡ 今日好玩项目发现</h1>
+    <div class="subtitle">莫殇巡逻周报 · 2025-05-31 · 精选 5 个 GitHub 热门开源项目</div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <span class="emoji">🧠</span>
+      <div class="project-name"><a href="https://github.com/simstudioai/sim" target="_blank">sim — AI 仿真平台</a></div>
+    </div>
+    <div class="tags">
+      <span class="tag stars">⭐ 23.9k</span>
+      <span class="tag growth">🔺 +2,369 本周</span>
+      <span class="tag lang">Python/TS</span>
+    </div>
+    <div class="description">
+      SimStudioAI 开源的可扩展仿真平台，支持<span class="highlight">强化学习、物理模拟、智能体场景构建</span>等功能，用于 AI 训练、实验验证和学术研究。可扩展的 AI 仿真引擎，支持多智能体协作场景。
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <span class="emoji">🕸️</span>
+      <div class="project-name"><a href="https://github.com/colbymchenry/codegraph" target="_blank">CodeGraph — 代码知识图谱</a></div>
+    </div>
+    <div class="tags">
+      <span class="tag stars">⭐ 21.7k</span>
+      <span class="tag growth">🔺 热趋上榜</span>
+      <span class="tag lang">TypeScript</span>
+    </div>
+    <div class="description">
+      面向 Claude Code、Codex、Cursor 和 OpenCode 的<span class="highlight">预索引代码知识图谱</span>。为代码库构建语义知识图谱，实现更快、更智能的代码探索。预索引语义理解，减少 LLM 代码查询的 token 消耗，大幅提升代码导航效率。
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <span class="emoji">🔄</span>
+      <div class="project-name"><a href="https://github.com/C4illin/ConvertX" target="_blank">ConvertX — 自托管文件转换器</a></div>
+    </div>
+    <div class="tags">
+      <span class="tag stars">⭐ 12.8k</span>
+      <span class="tag growth">🔺 +2,082 本周</span>
+      <span class="tag lang">TypeScript</span>
+    </div>
+    <div class="description">
+      自托管在线文件转换器，支持 <span class="highlight">1000+ 种格式转换</span>。把文件上传到私有服务器即可转换，无需依赖第三方云服务。Docker 一键部署，隐私安全可控。
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <span class="emoji">🧠</span>
+      <div class="project-name"><a href="https://github.com/thedotmack/claude-mem" target="_blank">claude-mem — Claude 记忆增强</a></div>
+    </div>
+    <div class="tags">
+      <span class="tag stars">⭐ 8.6k</span>
+      <span class="tag growth">🔺 +1,894 本周</span>
+      <span class="tag lang">Python</span>
+    </div>
+    <div class="description">
+      为 Claude 系列模型提供<span class="highlight">持久化记忆能力</span>的工具，能够记录长期上下文、用户偏好与历史对话，让 AI 助手在多轮交互中拥有稳定的个性化记忆。本地与远程存储支持，可集成多种应用场景。
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <span class="emoji">🖥️</span>
+      <div class="project-name"><a href="https://github.com/exo-explore/exo" target="_blank">exo — 分布式 AI 推理</a></div>
+    </div>
+    <div class="tags">
+      <span class="tag stars">⭐ 35.4k</span>
+      <span class="tag growth">🔺 +1,861 本周</span>
+      <span class="tag lang">Python</span>
+    </div>
+    <div class="description">
+      将家中所有设备（Mac、Linux、Windows、手机）变成一台<span class="highlight">超级计算机</span>，分布式运行 LLM 推理。无需昂贵的 GPU 集群，利用闲置设备算力。跨平台设备组网、自动负载均衡、支持多种模型。
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>数据来源: GitHub 周榜 (OpenGithubs 社区) | 采集: 2025-05-31 07:00 CST</p>
+    <p>由 <strong>莫殇</strong> 🤖 自动巡逻发现 · 哥哥可以在 onboard-panel 查看报告</p>
+  </div>
+</div>
+</body>
+</html>

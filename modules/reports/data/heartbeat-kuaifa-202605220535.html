@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Heartbeat Report - Kuaifa Hotnews</title>
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; background: #f5f5f5; }
+.card { background: white; border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+h1 { color: #1a1a1a; margin-top: 0; font-size: 24px; }
+h2 { color: #333; font-size: 18px; margin-top: 24px; }
+.status { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 14px; font-weight: 600; }
+.status-fail { background: #fee2e2; color: #dc2626; }
+.status-ok { background: #dcfce7; color: #16a34a; }
+pre { background: #f8f9fa; padding: 16px; border-radius: 8px; overflow-x: auto; font-size: 13px; line-height: 1.6; }
+.code { font-family: "SF Mono", Monaco, "Cascadia Code", monospace; }
+hr { border: none; border-top: 1px solid #eee; margin: 20px 0; }
+.tip { background: #fffbeb; border-left: 4px solid #f59e0b; padding: 12px 16px; border-radius: 0 8px 8px 0; color: #92400e; }
+</style>
+</head>
+<body>
+<div class="card">
+<h1>📰 Kuaifa 热点文章发布报告</h1>
+<p>任务时间: 2026-05-22 05:35 CST</p>
+<p>任务类型: kuaifa-hotnews</p>
+<span class="status status-fail">❌ 发布失败</span>
+</div>
+
+<div class="card">
+<h2>📋 执行摘要</h2>
+<p>本次任务尝试从 Hacker News 获取热点科技资讯，生成封面与文章，并同步至微信公众号草稿箱。</p>
+<ul>
+<li>✅ 获取 HN 热点故事 (5 条)</li>
+<li>✅ 生成科技风封面图 (任务 ID: 1779399496634234)</li>
+<li>✅ 撰写文章 (~3000 字，6 个章节)</li>
+<li>❌ 同步到微信草稿箱 —— IP 白名单限制</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>📝 文章内容预览</h2>
+<p><strong>标题：</strong>🔥 科技周刊：Flipper One 求救、Freenet 重生与星际导航图</p>
+<p><strong>作者：</strong>莫殇</p>
+<p><strong>摘要：</strong>精选 Hacker News 本周最热科技话题，从硬件黑客工具到去中心化网络，一文带你速览全球极客圈动态。</p>
+<p><strong>字数：</strong>约 3000 字</p>
+<p><strong>章节：</strong></p>
+<ol>
+<li>Flipper One 发布在即，团队向社区发出求救信号</li>
+<li>《Project Hail Mary》粉丝自制「盖亚星际导航图」</li>
+<li>Freenet 归来：去中心化应用的新希望？</li>
+<li>BBEdit 16 发布：macOS 上最长寿的文本编辑器还在进化</li>
+<li>从 Ubuntu 16.04 到 FreeBSD：一位博主十年迁移记</li>
+<li>写在最后</li>
+</ol>
+</div>
+
+<div class="card">
+<h2>🖼️ 封面图</h2>
+<p>封面图已成功生成并下载到 <code class="code">/tmp/kuaifa-cover.png</code></p>
+<p>尺寸: 1456×816 | 大小: ~1.4MB | 格式: PNG</p>
+<p>图片来源: huanwang-ai (Midjourney v7)</p>
+</div>
+
+<div class="card">
+<h2>❌ 失败详情</h2>
+<pre>API Error 40164: invalid ip 125.118.249.157 ipv6 ::ffff:125.118.249.157, not in whitelist rid: 6a0f7b82-1ab6c21d-49c1a3df
+</pre>
+<div class="tip">
+<strong>原因：</strong>当前服务器 IP 未被添加到微信公众号后台的「IP 白名单」中。
+</div>
+<p style="margin-top:12px"><strong>修复方法：</strong></p>
+<ol>
+<li>登录<a href="https://mp.weixin.qq.com">微信公众号后台</a></li>
+<li>进入「开发」→「基本配置」→「IP 白名单」</li>
+<li>添加当前服务器 IP：<code class="code">125.118.249.157</code></li>
+<li>保存后重新执行任务即可</li>
+</ol>
+</div>
+
+<div class="card">
+<h2>📄 本地文件保留位置</h2>
+<ul>
+<li>文章 Markdown: <code class="code">/tmp/kuaifa-article.md</code></li>
+<li>微信 HTML 预览: <code class="code">/tmp/kuaifa-article.wechat.html</code></li>
+<li>封面图片: <code class="code">/tmp/kuaifa-cover.png</code></li>
+</ul>
+<p>修复 IP 白名单后，可手动重新发布：</p>
+<pre>cd ~/.openclaw/workspace
+md2wechat sync-md /tmp/kuaifa-article.md \
+  --title "🔥 科技周刊：Flipper One 求救、Freenet 重生与星际导航图" \
+  --author "莫殇" \
+  --cover /tmp/kuaifa-cover.png \
+  --digest "精选 Hacker News 本周最热科技话题..."
+</pre>
+</div>
+
+</body>
+</html>

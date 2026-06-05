@@ -1,0 +1,1533 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Onboard Panel</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: linear-gradient(135deg, #f0f2f5 0%, #e8ecf1 50%, #f5f0f8 100%);
+      color: #1a1a2e;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      min-height: 100vh;
+      display: flex;
+    }
+
+    /* Sidebar - Glass */
+    .sidebar {
+      width: 200px;
+      background: rgba(255,255,255,0.6);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-right: 1px solid rgba(255,255,255,0.8);
+      padding: 28px 0;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      box-shadow: 4px 0 24px rgba(0,0,0,0.04);
+    }
+    .sidebar-logo {
+      text-align: center;
+      margin-bottom: 36px;
+      padding: 0 20px;
+    }
+    .sidebar-logo h1 {
+      font-size: 20px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 700;
+    }
+    .sidebar-logo .sub {
+      font-size: 11px;
+      color: #8892a0;
+      margin-top: 4px;
+      font-weight: 500;
+    }
+    .nav-item {
+      padding: 14px 24px;
+      cursor: pointer;
+      font-size: 14px;
+      color: #64748b;
+      transition: all 0.25s;
+      border-left: 3px solid transparent;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 500;
+    }
+    .nav-item:hover {
+      background: rgba(102,126,234,0.06);
+      color: #475569;
+    }
+    .nav-item.active {
+      background: rgba(102,126,234,0.1);
+      color: #667eea;
+      border-left-color: #667eea;
+    }
+    .nav-icon { font-size: 18px; width: 24px; text-align: center; }
+    .badge {
+      background: #ef4444;
+      color: white;
+      border-radius: 999px;
+      font-size: 10px;
+      padding: 1px 5px;
+      margin-left: 4px;
+      font-family: -apple-system, sans-serif;
+    }
+
+    /* Main Content */
+    .main {
+      flex: 1;
+      padding: 36px 40px;
+      overflow-y: auto;
+      max-width: calc(100vw - 200px);
+    }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    .page-title {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 28px;
+      color: #1e293b;
+      letter-spacing: -0.5px;
+    }
+
+    /* Glass Cards */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 18px;
+    }
+    .card {
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.9);
+      border-radius: 16px;
+      padding: 24px;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04), 0 1px 3px rgba(0,0,0,0.02);
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #667eea, #764ba2);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(102,126,234,0.12), 0 2px 8px rgba(0,0,0,0.04);
+      border-color: rgba(102,126,234,0.15);
+    }
+    .card:hover::before { opacity: 1; }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .card-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #94a3b8;
+      font-weight: 600;
+    }
+    .card-icon { font-size: 18px; opacity: 0.6; }
+
+    .metric {
+      font-family: 'SF Mono', Monaco, monospace;
+      font-size: 32px;
+      font-weight: 700;
+      color: #1e293b;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .metric.small { font-size: 22px; }
+
+    .card-detail {
+      font-size: 13px;
+      color: #64748b;
+      line-height: 1.6;
+    }
+    .card-detail .highlight { color: #667eea; font-weight: 600; }
+    .card-detail .warn { color: #f59e0b; font-weight: 600; }
+    .card-detail .err { color: #ef4444; font-weight: 600; }
+
+    /* Status */
+    .status-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 12px rgba(16,185,129,0.4);
+      animation: pulse 2.5s infinite;
+    }
+    .status-dot.offline {
+      background: #ef4444;
+      box-shadow: 0 0 12px rgba(239,68,68,0.4);
+      animation: none;
+    }
+    .status-dot.unknown {
+      background: #94a3b8;
+      box-shadow: none;
+      animation: none;
+    }
+    .status-text {
+      font-size: 14px;
+      font-weight: 600;
+      color: #10b981;
+    }
+    .status-text.offline { color: #ef4444; }
+    .status-text.unknown { color: #94a3b8; }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(0.85); }
+    }
+
+    /* Stat Row */
+    .stat-row {
+      display: flex;
+      gap: 20px;
+      margin-top: 16px;
+    }
+    .stat-item { flex: 1; }
+    .stat-item .n {
+      font-family: 'SF Mono', Monaco, monospace;
+      font-size: 22px;
+      font-weight: 700;
+      color: #1e293b;
+    }
+    .stat-item .l {
+      font-size: 11px;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 4px;
+      font-weight: 600;
+    }
+
+    /* Progress */
+    .progress-wrap { margin-top: 12px; }
+    .progress-bar {
+      height: 6px;
+      background: rgba(0,0,0,0.06);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #667eea, #764ba2);
+      border-radius: 3px;
+      transition: width 0.5s ease;
+    }
+    .progress-fill.warn { background: linear-gradient(90deg, #f59e0b, #ef4444); }
+    .progress-text {
+      font-size: 12px;
+      color: #94a3b8;
+      margin-top: 8px;
+      text-align: right;
+      font-weight: 500;
+    }
+
+    /* Tags */
+    .tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+    .tag {
+      background: rgba(102,126,234,0.08);
+      padding: 5px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      color: #64748b;
+      font-weight: 500;
+    }
+    .tag.active {
+      background: rgba(16,185,129,0.12);
+      color: #059669;
+    }
+
+    /* Buttons */
+    .btn {
+      padding: 10px 18px;
+      border-radius: 10px;
+      border: 1px solid rgba(0,0,0,0.06);
+      background: rgba(255,255,255,0.8);
+      color: #475569;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.25s;
+      text-align: center;
+      display: inline-block;
+      font-weight: 500;
+      backdrop-filter: blur(8px);
+    }
+    .btn:hover {
+      background: rgba(102,126,234,0.1);
+      border-color: rgba(102,126,234,0.2);
+      color: #667eea;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(102,126,234,0.1);
+    }
+    .btn.primary {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      border: none;
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(102,126,234,0.3);
+    }
+    .btn.primary:hover {
+      box-shadow: 0 6px 24px rgba(102,126,234,0.4);
+      transform: translateY(-1px);
+    }
+    .btn.danger:hover {
+      background: rgba(239,68,68,0.1);
+      border-color: rgba(239,68,68,0.2);
+      color: #ef4444;
+    }
+    .btn.small { padding: 8px 14px; font-size: 12px; }
+
+    .actions-bar {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    /* Docker Service Cards */
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 18px;
+    }
+    .service-card {
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.9);
+      border-radius: 16px;
+      padding: 24px;
+      transition: all 0.3s;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+    }
+    .service-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(102,126,234,0.12);
+      border-color: rgba(102,126,234,0.15);
+    }
+    .service-card .top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .service-card .name {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1e293b;
+    }
+    .service-card .group {
+      font-size: 11px;
+      color: #94a3b8;
+      background: rgba(0,0,0,0.04);
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+    .service-card .url {
+      font-family: monospace;
+      font-size: 12px;
+      color: #94a3b8;
+      margin-bottom: 14px;
+      word-break: break-all;
+    }
+    .service-card .bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .service-card .rt {
+      font-family: monospace;
+      font-size: 13px;
+      color: #64748b;
+    }
+    .service-card .rt.ok { color: #10b981; font-weight: 600; }
+    .service-card .rt.error { color: #ef4444; font-weight: 600; }
+    .service-card .time {
+      font-size: 11px;
+      color: #cbd5e1;
+    }
+    .service-card .actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    /* Group Filter */
+    .filter-bar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      padding: 8px 16px;
+      border-radius: 10px;
+      border: 1px solid rgba(0,0,0,0.06);
+      background: rgba(255,255,255,0.7);
+      color: #64748b;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.25s;
+      font-weight: 500;
+      backdrop-filter: blur(8px);
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: rgba(102,126,234,0.1);
+      border-color: rgba(102,126,234,0.2);
+      color: #667eea;
+    }
+
+    /* Modal - Glass */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.3);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+    }
+    .modal-overlay.show { display: flex; }
+    .modal {
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255,255,255,0.9);
+      border-radius: 20px;
+      padding: 32px;
+      max-width: 440px;
+      width: 90%;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.12);
+    }
+    .modal h3 {
+      font-size: 18px;
+      margin-bottom: 24px;
+      color: #1e293b;
+      font-weight: 700;
+    }
+    .form-group {
+      margin-bottom: 18px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      color: #64748b;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(0,0,0,0.08);
+      background: rgba(255,255,255,0.8);
+      color: #1e293b;
+      font-size: 14px;
+      outline: none;
+      transition: all 0.2s;
+    }
+    .form-group input:focus, .form-group select:focus {
+      border-color: rgba(102,126,234,0.4);
+      box-shadow: 0 0 0 3px rgba(102,126,234,0.08);
+    }
+    .modal-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 28px;
+    }
+    .modal-actions .btn { flex: 1; }
+
+    /* Toast */
+    .toast-container {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .toast {
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.9);
+      border-radius: 12px;
+      padding: 14px 18px;
+      font-size: 14px;
+      max-width: 340px;
+      animation: slideIn 0.3s ease;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+      color: #1e293b;
+      font-weight: 500;
+    }
+    .toast.success { border-left: 3px solid #10b981; }
+    .toast.error { border-left: 3px solid #ef4444; }
+    .toast.warn { border-left: 3px solid #f59e0b; }
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    /* Section title */
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #94a3b8;
+      margin: 28px 0 16px;
+      font-weight: 700;
+    }
+    .section-title::before {
+      content: '';
+      width: 3px;
+      height: 16px;
+      background: linear-gradient(180deg, #667eea, #764ba2);
+      border-radius: 2px;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 48px;
+      color: #cbd5e1;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    /* ===== Mobile Bottom Nav ===== */
+    .mobile-bottom-nav {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 64px;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(0,0,0,0.06);
+      z-index: 100;
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+    .mobile-bottom-nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      height: 64px;
+      padding: 0 8px;
+    }
+    .mobile-nav-tab {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      flex: 1;
+      height: 100%;
+      cursor: pointer;
+      color: #94a3b8;
+      transition: all 0.2s;
+      position: relative;
+      -webkit-tap-highlight-color: transparent;
+      padding: 0 2px;
+    }
+    .mobile-nav-tab:active { transform: scale(0.92); }
+    .mobile-nav-tab .m-icon {
+      font-size: 22px;
+      line-height: 1;
+      margin-bottom: 2px;
+    }
+    .mobile-nav-tab .m-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+    }
+    .mobile-nav-tab.active {
+      color: #667eea;
+    }
+    .mobile-nav-tab.active::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 36px;
+      height: 3px;
+      background: linear-gradient(90deg, #667eea, #764ba2);
+      border-radius: 0 0 2px 2px;
+    }
+    .mobile-nav-badge {
+      position: absolute;
+      top: 4px;
+      right: calc(50% - 14px);
+      background: #ef4444;
+      color: white;
+      border-radius: 999px;
+      font-size: 9px;
+      padding: 1px 5px;
+      font-weight: 700;
+      min-width: 14px;
+      text-align: center;
+      display: none;
+    }
+
+    /* ===== Mobile Header ===== */
+    .mobile-header {
+      display: none;
+      position: sticky;
+      top: 0;
+      z-index: 90;
+      background: rgba(255,255,255,0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      padding: 12px 16px;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .mobile-header .mh-title {
+      font-size: 18px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .mobile-header .mh-status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: #64748b;
+    }
+    .mobile-header .mh-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 8px rgba(16,185,129,0.4);
+    }
+    .mobile-header .mh-dot.offline { background: #ef4444; box-shadow: 0 0 8px rgba(239,68,68,0.4); }
+
+    /* ===== Mobile Adaptation ===== */
+    @media (max-width: 768px) {
+      body { flex-direction: column; padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
+      .sidebar { display: none !important; }
+      .mobile-bottom-nav { display: block; }
+      .mobile-header { display: flex; }
+      .main {
+        padding: 16px;
+        max-width: 100vw;
+      }
+      .page-title {
+        font-size: 20px;
+        margin-bottom: 16px;
+        margin-top: 8px;
+      }
+      .grid, .service-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      .card, .service-card {
+        padding: 16px;
+        border-radius: 14px;
+      }
+      .metric { font-size: 26px; }
+      .metric.small { font-size: 18px; }
+      .stat-row { gap: 12px; margin-top: 12px; }
+      .stat-item .n { font-size: 18px; }
+      .stat-item .l { font-size: 10px; }
+      .actions-bar {
+        gap: 8px;
+        margin-bottom: 16px;
+      }
+      .btn {
+        padding: 12px 16px;
+        font-size: 14px;
+        min-height: 44px;
+        touch-action: manipulation;
+      }
+      .btn.small {
+        padding: 10px 14px;
+        font-size: 13px;
+      }
+      .filter-bar {
+        gap: 6px;
+        margin-bottom: 16px;
+      }
+      .filter-btn {
+        padding: 8px 12px;
+        font-size: 12px;
+        min-height: 36px;
+      }
+      .modal {
+        padding: 24px;
+        max-width: 92vw;
+        width: 92vw;
+        border-radius: 16px;
+        margin-bottom: calc(64px + env(safe-area-inset-bottom));
+      }
+      .modal h3 { font-size: 16px; margin-bottom: 18px; }
+      .form-group input, .form-group select {
+        padding: 14px 12px;
+        font-size: 16px;
+        min-height: 44px;
+      }
+      .modal-actions {
+        margin-top: 20px;
+      }
+      .chart-container {
+        padding: 16px;
+        margin-bottom: 16px;
+      }
+      .chart-controls {
+        flex-wrap: wrap;
+      }
+      .chart-btn {
+        padding: 6px 10px;
+        font-size: 11px;
+        min-height: 32px;
+      }
+      .section-title {
+        margin: 20px 0 12px;
+        font-size: 11px;
+      }
+      .service-card .actions {
+        gap: 6px;
+      }
+      .service-card .url {
+        font-size: 11px;
+      }
+      .tags {
+        gap: 6px;
+        margin-top: 10px;
+      }
+      .tag {
+        padding: 5px 10px;
+        font-size: 11px;
+      }
+      .footer {
+        margin-top: 24px;
+        font-size: 11px;
+        padding-bottom: 20px;
+      }
+      .toast-container {
+        top: auto;
+        bottom: calc(80px + env(safe-area-inset-bottom));
+        right: 16px;
+        left: 16px;
+        max-width: 100%;
+      }
+      .toast {
+        max-width: 100%;
+        padding: 12px 14px;
+        font-size: 13px;
+      }
+      #device-list .service-card {
+        margin-bottom: 10px;
+      }
+      #reports-list {
+        gap: 12px;
+      }
+      .report-item {
+        padding: 14px 16px !important;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .main { padding: 12px; }
+      .page-title { font-size: 18px; }
+      .metric { font-size: 22px; }
+      .card, .service-card { padding: 14px; }
+      .mobile-nav-tab .m-icon { font-size: 20px; }
+      .mobile-nav-tab .m-label { font-size: 9px; }
+    }
+
+    @supports (padding-bottom: env(safe-area-inset-bottom)) {
+      @media (max-width: 768px) {
+        .footer { padding-bottom: calc(20px + env(safe-area-inset-bottom)); }
+        .toast-container { bottom: calc(80px + env(safe-area-inset-bottom)); }
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Mobile Header -->
+  <div class="mobile-header" id="mobile-header">
+    <span class="mh-title">⚡ Onboard</span>
+    <div class="mh-status">
+      <span class="mh-dot" id="mobile-header-dot"></span>
+      <span id="mobile-header-status">Online</span>
+    </div>
+  </div>
+
+  <!-- Mobile Bottom Nav -->
+  <div class="mobile-bottom-nav">
+    <div class="mobile-bottom-nav-inner" id="mobile-bottom-nav-inner">
+      <div class="mobile-nav-tab active" data-tab="overview" onclick="switchTab('overview')">
+        <span class="m-icon">🏠</span>
+        <span class="m-label">概览</span>
+      </div>
+      <div class="mobile-nav-tab" data-tab="gateway" onclick="switchTab('gateway')">
+        <span class="m-icon">🔌</span>
+        <span class="m-label">Gateway</span>
+      </div>
+      <div class="mobile-nav-tab" data-tab="docker" onclick="switchTab('docker')">
+        <span class="m-icon">🐳</span>
+        <span class="m-label">Docker</span>
+      </div>
+      <div class="mobile-nav-tab" data-tab="reports" onclick="switchTab('reports')">
+        <span class="m-icon">📑</span>
+        <span class="m-label">Reports</span>
+        <span class="mobile-nav-badge" id="mobile-nav-badge"></span>
+      </div>
+      <div class="mobile-nav-tab" onclick="window.open('/onboard/food','_blank')">
+        <span class="m-icon">🍽️</span>
+        <span class="m-label">今天吃啥</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-logo">
+      <h1>⚡ Onboard</h1>
+      <div class="sub">Gateway Panel</div>
+    </div>
+    <div class="nav-item active" data-tab="overview" onclick="switchTab('overview')">
+      <span class="nav-icon">🏠</span> 概览
+    </div>
+    <div class="nav-item" data-tab="gateway" onclick="switchTab('gateway')">
+      <span class="nav-icon">🔌</span> Gateway
+    </div>
+    <div class="nav-item" data-tab="docker" onclick="switchTab('docker')">
+      <span class="nav-icon">🐳</span> Docker
+    </div>
+    <div class="nav-item" data-tab="reports" onclick="switchTab('reports')">
+      <span class="nav-icon">📑</span> Reports
+      <span class="badge" id="nav-reports-badge" style="display:none;"></span>
+    </div>
+    <div class="nav-item" onclick="toggleSubmenu(this)">
+      <span class="nav-icon">🧩</span> 其他模块
+      <span class="sub-arrow" style="margin-left:auto;font-size:12px;transition:transform .2s">▸</span>
+    </div>
+    <div class="submenu" style="display:none;padding-left:20px">
+      <div class="nav-item" onclick="window.open('/onboard/novels','_blank')">
+        <span class="nav-icon">📖</span> 小说
+      </div>
+      <div class="nav-item" onclick="window.open('/onboard/food','_blank')">
+        <span class="nav-icon">🍽️</span> 今天吃啥
+      </div>
+    </div>
+    <div class="nav-item" data-tab="settings" onclick="switchTab('settings')">
+      <span class="nav-icon">⚙️</span> 设置
+    </div>
+  </div>
+
+  <!-- Main -->
+  <div class="main">
+
+    <!-- Overview Tab -->
+    <div class="tab-content active" id="tab-overview">
+      <div class="page-title">概览</div>
+      <div class="grid">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-label">Gateway</div>
+            <div class="card-icon">🌐</div>
+          </div>
+          <div class="status-wrap">
+            <div class="status-dot" id="ov-gateway-dot"></div>
+            <div class="status-text" id="ov-gateway-text">—</div>
+          </div>
+          <div class="card-detail" id="ov-gateway-detail" style="margin-top:10px;">—</div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-label">版本</div>
+            <div class="card-icon">📦</div>
+          </div>
+          <div class="metric small" id="ov-version">—</div>
+          <div class="card-detail" id="ov-update" style="display:none;"><span class="warn">有可更新</span></div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-label">Sessions</div>
+            <div class="card-icon">💬</div>
+          </div>
+          <div class="metric" id="ov-sessions">—</div>
+          <div class="card-detail"><span class="highlight" id="ov-tokens">—</span> tokens</div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-label">Tasks</div>
+            <div class="card-icon">📋</div>
+          </div>
+          <div class="stat-row">
+            <div class="stat-item"><div class="n" id="ov-tasks-run" style="color:#10b981">—</div><div class="l">运行</div></div>
+            <div class="stat-item"><div class="n" id="ov-tasks-ok" style="color:#667eea">—</div><div class="l">成功</div></div>
+            <div class="stat-item"><div class="n" id="ov-tasks-fail" style="color:#ef4444">—</div><div class="l">失败</div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-label">Agents</div>
+            <div class="card-icon">🤖</div>
+          </div>
+          <div class="metric small" id="ov-agents">—</div>
+          <div class="card-detail" id="ov-agents-detail">—</div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-label">Docker 服务</div>
+            <div class="card-icon">🐳</div>
+          </div>
+          <div class="metric small" id="ov-docker-total">—</div>
+          <div class="card-detail"><span class="highlight" id="ov-docker-ok">—</span> 健康</div>
+        </div>
+        <div class="card" onclick="switchTab('reports')" style="cursor:pointer;">
+          <div class="card-header">
+            <div class="card-label">Reports</div>
+            <div class="card-icon">📑</div>
+          </div>
+          <div class="metric small" id="ov-reports-total">—</div>
+          <div class="card-detail"><span class="highlight" id="ov-reports-unread">—</span> 未读</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gateway Tab -->
+    <div class="tab-content" id="tab-gateway">
+      <div class="page-title">OpenClaw Gateway</div>
+      <div class="grid">
+        <div class="card">
+          <div class="card-header"><div class="card-label">版本</div><div class="card-icon">📦</div></div>
+          <div class="metric" id="gw-version">—</div>
+          <div class="card-detail" id="gw-update-wrap" style="display:none;"><span class="warn" id="gw-update">—</span></div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-label">Gateway</div><div class="card-icon">🌐</div></div>
+          <div class="status-wrap">
+            <div class="status-dot" id="gw-dot"></div>
+            <div class="status-text" id="gw-text">—</div>
+          </div>
+          <div class="card-detail err" id="gw-err" style="margin-top:10px;font-size:11px;display:none;"></div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-label">Sessions</div><div class="card-icon">💬</div></div>
+          <div class="metric" id="gw-sessions">—</div>
+          <div class="card-detail">总 tokens <span class="highlight" id="gw-tokens">—</span></div>
+          <div class="progress-wrap">
+            <div class="progress-bar"><div class="progress-fill" id="gw-sessions-bar" style="width:0%"></div></div>
+            <div class="progress-text" id="gw-sessions-pct">—</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-label">Tasks</div><div class="card-icon">📋</div></div>
+          <div class="stat-row">
+            <div class="stat-item"><div class="n" id="gw-tasks-run" style="color:#10b981">—</div><div class="l">运行中</div></div>
+            <div class="stat-item"><div class="n" id="gw-tasks-ok" style="color:#667eea">—</div><div class="l">成功</div></div>
+            <div class="stat-item"><div class="n" id="gw-tasks-to" style="color:#f59e0b">—</div><div class="l">超时</div></div>
+            <div class="stat-item"><div class="n" id="gw-tasks-fail" style="color:#ef4444">—</div><div class="l">失败</div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-label">Agents</div><div class="card-icon">🤖</div></div>
+          <div class="metric small" id="gw-agents">—</div>
+          <div class="card-detail">Sessions <span class="highlight" id="gw-agents-sess">—</span></div>
+          <div class="tags">
+            <span class="tag" id="gw-hb">hb —</span>
+            <span class="tag active" id="gw-mem">mem —</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-label">系统</div><div class="card-icon">🖥️</div></div>
+          <div class="metric small" id="gw-os">—</div>
+          <div class="card-detail" style="margin-top:8px;">OpenClaw 运行时</div>
+        </div>
+      </div>
+
+      <div class="section-title">操作</div>
+      <div class="actions-bar">
+        <div class="btn primary" onclick="restartGateway()">🔄 重启 Gateway</div>
+        <div class="btn" onclick="clearCache()">🗑️ 清空缓存</div>
+      </div>
+
+      <div class="section-title">Gateway 详情</div>
+      <div class="grid" id="gw-detail-grid" style="margin-bottom:20px;">
+        <div class="card"><div class="card-header"><div class="card-label">Service</div></div><div class="card-detail" id="gd-service">—</div></div>
+        <div class="card"><div class="card-header"><div class="card-label">Config</div></div><div class="card-detail" id="gd-config">—</div></div>
+        <div class="card"><div class="card-header"><div class="card-label">Bind</div></div><div class="card-detail" id="gd-bind">—</div></div>
+        <div class="card"><div class="card-header"><div class="card-label">Dashboard</div></div><div class="card-detail"><a href="#" id="gd-dashboard" target="_blank" style="color:#667eea;font-weight:600;">—</a></div></div>
+        <div class="card"><div class="card-header"><div class="card-label">Probe</div></div><div class="card-detail" id="gd-probe">—</div></div>
+        <div class="card"><div class="card-header"><div class="card-label">File Logs</div></div><div class="card-detail" id="gd-logs">—</div></div>
+      </div>
+
+      <div class="section-title">设备管理</div>
+      <div class="actions-bar">
+        <div class="btn" onclick="loadPendingDevices()">📋 查看 Pending 设备</div>
+        <div class="btn" onclick="approveDevice()">✅ 批准最新</div>
+      </div>
+      <div id="device-list" style="margin-top:10px;"></div>
+    </div>
+
+    <!-- Docker Tab -->
+    <div class="tab-content" id="tab-docker">
+      <div class="page-title">Docker Services</div>
+      <div class="actions-bar">
+        <div class="btn primary" onclick="showAddServiceModal()">➕ 添加服务</div>
+      </div>
+      <div class="filter-bar" id="docker-filters">
+        <div class="filter-btn active" onclick="filterServices('all',this)">全部</div>
+      </div>
+      <div class="service-grid" id="service-grid">
+        <div class="card" style="text-align:center;padding:40px;color:#94a3b8;">
+          暂无服务，点击"添加服务"
+        </div>
+      </div>
+    </div>
+
+    <!-- Settings Tab -->
+    <div class="tab-content" id="tab-settings">
+      <div class="page-title">设置</div>
+      <div class="grid" style="max-width:600px;">
+        <div class="card">
+          <div class="card-header"><div class="card-label">看板信息</div></div>
+          <div class="card-detail" style="margin-top:10px;">
+            <p>版本: v0.2.0</p>
+            <p style="margin-top:8px;">数据刷新间隔: 30s</p>
+            <p style="margin-top:8px;">历史采集间隔: 1min</p>
+            <p style="margin-top:8px;">服务检查间隔: 30s</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-label">修改密码</div></div>
+          <div class="card-detail" style="margin-top:10px;">
+            <div class="form-group" style="margin-bottom:12px;">
+              <label style="display:block;font-size:13px;color:#64748b;margin-bottom:8px;font-weight:600;">旧密码</label>
+              <input type="password" id="pwd-old" placeholder="当前密码" style="width:100%;padding:12px 14px;border-radius:10px;border:1px solid rgba(0,0,0,0.08);background:rgba(255,255,255,0.8);color:#1e293b;font-size:14px;outline:none;">
+            </div>
+            <div class="form-group" style="margin-bottom:12px;">
+              <label style="display:block;font-size:13px;color:#64748b;margin-bottom:8px;font-weight:600;">新密码</label>
+              <input type="password" id="pwd-new" placeholder="至少4位" style="width:100%;padding:12px 14px;border-radius:10px;border:1px solid rgba(0,0,0,0.08);background:rgba(255,255,255,0.8);color:#1e293b;font-size:14px;outline:none;">
+            </div>
+            <div class="form-group" style="margin-bottom:16px;">
+              <label style="display:block;font-size:13px;color:#64748b;margin-bottom:8px;font-weight:600;">确认新密码</label>
+              <input type="password" id="pwd-confirm" placeholder="再次输入" style="width:100%;padding:12px 14px;border-radius:10px;border:1px solid rgba(0,0,0,0.08);background:rgba(255,255,255,0.8);color:#1e293b;font-size:14px;outline:none;">
+            </div>
+            <div class="btn primary" onclick="changePassword()">修改密码</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-label">监管服务</div></div>
+          <div class="card-detail" style="margin-top:10px;">
+            <div class="status-wrap" id="supervisor-status">
+              <div class="status-dot unknown"></div>
+              <div class="status-text unknown">checking...</div>
+            </div>
+            <p style="margin-top:10px;">自动拉起挂了的服务</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reports Tab -->
+    <div class="tab-content" id="tab-reports">
+      <div class="page-title">Reports</div>
+      <div id="reports-list" style="display:grid; gap:16px;">
+        <div style="color:#666; text-align:center; padding:40px;">加载中...</div>
+      </div>
+    </div>
+
+    <div class="footer">
+      openclaw-gateway → onboard-panel · 数据每 30s 自动刷新
+    </div>
+  </div>
+
+  <!-- Modal: Add Service -->
+  <div class="modal-overlay" id="modal-add">
+    <div class="modal">
+      <h3>添加 Docker 服务</h3>
+      <div class="form-group">
+        <label>服务名称</label>
+        <input type="text" id="svc-name" placeholder="如: SearXNG">
+      </div>
+      <div class="form-group">
+        <label>健康检查 URL</label>
+        <input type="text" id="svc-url" placeholder="如: http://searxng:8080">
+      </div>
+      <div class="form-group">
+        <label>分组</label>
+        <input type="text" id="svc-group" placeholder="如: 搜索 / 缓存 / 代理（可选）">
+      </div>
+      <div class="modal-actions">
+        <div class="btn" onclick="closeModal('modal-add')">取消</div>
+        <div class="btn primary" onclick="addService()">添加</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Confirm -->
+  <div class="modal-overlay" id="modal-confirm">
+    <div class="modal">
+      <h3 id="confirm-title">确认</h3>
+      <p id="confirm-msg">确定执行此操作？</p>
+      <div class="modal-actions">
+        <div class="btn" onclick="closeModal('modal-confirm')">取消</div>
+        <div class="btn danger" id="confirm-btn">确认</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast-container" id="toasts"></div>
+
+  <script>
+    // === Toast ===
+    function toast(msg, type = 'success') {
+      const c = document.getElementById('toasts');
+      const t = document.createElement('div');
+      t.className = 'toast ' + type;
+      t.textContent = msg;
+      c.appendChild(t);
+      setTimeout(() => t.remove(), 4000);
+    }
+
+    // === Tab Switch ===
+    function switchTab(tab) {
+      // Desktop sidebar
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+      const deskItem = document.querySelector('.nav-item[data-tab="' + tab + '"]');
+      if (deskItem) deskItem.classList.add('active');
+      document.getElementById('tab-' + tab).classList.add('active');
+      // Mobile bottom nav
+      document.querySelectorAll('.mobile-nav-tab').forEach(n => n.classList.remove('active'));
+      const mobItem = document.querySelector('.mobile-nav-tab[data-tab="' + tab + '"]');
+      if (mobItem) mobItem.classList.add('active');
+      if (tab === 'docker') loadServices();
+    }
+
+    function toggleSubmenu(el) {
+      var sub = el.nextElementSibling;
+      var arrow = el.querySelector('.sub-arrow');
+      if (sub && sub.classList.contains('submenu')) {
+        var showing = sub.style.display === 'block';
+        sub.style.display = showing ? 'none' : 'block';
+        if (arrow) arrow.style.transform = showing ? 'rotate(0deg)' : 'rotate(90deg)';
+      }
+    }
+
+    // === Modal ===
+    function showModal(id) {
+      document.getElementById(id).classList.add('show');
+    }
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('show');
+    }
+    function confirmAction(title, msg, onConfirm) {
+      document.getElementById('confirm-title').textContent = title;
+      document.getElementById('confirm-msg').textContent = msg;
+      document.getElementById('confirm-btn').onclick = () => { closeModal('modal-confirm'); onConfirm(); };
+      showModal('modal-confirm');
+    }
+
+    // === API ===
+    async function api(url, opts = {}) {
+      const res = await fetch(url, opts);
+      if (!res.ok) {
+        const text = await res.text();
+        throw new Error(res.status + ' ' + text);
+      }
+      return res.json();
+    }
+
+    // === Gateway Status ===
+    async function fetchStatus() {
+      try {
+        const d = await api('api/status');
+        if (d.error) return;
+        // Overview
+        document.getElementById('ov-version').textContent = d.version || '—';
+        document.getElementById('ov-update').style.display = d.updateAvailable ? 'block' : 'none';
+        const gwDot = document.getElementById('ov-gateway-dot');
+        const gwText = document.getElementById('ov-gateway-text');
+        if (d.gateway?.reachable) {
+          gwDot.className = 'status-dot'; gwText.className = 'status-text'; gwText.textContent = 'online';
+        } else {
+          gwDot.className = 'status-dot offline'; gwText.className = 'status-text offline'; gwText.textContent = 'offline';
+        }
+        document.getElementById('ov-gateway-detail').textContent = d.gateway?.mode + ' · ' + (d.gateway?.url || '—');
+        document.getElementById('ov-sessions').textContent = d.sessions?.count ?? '—';
+        document.getElementById('ov-tokens').textContent = d.sessions?.totalTokens != null ? (d.sessions.totalTokens / 1000).toFixed(1) + 'k' : '—';
+        document.getElementById('ov-tasks-run').textContent = d.tasks?.running ?? '—';
+        document.getElementById('ov-tasks-ok').textContent = d.tasks?.succeeded ?? '—';
+        document.getElementById('ov-tasks-fail').textContent = d.tasks?.failures ?? '—';
+        document.getElementById('ov-agents').textContent = (d.agents?.count ?? '—') + ' agent' + ((d.agents?.count || 0) > 1 ? 's' : '');
+        document.getElementById('ov-agents-detail').textContent = (d.agents?.totalSessions ?? '—') + ' sessions';
+
+        // Gateway Tab
+        document.getElementById('gw-version').textContent = d.version || '—';
+        document.getElementById('gw-update-wrap').style.display = d.updateAvailable ? 'block' : 'none';
+        if (d.updateAvailable) document.getElementById('gw-update').textContent = '可更新至 ' + d.updateAvailable;
+        const gwDot2 = document.getElementById('gw-dot');
+        const gwText2 = document.getElementById('gw-text');
+        const gwErr = document.getElementById('gw-err');
+        if (d.gateway?.reachable) {
+          gwDot2.className = 'status-dot'; gwText2.className = 'status-text'; gwText2.textContent = 'online'; gwErr.style.display = 'none';
+        } else {
+          gwDot2.className = 'status-dot offline'; gwText2.className = 'status-text offline'; gwText2.textContent = 'offline';
+          if (d.gateway?.error) { gwErr.textContent = d.gateway.error; gwErr.style.display = 'block'; }
+        }
+        document.getElementById('gw-sessions').textContent = d.sessions?.count ?? '—';
+        document.getElementById('gw-tokens').textContent = d.sessions?.totalTokens != null ? (d.sessions.totalTokens / 1000).toFixed(1) + 'k' : '—';
+        // Mobile header status
+        const mhDot = document.getElementById('mobile-header-dot');
+        const mhStatus = document.getElementById('mobile-header-status');
+        if (mhDot && mhStatus) {
+          if (d.gateway?.reachable) {
+            mhDot.className = 'mh-dot';
+            mhStatus.textContent = 'Online';
+          } else {
+            mhDot.className = 'mh-dot offline';
+            mhStatus.textContent = 'Offline';
+          }
+        }
+        const pct = d.sessions?.totalUsedPercent ?? 0;
+        document.getElementById('gw-sessions-bar').style.width = pct + '%';
+        document.getElementById('gw-sessions-bar').className = pct > 80 ? 'progress-fill warn' : 'progress-fill';
+        document.getElementById('gw-sessions-pct').textContent = pct + '% 已用';
+        document.getElementById('gw-tasks-run').textContent = d.tasks?.running ?? '—';
+        document.getElementById('gw-tasks-ok').textContent = d.tasks?.succeeded ?? '—';
+        document.getElementById('gw-tasks-to').textContent = d.tasks?.timedOut ?? '—';
+        document.getElementById('gw-tasks-fail').textContent = d.tasks?.failures ?? '—';
+        document.getElementById('gw-agents').textContent = (d.agents?.count ?? '—') + ' agent' + ((d.agents?.count || 0) > 1 ? 's' : '');
+        document.getElementById('gw-agents-sess').textContent = d.agents?.totalSessions ?? '—';
+        document.getElementById('gw-hb').textContent = 'hb ' + (d.heartbeat || '—');
+        document.getElementById('gw-mem').textContent = 'mem ' + (d.memory ? 'ON' : 'OFF');
+        document.getElementById('gw-mem').className = d.memory ? 'tag active' : 'tag';
+        document.getElementById('gw-os').textContent = d.os || '—';
+      } catch (e) {
+        console.error('fetchStatus error', e);
+      }
+    }
+
+    // === Gateway Actions ===
+    function restartGateway() {
+      confirmAction('重启 Gateway', '确定要重启 OpenClaw Gateway 吗？', async () => {
+        try {
+          const d = await api('api/gateway/restart', { method: 'POST' });
+          toast(d.message || 'Gateway 正在重启', d.success ? 'success' : 'error');
+        } catch (e) { toast('重启失败: ' + e.message, 'error'); }
+      });
+    }
+    function clearCache() {
+      api('api/cache/clear', { method: 'POST' })
+        .then(() => toast('缓存已清空', 'success'))
+        .catch(e => toast('清空失败: ' + e.message, 'error'));
+    }
+
+    // === Device Management ===
+    async function loadPendingDevices() {
+      try {
+        const d = await api('api/devices/pending');
+        const list = document.getElementById('device-list');
+        if (!d.devices || d.devices.length === 0) {
+          list.innerHTML = '<div class="card-detail">暂无 pending 设备</div>'; return;
+        }
+        list.innerHTML = d.devices.map(dev => `<div class="service-card"><div class="top"><span class="name">${escapeHtml(dev.requestId || dev.id || '?')}</span><span class="group">${escapeHtml(dev.status)}</span></div></div>`).join('');
+      } catch (e) { toast('获取设备失败: ' + e.message, 'error'); }
+    }
+    function approveDevice() {
+      confirmAction('批准设备', '批准最新的 pending 设备？', async () => {
+        try {
+          const d = await api('api/devices/approve', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({}) });
+          toast(d.message || '已批准', d.success ? 'success' : 'error');
+          loadPendingDevices();
+        } catch (e) { toast('批准失败: ' + e.message, 'error'); }
+      });
+    }
+
+    // === Gateway Detail ===
+    async function fetchGwDetail() {
+      try {
+        const d = await api('api/gateway/detail');
+        if (!d.success) return;
+        const detail = d.detail || {};
+        document.getElementById('gd-service').textContent = detail['Service'] || '—';
+        document.getElementById('gd-config').textContent = detail['Config (cli)'] || '—';
+        document.getElementById('gd-bind').textContent = detail['Gateway'] || '—';
+        const dash = detail['Dashboard'];
+        const dashEl = document.getElementById('gd-dashboard');
+        if (dash) { dashEl.textContent = dash; dashEl.href = dash; }
+        document.getElementById('gd-probe').textContent = detail['Connectivity probe'] || '—';
+        document.getElementById('gd-logs').textContent = detail['File logs'] || '—';
+      } catch (e) { console.error('fetchGwDetail error', e); }
+    }
+
+    // === Docker Services ===
+    let currentGroup = 'all';
+    async function loadServices() {
+      try {
+        const d = await api('api/services' + (currentGroup !== 'all' ? '?group=' + encodeURIComponent(currentGroup) : ''));
+        const grid = document.getElementById('service-grid');
+        if (!d.services || d.services.length === 0) {
+          grid.innerHTML = '<div class="card" style="text-align:center;padding:40px;color:#94a3b8;">暂无服务，点击"添加服务"或"自动发现"</div>';
+          updateOverviewServices(0, 0); return;
+        }
+        grid.innerHTML = d.services.map(s => renderServiceCard(s)).join('');
+        const okCount = d.services.filter(s => s.status === 'ok').length;
+        updateOverviewServices(d.services.length, okCount);
+        updateFilters(d.services);
+      } catch (e) {
+        document.getElementById('service-grid').innerHTML = '<div class="card" style="text-align:center;padding:40px;color:#ef4444;">加载失败: ' + e.message + '</div>';
+      }
+    }
+    function renderServiceCard(s) {
+      const isOk = s.status === 'ok';
+      const isUnknown = s.status === 'unknown';
+      const dotClass = isOk ? 'status-dot' : (isUnknown ? 'status-dot unknown' : 'status-dot offline');
+      const textClass = isOk ? 'status-text' : (isUnknown ? 'status-text unknown' : 'status-text offline');
+      const rtClass = isOk ? 'rt ok' : 'rt error';
+      const rtText = s.responseTime > 0 ? s.responseTime + 'ms' : (s.error || '—');
+      const timeText = s.lastCheck > 0 ? new Date(s.lastCheck).toLocaleTimeString() : '从未检查';
+      return `
+        <div class="service-card">
+          <div class="top">
+            <span class="name">${escapeHtml(s.name)}</span>
+            <span class="group">${escapeHtml(s.group || 'default')}</span>
+          </div>
+          <div class="url">${escapeHtml(s.url)}</div>
+          <div class="bottom">
+            <div class="status-wrap">
+              <div class="${dotClass}"></div>
+              <div class="${textClass}">${s.status}</div>
+            </div>
+            <div class="${rtClass}">${rtText}</div>
+          </div>
+          <div class="time">${timeText}</div>
+          <div class="actions">
+            <div class="btn small" onclick="checkService('${s.id}')">检查</div>
+            <div class="btn small danger" onclick="deleteService('${s.id}', '${escapeHtml(s.name)}')">删除</div>
+          </div>
+        </div>
+      `;
+    }
+    function escapeHtml(s) {
+      const div = document.createElement('div');
+      div.textContent = s;
+      return div.innerHTML;
+    }
+    function updateFilters(services) {
+      const groups = [...new Set(services.map(s => s.group || 'default'))];
+      const bar = document.getElementById('docker-filters');
+      bar.innerHTML = '<div class="filter-btn ' + (currentGroup === 'all' ? 'active' : '') + '" onclick="filterServices(\'all\',this)">全部</div>' +
+        groups.map(g => '<div class="filter-btn ' + (currentGroup === g ? 'active' : '') + '" onclick="filterServices(\'' + g + '\',this)">' + escapeHtml(g) + '</div>').join('');
+    }
+    function filterServices(group, el) {
+      currentGroup = group;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      if (el) el.classList.add('active');
+      loadServices();
+    }
+    function updateOverviewServices(total, ok) {
+      document.getElementById('ov-docker-total').textContent = total;
+      document.getElementById('ov-docker-ok').textContent = ok;
+    }
+    function showAddServiceModal() {
+      document.getElementById('svc-name').value = '';
+      document.getElementById('svc-url').value = '';
+      document.getElementById('svc-group').value = '';
+      showModal('modal-add');
+    }
+    async function addService() {
+      const name = document.getElementById('svc-name').value.trim();
+      const url = document.getElementById('svc-url').value.trim();
+      const group = document.getElementById('svc-group').value.trim();
+      if (!name || !url) { toast('名称和 URL 不能为空', 'error'); return; }
+      try {
+        await api('api/services', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, url, group }) });
+        toast('服务已添加', 'success');
+        closeModal('modal-add');
+        loadServices();
+      } catch (e) { toast('添加失败: ' + e.message, 'error'); }
+    }
+    async function checkService(id) {
+      try {
+        const d = await api('api/services/' + id + '/check', { method: 'POST' });
+        toast(d.service?.name + ': ' + d.service?.status, d.service?.status === 'ok' ? 'success' : 'error');
+        loadServices();
+      } catch (e) { toast('检查失败: ' + e.message, 'error'); }
+    }
+    function deleteService(id, name) {
+      confirmAction('删除服务', '确定删除 "' + name + '" 吗？', async () => {
+        try {
+          await api('api/services/' + id, { method: 'DELETE' });
+          toast('已删除', 'success');
+          loadServices();
+        } catch (e) { toast('删除失败: ' + e.message, 'error'); }
+      });
+    }
+
+    // === Discover Dirs ===
+    async function loadDiscoverDirs() {
+      try {
+        const d = await api('api/services/discover-dirs');
+        const el = document.getElementById('discover-dirs-list');
+        if (!d.dirs || d.dirs.length === 0) {
+          el.innerHTML = '<span style="color:#94a3b8;">暂无自定义目录</span>';
+          return;
+        }
+        el.innerHTML = d.dirs.map(dir => {
+          const isDefault = dir.includes('workspace');
+          const label = isDefault ? dir + ' <span style="color:#94a3b8;font-size:11px;">(默认)</span>' : dir;
+          const delBtn = '<span class="btn small danger" style="padding:4px 8px;" onclick="removeDiscoverDir(\'' + dir.replace(/'/g, "\\'") + '\')">删除</span>';
+          return '<div style="display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(0,0,0,0.04);">' +
+            '<span style="font-size:13px;">' + label + '</span>' + delBtn + '</div>';
+        }).join('');
+      } catch (e) { console.error('loadDiscoverDirs error', e); }
+    }
+
+    // === Supervisor Status ===
+    async function fetchSupervisorStatus() {
+      try {
+        const d = await api('api/supervisor');
+        const wrap = document.getElementById('supervisor-status');
+        if (d.status === 'ok') {
+          wrap.innerHTML = '<div class="status-dot"></div><div class="status-text">running (pid ' + (d.child?.pid || '?') + ')</div>';
+        } else {
+          wrap.innerHTML = '<div class="status-dot offline"></div><div class="status-text offline">offline</div>';
+        }
+      } catch {
+        document.getElementById('supervisor-status').innerHTML = '<div class="status-dot offline"></div><div class="status-text offline">unreachable</div>';
+      }
+    }
+
+    // === Reports ===
+    async function fetchReports() {
+      try {
+        const d = await api('api/reports');
+        const list = document.getElementById('reports-list');
+        if (!list) return;
+        const unreadMap = {};
+        d.reports.forEach(r => { if (!r.read) unreadMap[r.file] = true; });
+        const unreadCount = d.unreadCount || 0;
+        // Badge
+        const badge = document.getElementById('nav-reports-badge');
+        const mobBadge = document.getElementById('mobile-nav-badge');
+        if (badge) {
+          if (unreadCount > 0) {
+            badge.textContent = unreadCount;
+            badge.style.display = '';
+          } else {
+            badge.style.display = 'none';
+          }
+        }
+        if (mobBadge) {
+          if (unreadCount > 0) {
+            mobBadge.textContent = unreadCount;
+            mobBadge.style.display = 'block';
+          } else {
+            mobBadge.style.display = 'none';
+          }
+        }
+        // Overview card
+        const ovTotal = document.getElementById('ov-reports-total');
+        const ovUnread = document.getElementById('ov-reports-unread');
+        if (ovTotal) ovTotal.textContent = d.reports.length + ' 个报告';
+        if (ovUnread) ovUnread.textContent = unreadCount + ' 未读';
+        // Reports tab list
+        if (d.reports.length === 0) {
+          list.innerHTML = '<div style="color:#666;text-align:center;padding:40px;">暂无报告</div>';
+          return;
+        }
+        list.innerHTML = d.reports.map(r => {
+          const date = new Date(r.timestamp);
+          const dateStr = isNaN(date.getTime()) ? r.title : date.toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+          const unread = r.read ? '' : '<span style="background:#ef4444;border-radius:50%;width:8px;height:8px;display:inline-block;margin-right:6px;flex-shrink:0;"></span>';
+          return `<div class="report-item" data-file="${r.file}" style="background:rgba(255,255,255,0.7);border-radius:12px;padding:16px 20px;display:flex;align-items:center;gap:12px;cursor:pointer;">
+            ${unread}
+            <div style="flex:1;min-width:0;">
+              <div style="font-size:14px;font-weight:600;margin-bottom:4px;" onclick="openReport('${r.file}')">${r.title}</div>
+              <div style="font-size:12px;color:#94a3b8;">${dateStr}</div>
+            </div>
+            <div style="font-size:12px;color:#10b981;" onclick="openReport('${r.file}')">查看 →</div>
+          </div>`;
+        }).join('');
+      } catch (e) {
+        const list = document.getElementById('reports-list');
+        if (list) list.innerHTML = '<div style="color:#ef4444;text-align:center;padding:40px;">加载失败: ' + e.message + '</div>';
+      }
+    }
+
+
+    function openReport(file) {
+      window.open('/onboard/reports/' + file, '_blank');
+      // mark read
+      fetch('/onboard/api/reports/' + encodeURIComponent(file) + '/read', { method: 'POST' }).then(() => fetchReports());
+    }
+
+    async function changePassword() {
+      const oldPwd = document.getElementById('pwd-old').value;
+      const newPwd = document.getElementById('pwd-new').value;
+      const confirmPwd = document.getElementById('pwd-confirm').value;
+      if (!oldPwd || !newPwd) { toast('请填写完整', 'error'); return; }
+      if (newPwd !== confirmPwd) { toast('两次新密码不一致', 'error'); return; }
+      if (newPwd.length < 4) { toast('密码至少4位', 'error'); return; }
+      try {
+        const d = await api('api/password', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ oldPassword: oldPwd, newPassword: newPwd }) });
+        if (d.success) {
+          toast('密码已修改，3秒后跳转登录...', 'success');
+          document.getElementById('pwd-old').value = '';
+          document.getElementById('pwd-new').value = '';
+          document.getElementById('pwd-confirm').value = '';
+          setTimeout(() => { window.location.href = '/onboard/'; }, 3000);
+        } else {
+          toast(d.error || '修改失败', 'error');
+        }
+      } catch (e) { toast('修改失败: ' + e.message, 'error'); }
+    }
+
+    // === Init ===
+    fetchStatus();
+    fetchSupervisorStatus();
+    fetchGwDetail();
+    fetchReports();
+    setInterval(fetchStatus, 30000);
+    setInterval(fetchSupervisorStatus, 30000);
+    setInterval(fetchGwDetail, 60000);
+    setInterval(fetchReports, 30000);
+    setInterval(() => { if (currentGroup !== 'all') loadServices(); }, 30000);
+  </script>
+</body>
+</html>

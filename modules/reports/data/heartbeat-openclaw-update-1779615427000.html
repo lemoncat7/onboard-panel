@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>OpenClaw 版本更新 v2026.5.22</title>
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; background: #f5f5f5; }
+.card { background: #fff; border-radius: 12px; padding: 32px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+h1 { margin: 0 0 8px; font-size: 24px; color: #1a1a1a; }
+.subtitle { color: #888; font-size: 14px; margin-bottom: 24px; }
+.badge { display: inline-block; background: #10b981; color: #fff; padding: 4px 12px; border-radius: 6px; font-size: 13px; font-weight: 600; }
+.section { margin-top: 24px; }
+.section h2 { font-size: 16px; color: #333; margin-bottom: 12px; border-bottom: 1px solid #eee; padding-bottom: 8px; }
+pre { background: #f8f9fa; border-radius: 8px; padding: 16px; overflow-x: auto; font-size: 13px; line-height: 1.6; color: #374151; }
+.meta { margin-top: 24px; font-size: 12px; color: #999; }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>🚀 OpenClaw 新版本发布</h1>
+  <div class="subtitle">检测到新版本，已自动发送邮件通知</div>
+  <div class="badge">v2026.5.22</div>
+
+  <div class="section">
+    <h2>版本名称</h2>
+    <p>openclaw 2026.5.22</p>
+  </div>
+
+  <div class="section">
+    <h2>主要变更</h2>
+    <pre>## 2026.5.22
+
+### Changes
+
+- Gateway/perf: reuse process-stable channel catalog reads, avoid repeated bundled-channel boundary checks, and rotate gateway watch CPU profiles so benchmark runs do not accumulate unbounded artifacts.
+- Gateway/perf: reuse immutable plugin metadata snapshots across startup, config, model, channel, setup, and secret metadata readers so hot paths avoid repeated plugin file stats and manifest registry reloads.
+- Gateway/perf: lazy-load startup-idle plugin work, core gateway method handlers, and the embedded ACPX runtime so Gateway health and ready signals no longer wait on unused handler trees or ACPX probes.
+- Gateway/perf: cache plugin SDK public-surface alias maps and skip irrelevant macOS Linuxbrew PATH probes so Gateway startup avoids repeated filesystem walks and slow missing-directory stats.
+- Meeting Notes: add a source-only external meeting-notes plugin and SDK source-provider contract outside the core npm package, with auto-start capture config, manual transcript imports, read-only `openclaw meeting-notes` CLI access, and Discord voice as the first live source.
+- Docs/channels/config: add Signal configPath, Telegram wildcard topic defaults, local-time backup archive names, Termux home fallback, include-path validation, secret-scanner-safe placeholder guidance, Gemini CLI/Antigravity media guidance, and macOS VM auto-login guidance.
+- Docs: clarify model-usage portability, Codex migration prerequisites, status bootstrap wording, thread-bound subagent limits, hook ownership, and config-preserving safety guidance.
+- Docs: clarify README onboarding and Gateway startup paths, WhatsApp QR/408 recovery, cron output language prompts, skill advanced features, gateway upstream 403 troubleshooting, and plugin fallback overr</pre>
+  </div>
+
+  <div class="section">
+    <h2>操作记录</h2>
+    <p>✅ 已发送邮件至 834426963@qq.com</p>
+    <p>📦 新版本详情见邮件正文或 <a href="https://github.com/openclaw/openclaw/releases/latest" target="_blank">GitHub Release</a></p>
+  </div>
+
+  <div class="meta">报告生成时间: 2026-05-24 17:37 (Asia/Shanghai)</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>系统巡检报告 - 2026-05-25 16:05</title>
+<style>
+body { font-family: system-ui, sans-serif; max-width: 800px; margin: 2rem auto; padding: 0 1rem; color: #333; }
+h1 { font-size: 1.5rem; border-bottom: 2px solid #4CAF50; padding-bottom: 0.5rem; }
+h2 { font-size: 1.2rem; margin-top: 1.5rem; color: #555; }
+table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+th, td { text-align: left; padding: 0.5rem; border-bottom: 1px solid #ddd; }
+th { background: #f5f5f5; }
+.status-ok { color: #4CAF50; font-weight: bold; }
+.status-warn { color: #FF9800; font-weight: bold; }
+.status-bad { color: #f44336; font-weight: bold; }
+pre { background: #f5f5f5; padding: 1rem; border-radius: 4px; overflow-x: auto; }
+</style>
+</head>
+<body>
+<h1>🔧 系统 + Wiki 巡检报告</h1>
+<p><strong>时间：</strong>2026-05-25 16:05 (Asia/Shanghai)</p>
+
+<h2>系统状态</h2>
+<table>
+<tr><th>指标</th><th>结果</th><th>状态</th></tr>
+<tr><td>磁盘空间</td><td>15% 已用 (530G / 3.7T)</td><td class="status-ok">✅ 健康</td></tr>
+<tr><td>内存使用</td><td>9.6G / 15G 已用，5.8G 可用</td><td class="status-ok">✅ 正常</td></tr>
+<tr><td>系统负载</td><td>1.65 (1m) / 1.48 (5m) / 1.54 (15m)</td><td class="status-ok">✅ 正常</td></tr>
+<tr><td>僵尸进程</td><td>2 个</td><td class="status-warn">⚠️ 少量</td></tr>
+</table>
+
+<h2>Wiki 状态</h2>
+<table>
+<tr><th>指标</th><th>结果</th><th>状态</th></tr>
+<tr><td>编译</td><td>78 页，0 索引更新</td><td class="status-ok">✅ 正常</td></tr>
+<tr><td>页面数</td><td>62 sources, 2 entities, 3 concepts, 1 syntheses, 10 reports</td><td class="status-ok">✅ 正常</td></tr>
+<tr><td>Lint 警告</td><td>3 个（均为桥接文件中的格式化标记被误判为 wikilink）</td><td class="status-warn">⚠️ 轻微</td></tr>
+</table>
+
+<h2>详情</h2>
+<h3>磁盘空间 (df -h)</h3>
+<pre>
+Filesystem                                      Size  Used Avail Use% Mounted on
+overlay                                         3.7T  530G  3.2T  15% /
+tmpfs                                            64M     0   64M   0% /dev
+shm                                              64M     0   64M   0% /dev/shm
+overlay                                          19G   13G  4.8G  74% /usr/sbin/docker-init
+/dev/mapper/ug_29C56C_1734775571_pool1-volume1  3.7T  530G  3.2T  15% /etc/hosts
+/dev/mapper/ug_29C56C_1744336467_pool3-volume1  917G  180G  736G  20% /home/root/.cache
+</pre>
+
+<h3>内存 (free -h)</h3>
+<pre>
+total        used        free      shared  buff/cache   available
+Mem:            15Gi       9.6Gi       1.6Gi        99Mi       5.6Gi       5.8Gi
+Swap:          9.7Gi       5.3Gi       4.4Gi
+</pre>
+
+<h3>Wiki Lint 警告</h3>
+<pre>
+sources/bridge-workspace-ae26912a-memory-dreaming-light-2026-05-23-a3f20d86.md: Broken wikilink target `reply_to_current`
+sources/bridge-workspace-ae26912a-memory-dreaming-light-2026-05-23-a3f20d86.md: Broken wikilink target `url`
+sources/bridge-workspace-ae26912a-memory-dreaming-light-2026-05-24-be154bbd.md: Broken wikilink target `reply_to_current`
+</pre>
+<p><em>注：以上警告为桥接文件中的 OpenClaw 输出指令（如 <code>[[reply_to_current]]</code>、<code>MEDIA:url</code>）被误识别为 wikilink，属无害误报。</em></p>
+
+<hr>
+<p style="color:#888;font-size:0.9rem;">莫殇巡逻中 👀⚡</p>
+</body>
+</html>

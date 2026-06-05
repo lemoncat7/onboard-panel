@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>系统巡检 & Wiki 巡检 - 2026-05-23 10:35</title>
+<style>
+body { font-family: system-ui, -apple-system, sans-serif; max-width: 960px; margin: 40px auto; padding: 0 20px; color: #333; }
+h1 { font-size: 1.6rem; border-bottom: 2px solid #4CAF50; padding-bottom: 10px; }
+h2 { font-size: 1.2rem; margin-top: 30px; color: #2c3e50; }
+table { border-collapse: collapse; width: 100%; margin-top: 12px; }
+th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+th { background: #f5f5f5; }
+tr:nth-child(even) { background: #fafafa; }
+.status-ok { color: #4CAF50; font-weight: bold; }
+.status-warn { color: #FF9800; font-weight: bold; }
+.status-err { color: #f44336; font-weight: bold; }
+pre { background: #f5f5f5; padding: 12px; border-radius: 6px; overflow-x: auto; font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<h1>🛡️ 系统巡检 & Wiki 巡检报告</h1>
+<p>生成时间：2026-05-23 10:35 (Asia/Shanghai)</p>
+
+<h2>📊 系统状态</h2>
+<table>
+<tr><th>项目</th><th>状态</th><th>详情</th></tr>
+<tr><td>磁盘空间 (root)</td><td class="status-ok">健康 (15%)</td><td>3.7T 总容量，已用 531G，剩余 3.1T</td></tr>
+<tr><td>磁盘空间 (/home/root/.cache)</td><td class="status-ok">健康 (20%)</td><td>917G 总容量，已用 179G，剩余 737G</td></tr>
+<tr><td>内存使用</td><td class="status-ok">正常</td><td>总 15Gi，已用 9.1Gi，可用 6.3Gi</td></tr>
+<tr><td>系统负载</td><td class="status-ok">正常</td><td>1.77, 1.85, 1.71 (20天运行中)</td></tr>
+<tr><td>僵尸进程</td><td class="status-ok">无</td><td>0 个僵尸进程</td></tr>
+<tr><td>Wiki 空目录清理</td><td class="status-ok">无需清理</td><td>0 个空目录</td></tr>
+</table>
+
+<h2>📚 Wiki 状态</h2>
+<table>
+<tr><th>项目</th><th>结果</th><th>详情</th></tr>
+<tr><td>Wiki 编译</td><td class="status-ok">成功</td><td>72 页面，0 索引更新</td></tr>
+<tr><td>Wiki 检查</td><td class="status-ok">通过</td><td>0 个问题</td></tr>
+<tr><td>Wiki 概览</td><td class="status-ok">就绪</td><td>56 sources, 2 entities, 3 concepts, 1 syntheses, 10 reports</td></tr>
+</table>
+
+<h2>📝 原始数据</h2>
+<h3>df -h</h3>
+<pre>
+Filesystem                                      Size  Used Avail Use% Mounted on
+overlay                                         3.7T  531G  3.1T  15% /
+tmpfs                                            64M     0   64M   0% /dev
+shm                                              64M     0   64M   0% /dev/shm
+overlay                                          19G   13G  4.7G  74% /usr/sbin/docker-init
+/dev/mapper/ug_29C56C_1734775571_pool1-volume1  3.7T  531G  3.1T  15% /etc/hosts
+/dev/mapper/ug_29C56C_1744336467_pool3-volume1  917G  179G  737G  20% /home/root/.cache
+</pre>
+
+<h3>free -h</h3>
+<pre>
+total        used        free      shared  buff/cache   available
+Mem:            15Gi       9.1Gi       1.5Gi       122Mi       6.2Gi       6.3Gi
+Swap:          9.7Gi       6.7Gi       3.0Gi
+</pre>
+
+<h3>uptime</h3>
+<pre>10:35:22 up 20 days, 14:52,  0 user,  load average: 1.77, 1.85, 1.71</pre>
+
+<h3>openclaw wiki status</h3>
+<pre>Wiki vault mode: bridge
+Vault: ready (/home/root/.openclaw/workspace/record/wiki)
+Render mode: obsidian
+Obsidian CLI: missing
+Bridge: enabled (56 exported artifacts)
+Unsafe local: disabled
+Pages: 56 sources, 2 entities, 3 concepts, 1 syntheses, 10 reports
+Source provenance: 0 native, 55 bridge, 1 bridge-events, 0 unsafe-local, 0 other</pre>
+
+<p style="margin-top:40px;color:#999;font-size:0.85rem;">由莫殇 Heartbeat 自动生成 ⚡</p>
+</body>
+</html>

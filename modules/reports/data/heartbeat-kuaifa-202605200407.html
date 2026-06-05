@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>心跳报告 - Kuaifa 热点文章发布</title>
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background: #f5f5f7; }
+.card { background: #fff; border-radius: 16px; padding: 24px; margin-bottom: 16px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+h1 { color: #1d1d1f; font-size: 24px; margin: 0 0 8px; }
+.sub { color: #86868b; font-size: 14px; }
+.status-ok { color: #34c759; font-weight: 600; }
+.status-warn { color: #ff9500; font-weight: 600; }
+.status-err { color: #ff3b30; font-weight: 600; }
+.section-title { font-size: 16px; font-weight: 600; color: #1d1d1f; margin: 16px 0 8px; border-left: 4px solid #007aff; padding-left: 10px; }
+pre { background: #f2f2f7; padding: 12px; border-radius: 8px; overflow-x: auto; font-size: 13px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 8px; }
+th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid #e5e5ea; }
+th { color: #86868b; font-weight: 500; }
+.cover { width: 100%; border-radius: 12px; margin: 12px 0; }
+</style>
+</head>
+<body>
+<div class="card">
+<h1>🤖 AI 圈地震！Karpathy 加盟 Anthropic，Google 搜索彻底 AI 化</h1>
+<div class="sub">生成时间: 2026-05-20 04:07 (Asia/Shanghai) | 类型: kuaifa-hotnews</div>
+</div>
+
+<div class="card">
+<div class="section-title">📰 文章发布状态</div>
+<p><span class="status-ok">✅ 发布成功</span> — 文章已推送到微信公众号草稿箱</p>
+<table>
+<tr><th>项目</th><th>详情</th></tr>
+<tr><td>标题</td><td>🤖 AI 圈地震！Karpathy 加盟 Anthropic，Google 搜索彻底 AI 化</td></tr>
+<tr><td>media_id</td><td><code>lNP1W3wZstHurAUmmwnjp2z9NI3aUrEXjcaCgTKdtUSf2TIshRY6qqvq061BsMUE</code></td></tr>
+<tr><td>封面图</td><td>Midjourney v7 生成 (1456×816)</td></tr>
+<tr><td>字数</td><td>~2600 字</td></tr>
+<tr><td>章节</td><td>5 个章节</td></tr>
+</table>
+</div>
+
+<div class="card">
+<div class="section-title">🔥 今日热点汇总</div>
+<table>
+<tr><th>事件</th><th>热度</th><th>来源</th></tr>
+<tr><td>Andrej Karpathy 加入 Anthropic</td><td>913 分 / 355 评论</td><td>Hacker News / Twitter</td></tr>
+<tr><td>Google I/O 2026 搜索 AI 改版</td><td>核心发布</td><td>Google Blog / TechCrunch / The Verge</td></tr>
+<tr><td>Apple AI 无障碍功能更新</td><td>502 分</td><td>Apple Newsroom</td></tr>
+<tr><td>高斯溅射草莓 3D 展示</td><td>421 分</td><td>Show HN</td></tr>
+</table>
+</div>
+
+<div class="card">
+<div class="section-title">📎 操作记录</div>
+<pre>
+1. 扫描 HN Top Stories API → 筛选科技/AI/开源热点
+2. 生成封面图 (huanwang-ai Midjourney v7) → task 1779221212933654
+3. 撰写综合文章 (~2600字，5章节) → /tmp/kuaifa-article.md
+4. 下载单张封面 (kuaifa-cover.png, 1.5MB)
+5. kuaifa publish → 草稿箱 (media_id 已生成)
+6. 生成本报告 + Bark 推送通知
+</pre>
+</div>
+
+<div class="card">
+<div class="section-title">🔗 相关链接</div>
+<ul>
+<li><a href="https://twitter.com/karpathy/status/2056753169888334312" target="_blank">Karpathy 官宣推文</a></li>
+<li><a href="https://blog.google/products-and-platforms/products/search/search-io-2026/" target="_blank">Google I/O 2026 搜索更新</a></li>
+<li><a href="https://techcrunch.com/2026/05/19/google-search-as-you-know-it-is-over/" target="_blank">TechCrunch: Google Search as you know it is over</a></li>
+<li><a href="https://www.theverge.com/tech/932970/google-search-ai-update-io-2026" target="_blank">The Verge: Google Search biggest changes ever</a></li>
+<li><a href="https://www.apple.com/newsroom/2026/05/apple-unveils-new-accessibility-features-and-updates-with-apple-intelligence/" target="_blank">Apple Newsroom: AI 无障碍功能</a></li>
+</ul>
+</div>
+</body>
+</html>

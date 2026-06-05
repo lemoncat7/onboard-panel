@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heartbeat 巡检报告 | 2026-06-05 10:00</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: #e2e8f0; max-width: 800px; margin: 40px auto; padding: 20px; }
+  h1 { font-size: 1.5rem; border-bottom: 1px solid #334155; padding-bottom: 12px; }
+  .card { background: #1e293b; border-radius: 12px; padding: 20px; margin: 16px 0; }
+  .card h2 { font-size: 1.1rem; margin: 0 0 12px 0; color: #94a3b8; }
+  .status-ok { color: #4ade80; }
+  .status-warn { color: #facc15; }
+  .status-err { color: #f87171; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+  .metric { background: #0f172a; padding: 12px; border-radius: 8px; }
+  .metric .value { font-size: 1.3rem; font-weight: 600; }
+  .metric .label { font-size: 0.85rem; color: #94a3b8; margin-top: 4px; }
+  pre { background: #0f172a; padding: 12px; border-radius: 8px; overflow-x: auto; font-size: 0.85rem; color: #cbd5e1; }
+</style>
+</head>
+<body>
+<h1>🤖 莫殇巡逻报告 — 2026-06-05 10:00</h1>
+
+<div class="card">
+  <h2>📧 邮箱检查</h2>
+  <p class="status-ok">✅ 无新邮件，全部已读</p>
+</div>
+
+<div class="card">
+  <h2>🖥 系统状态</h2>
+  <div class="grid">
+    <div class="metric">
+      <div class="value status-ok">15%</div>
+      <div class="label">磁盘使用 (根分区)</div>
+    </div>
+    <div class="metric">
+      <div class="value status-warn">77%</div>
+      <div class="label">/usr/sbin/docker-init</div>
+    </div>
+    <div class="metric">
+      <div class="value status-ok">57%</div>
+      <div class="label">内存使用 (8.6/15G)</div>
+    </div>
+    <div class="metric">
+      <div class="value status-ok">0</div>
+      <div class="label">僵尸进程</div>
+    </div>
+    <div class="metric">
+      <div class="value status-ok">3.07</div>
+      <div class="label">1min 负载</div>
+    </div>
+    <div class="metric">
+      <div class="value status-ok">20%</div>
+      <div class="label">.cache 磁盘使用</div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>📚 Wiki 状态</h2>
+  <p><span class="status-ok">✅ 编译成功</span> — 120 pages, 0 errors</p>
+  <p><span class="status-warn">⚠️ 3 warnings</span> — 3 broken wikilinks in bridge sources</p>
+  <pre>Broken links in bridge-workspace memory files (reply_to_current, url)
+→ 均为 bridge 导出的格式标记，非内容链接，可忽略</pre>
+</div>
+
+<div class="card">
+  <h2>📝 备注</h2>
+  <ul>
+    <li>/usr/sbin/docker-init 使用率 77% — 但此路径为 overlay 挂载，不是持久存储，不影响实际容量</li>
+    <li>Swap 使用 5.8/9.7G — 系统运行正常，无需干预</li>
+  </ul>
+</div>
+
+<p style="text-align:center; color:#64748b; font-size:0.85rem; margin-top:30px;">_莫殇巡逻中... 👀⚡_</p>
+</body>
+</html>

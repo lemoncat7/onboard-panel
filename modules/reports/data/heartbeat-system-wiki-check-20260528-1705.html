@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>系统巡检 & Wiki 巡检报告 — 2026-05-28 17:05</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #333; background: #fafafa; }
+  h1 { font-size: 24px; border-bottom: 2px solid #e0e0e0; padding-bottom: 10px; }
+  h2 { font-size: 18px; margin-top: 28px; color: #222; }
+  .badge { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; margin-left: 8px; }
+  .badge-ok { background: #d4edda; color: #155724; }
+  .badge-warn { background: #fff3cd; color: #856404; }
+  .badge-err { background: #f8d7da; color: #721c24; }
+  table { width: 100%; border-collapse: collapse; margin-top: 12px; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+  th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #f0f0f0; }
+  th { background: #f5f5f5; font-weight: 600; font-size: 13px; color: #666; }
+  td { font-size: 14px; }
+  tr:last-child td { border-bottom: none; }
+  pre { background: #f4f4f4; padding: 12px; border-radius: 6px; overflow-x: auto; font-size: 13px; line-height: 1.5; }
+  .section { background: #fff; padding: 16px 20px; border-radius: 8px; margin-top: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+  .fix-list { margin: 0; padding-left: 20px; }
+  .fix-list li { margin: 6px 0; }
+</style>
+</head>
+<body>
+<h1>🔧 系统巡检 & Wiki 巡检报告 <span style="font-size:14px;color:#888;font-weight:400;">2026-05-28 17:05</span></h1>
+
+<div class="section">
+  <h2>🖥️ 系统巡检 <span class="badge badge-ok">健康</span></h2>
+  <table>
+    <tr><th>项目</th><th>结果</th><th>状态</th></tr>
+    <tr><td>磁盘空间（/）</td><td>3.7T 中已用 534G（15%）</td><td><span class="badge badge-ok">正常</span></td></tr>
+    <tr><td>磁盘空间（cache）</td><td>917G 中已用 181G（20%）</td><td><span class="badge badge-ok">正常</span></td></tr>
+    <tr><td>内存</td><td>15G 总 / 9.8G 已用 / 5.6G Available</td><td><span class="badge badge-warn">Swap 偏高（6.7G/9.7G）</span></td></tr>
+    <tr><td>负载</td><td>1.78 / 1.78 / 1.80（5d 2h 在线）</td><td><span class="badge badge-ok">正常</span></td></tr>
+    <tr><td>僵尸进程</td><td>0</td><td><span class="badge badge-ok">正常</span></td></tr>
+  </table>
+</div>
+
+<div class="section">
+  <h2>📚 Wiki 巡检 <span class="badge badge-warn">已修复 1 项，遗留 1 项</span></h2>
+
+  <h3 style="margin-top:18px;font-size:15px;">✅ 已自动修复</h3>
+  <ul class="fix-list">
+    <li>删除 <code>record/wiki/reports/</code> 下 5 个误建为「目录」的 <code>*.md</code> 文件：
+      <code>lint.md</code>、<code>person-agent-directory.md</code>、<code>privacy-review.md</code>、
+      <code>provenance-coverage.md</code>、<code>relationship-graph.md</code>
+    </li>
+    <li><strong>修复结果：</strong> <code>openclaw wiki lint</code> 现已正常通过（0 issues）</li>
+  </ul>
+
+  <h3 style="margin-top:18px;font-size:15px;">⚠️ 遗留问题</h3>
+  <p><code>openclaw wiki status</code> 仍报错，需哥哥关注：</p>
+  <pre>Refusing to write imported source page over non-file:
+sources/bridge-workspace-ae26912a-memory-2d62c497.md</pre>
+  <p>该路径在 <code>sources/</code> 下<strong>已不存在</strong>，但 wiki 编译缓存/元数据中仍引用，可能需手动清理 wiki 索引或对应 gateway DB 记录。</p>
+</div>
+
+<div class="section">
+  <h2>📝 建议</h2>
+  <ul class="fix-list">
+    <li>Swap 占用 69%，如后续内存持续紧张可考虑重启释放或排查大内存进程。</li>
+    <li>Wiki 遗留报错建议尝试 <code>openclaw wiki compile --force</code> 或清理相关导入源缓存。</li>
+  </ul>
+</div>
+
+</body>
+</html>

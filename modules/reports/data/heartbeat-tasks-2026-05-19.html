@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heartbeat Report - Tasks - 2026-05-19</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background: #f8fafc; color: #334155; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 24px; border-radius: 12px; margin-bottom: 24px; }
+        .header h1 { margin: 0; font-size: 24px; }
+        .header .time { opacity: 0.9; font-size: 14px; margin-top: 6px; }
+        .card { background: white; border-radius: 10px; padding: 20px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        .status-ok { border-left: 4px solid #48bb78; }
+        .status-info { border-left: 4px solid #4299e1; }
+        .card h3 { margin: 0 0 10px 0; color: #1a202c; }
+        .card p { margin: 6px 0; line-height: 1.6; }
+        .badge { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+        .badge-green { background: #c6f6d5; color: #22543d; }
+        .badge-blue { background: #bee3f8; color: #2a4365; }
+        .projects { margin-top: 10px; }
+        .project-item { padding: 8px 0; border-bottom: 1px solid #edf2f7; }
+        .project-item:last-child { border-bottom: none; }
+        .project-name { font-weight: 600; color: #2d3748; }
+        .project-stars { color: #ed8936; font-size: 13px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>⚡ Heartbeat 任务执行报告</h1>
+        <div class="time">2026-05-19 06:05 CST</div>
+    </div>
+
+    <div class="card status-ok">
+        <h3>📧 AgentMail 邮箱检查</h3>
+        <span class="badge badge-green">完成</span>
+        <p><strong>状态:</strong> 已检查 moshang@agentmail.to 收件箱</p>
+        <p><strong>未读邮件:</strong> 0 封</p>
+        <p><strong>处理:</strong> 无需标记已读，暂无新邮件</p>
+    </div>
+
+    <div class="card status-info">
+        <h3>🚀 好玩项目发现</h3>
+        <span class="badge badge-blue">已发送邮件</span>
+        <p>今日发现 5 个高质量开源项目，已生成记录并发送邮件给 834426963@qq.com</p>
+        <div class="projects">
+            <div class="project-item">
+                <span class="project-name">build-your-own-x</span>
+                <span class="project-stars">⭐ 502,278</span>
+            </div>
+            <div class="project-item">
+                <span class="project-name">Immich</span>
+                <span class="project-stars">⭐ 100,995</span>
+            </div>
+            <div class="project-item">
+                <span class="project-name">AFFiNE</span>
+                <span class="project-stars">⭐ 68,509</span>
+            </div>
+            <div class="project-item">
+                <span class="project-name">Coolify</span>
+                <span class="project-stars">⭐ 55,526</span>
+            </div>
+            <div class="project-item">
+                <span class="project-name">Maybe Finance</span>
+                <span class="project-stars">⭐ 54,130</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>📁 文件记录</h3>
+        <p>项目详情已记录到: <code>record/projects/2026-05-19.md</code></p>
+    </div>
+</body>
+</html>

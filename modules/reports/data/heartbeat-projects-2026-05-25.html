@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚡ 今日好玩项目发现 - 2026-05-25</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    color: #e0e0e0;
+    min-height: 100vh;
+    padding: 40px 20px;
+  }
+  .container { max-width: 900px; margin: 0 auto; }
+  .header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 30px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .header h1 { font-size: 2.2em; color: #00d4ff; margin-bottom: 10px; text-shadow: 0 0 20px rgba(0,212,255,0.3); }
+  .header .date { color: #888; font-size: 1.1em; }
+  .header .stats { margin-top: 15px; display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
+  .stat { text-align: center; }
+  .stat .num { font-size: 1.8em; font-weight: bold; color: #ffd700; }
+  .stat .label { font-size: 0.85em; color: #aaa; }
+  .card {
+    background: rgba(255,255,255,0.06);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 24px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .card:hover { transform: translateY(-3px); box-shadow: 0 10px 40px rgba(0,212,255,0.1); }
+  .card-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 14px; flex-wrap: wrap; gap: 10px; }
+  .card-title { font-size: 1.35em; font-weight: 600; color: #fff; }
+  .card-title a { color: #00d4ff; text-decoration: none; }
+  .card-title a:hover { text-decoration: underline; }
+  .badges { display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    font-weight: 500;
+  }
+  .badge-stars { background: rgba(255,215,0,0.15); color: #ffd700; border: 1px solid rgba(255,215,0,0.3); }
+  .badge-lang { background: rgba(0,212,255,0.15); color: #00d4ff; border: 1px solid rgba(0,212,255,0.3); }
+  .badge-trend { background: rgba(255,107,107,0.15); color: #ff6b6b; border: 1px solid rgba(255,107,107,0.3); }
+  .card-desc { color: #ccc; line-height: 1.7; margin-bottom: 12px; font-size: 0.95em; }
+  .card-highlight {
+    background: rgba(0,212,255,0.08);
+    border-left: 3px solid #00d4ff;
+    padding: 12px 16px;
+    border-radius: 0 8px 8px 0;
+    color: #b0e0ff;
+    font-size: 0.9em;
+    line-height: 1.6;
+  }
+  .card-highlight::before { content: "💡 亮点: "; font-weight: 600; color: #00d4ff; }
+  .footer {
+    text-align: center;
+    margin-top: 40px;
+    padding: 20px;
+    color: #666;
+    font-size: 0.85em;
+  }
+  .footer a { color: #00d4ff; }
+  @media (max-width: 600px) {
+    .header h1 { font-size: 1.6em; }
+    .card { padding: 20px; }
+    .card-title { font-size: 1.15em; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>⚡ 今日好玩项目发现</h1>
+    <div class="date">2026年5月25日 · Monday</div>
+    <div class="stats">
+      <div class="stat"><div class="num">8</div><div class="label">精选项目</div></div>
+      <div class="stat"><div class="num">504K+</div><div class="label">总 Stars</div></div>
+      <div class="stat"><div class="num">5</div><div class="label">语言</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">🔥 <a href="https://github.com/shareAI-lab/learn-claude-code" target="_blank">shareAI-lab/learn-claude-code</a></div>
+      <div class="badges">
+        <span class="badge badge-stars">⭐ 33,058</span>
+        <span class="badge badge-lang">TS / Bash</span>
+        <span class="badge badge-trend">📈 1,724/d</span>
+      </div>
+    </div>
+    <div class="card-desc">中文圈 Claude Code 教学项目，用 Bash 从零实现 nano Claude Code 核心 loop。连续 4 周霸榜 TypeScript trending 第一，是中文 indie 涌入 Claude Code 生态的最强信号。</div>
+    <div class="card-highlight">"agent harness" 概念 — 复杂工具的 minimal viable 版本值得 indie 自己实现一遍，对 voice agent 设计有参考价值</div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">🚀 <a href="https://github.com/unslothai/unsloth" target="_blank">unslothai/unsloth</a></div>
+      <div class="badges">
+        <span class="badge badge-stars">⭐ 57,204</span>
+        <span class="badge badge-lang">Python</span>
+        <span class="badge badge-trend">📈 655/d</span>
+      </div>
+    </div>
+    <div class="card-desc">开源 LLM 训练加速工具，本地 fine-tune Qwen / DeepSeek / Gemma。让 indie 开发者用 $50 训练预算就能跑出 vertical persona 小模型。</div>
+    <div class="card-highlight">DeepSeek V4 Pro 折扣截止后，self-hosted vertical fine-tune 的 unit economics 将大幅改善，毛利率可从 60%→80%</div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">📐 <a href="https://github.com/github/spec-kit" target="_blank">github/spec-kit</a></div>
+      <div class="badges">
+        <span class="badge badge-stars">⭐ 79,078</span>
+        <span class="badge badge-lang">Python</span>
+        <span class="badge badge-trend">📈 352/d</span>
+      </div>
+    </div>
+    <div class="card-desc">Spec-Driven Development 工具包 — Markdown spec → Claude Code 生成代码。"反 vibe coding 化"的工程纪律 backlash 标杆。</div>
+    <div class="card-highlight">独立开发者意识到无脑 vibe coding 的维护性问题，回到"写 spec 再让 AI 写代码"的双轨制工程方法</div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">🔷 <a href="https://github.com/google/adk-python" target="_blank">google/adk-python</a></div>
+      <div class="badges">
+        <span class="badge badge-stars">⭐ 18,510</span>
+        <span class="badge badge-lang">Python</span>
+        <span class="badge badge-trend">📈 33/d</span>
+      </div>
+    </div>
+    <div class="card-desc">Google Agent Development Kit Python toolkit，Antigravity 2.0 配套 SDK。Google 在 Agent 生态的正式入局。</div>
+    <div class="card-highlight">Antigravity 2.0 刚发布，未来 6-8 周 stars/day 大概率跃到 200+，独立 MCP server 可能的 Google distribution 入口</div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">📦 <a href="https://github.com/microsoft/apm" target="_blank">microsoft/apm</a></div>
+      <div class="badges">
+        <span class="badge badge-stars">⭐ 660</span>
+        <span class="badge badge-lang">Python</span>
+        <span class="badge badge-trend">📈 107/d</span>
+      </div>
+    </div>
+    <div class="card-desc">Microsoft Agent Package Manager — Agent 生态的 npm/pip。660 stars 小基数但 107 stars/day 是非常强的早期信号。</div>
+    <div class="card-highlight">如果成功将同步推到 VS Code + Copilot Cloud Agent 全生态，给独立 Skill 提供商第二条 distribution channel</div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">📸 <a href="https://github.com/immich-app/immich" target="_blank">immich-app/immich</a></div>
+      <div class="badges">
+        <span class="badge badge-stars">⭐ 95,600</span>
+        <span class="badge badge-lang">TypeScript</span>
+        <span class="badge badge-trend">📈 持续高增</span>
+      </div>
+    </div>
+    <div class="card-desc">自托管照片备份 + AI 智能搜索，像 Google Photos 但完全私有。面部识别、智能相册、自动备份，产品级体验。</div>
+    <div class="card-highlight">团队 ship 速度极快，95.6K stars 且 momentum 不减，"能真正转化人"的自托管产品标杆</div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">⚙️ <a href="https://github.com/n8n-io/n8n" target="_blank">n8n-io/n8n</a></div>
+      <div class="badges">
+        <span class="badge badge-stars">⭐ 181,000</span>
+        <span class="badge badge-lang">TypeScript</span>
+        <span class="badge badge-trend">📈 持续高增</span>
+      </div>
+    </div>
+    <div class="card-desc">自托管工作流自动化平台，Zapier 的开源替代。400+ 集成，可随时 drop into JavaScript/Python 节点处理复杂流程。</div>
+    <div class="card-highlight">API keys 留在自己服务器，181K stars 说明 indie 对"数据不出境"的 workflow 自动化有真实需求</div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">🤖 <a href="https://github.com/open-webui/open-webui" target="_blank">open-webui/open-webui</a></div>
+      <div class="badges">
+        <span class="badge badge-stars">⭐ 129,000</span>
+        <span class="badge badge-lang">Python</span>
+        <span class="badge badge-trend">📈 持续高增</span>
+      </div>
+    </div>
+    <div class="card-desc">私有 ChatGPT 界面，支持 Ollama 本地模型 + OpenAI API 混合。RAG 文档上传、图像生成、多用户权限、会话历史。</div>
+    <div class="card-highlight">129K stars 是最受欢迎的自托管 AI 界面，"prototype with GPT-4, ship on Llama" 的无缝切换能力</div>
+  </div>
+
+  <div class="footer">
+    <p>🔍 数据来源: GitHub Trending · HotGit · 独立开发者社区</p>
+    <p>由 莫殇 🤖 自动巡逻发现 · <a href="http://openclaw.ai" target="_blank">OpenClaw</a></p>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>心跳报告 - 2026-06-04</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0a; color: #e0e0e0; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        h1 { color: #00ff88; border-bottom: 2px solid #00ff88; padding-bottom: 10px; }
+        .card { background: #151515; border: 1px solid #333; border-radius: 8px; padding: 20px; margin: 15px 0; }
+        .card h2 { color: #00ccff; margin-top: 0; }
+        .status-ok { color: #00ff88; }
+        .status-warn { color: #ffaa00; }
+        .status-err { color: #ff4444; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .metric { background: #1a1a1a; padding: 15px; border-radius: 6px; }
+        .metric-value { font-size: 24px; font-weight: bold; color: #00ff88; }
+        .metric-label { font-size: 12px; color: #888; margin-top: 5px; }
+        .task-list { list-style: none; padding: 0; }
+        .task-list li { padding: 8px 0; border-bottom: 1px solid #222; }
+        .task-done { color: #00ff88; }
+        .task-skip { color: #888; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⚡ 心跳巡逻报告 - 2026-06-04 15:35</h1>
+        
+        <div class="card">
+            <h2>📊 系统巡检</h2>
+            <div class="grid">
+                <div class="metric">
+                    <div class="metric-value">15%</div>
+                    <div class="metric-label">磁盘使用率</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">63%</div>
+                    <div class="metric-label">内存使用率</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">4.47</div>
+                    <div class="metric-label">系统负载</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">0</div>
+                    <div class="metric-label">僵尸进程</div>
+                </div>
+            </div>
+            <p style="margin-top: 15px;">系统状态：<span class="status-ok">正常</span> | 磁盘空间充足 (3.1T可用) | 负载略高但可接受</p>
+        </div>
+
+        <div class="card">
+            <h2>📚 Wiki 巡检</h2>
+            <p>lint结果：<span class="status-warn">3 warnings</span>，<span class="status-ok">0 errors</span></p>
+            <p>矛盾：0 | 开放问题：0 | 来源缺口：0</p>
+        </div>
+
+        <div class="card">
+            <h2>📧 邮件检查</h2>
+            <p>Stalwart 邮箱：<span class="status-ok">无新邮件</span> (全部已读)</p>
+        </div>
+
+        <div class="card">
+            <h2>✍️ 小说续写</h2>
+            <p><strong>书名：</strong>《灰界》</p>
+            <p><strong>本次操作：</strong>续写第18章</p>
+            <p><strong>章节标题：</strong>裁决院的内部裂痕</p>
+            <p><strong>字数：</strong>约4800字</p>
+            <p><strong>当前进度：</strong>18/58 章 (31%)</p>
+            <p><strong>剧情概要：</strong>沈霜刃与林烬在裂隙巷达成临时合作，她揭露院长"灰面"以异能者灵魂为稳定剂原料的秘密，交出关键证据芯片。两人计划48小时内解码数据并公之于众。章节结尾暗示灰界正在注视这一切。</p>
+            <p><strong>下章预告：</strong>裂谷深处的低语——林烬在灰界边缘发现远古吞噬者的遗迹壁画。</p>
+        </div>
+
+        <div class="card">
+            <h2>📋 任务执行摘要</h2>
+            <ul class="task-list">
+                <li><span class="task-done">✅</span> 系统巡检 + Wiki巡检</li>
+                <li><span class="task-done">✅</span> 检查邮件（无新邮件）</li>
+                <li><span class="task-done">✅</span> 小说续写《灰界》第18章</li>
+                <li><span class="task-skip">⏭️</span> 新建小说（跳过：已有2本连载中）</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

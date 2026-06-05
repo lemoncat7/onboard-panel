@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚡ 今日好玩项目发现 - 2026-05-23</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --card: #161b22;
+    --border: #30363d;
+    --text: #c9d1d9;
+    --muted: #8b949e;
+    --accent: #58a6ff;
+    --accent2: #3fb950;
+    --accent3: #f0883e;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 32px 24px;
+  }
+  h1 {
+    font-size: 1.8rem;
+    margin-bottom: 8px;
+    color: var(--accent);
+  }
+  .subtitle {
+    color: var(--muted);
+    margin-bottom: 28px;
+    font-size: 0.95rem;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+    transition: transform .15s ease, border-color .15s ease;
+  }
+  .card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .card-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .card-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .card-title:hover {
+    color: var(--accent);
+    text-decoration: underline;
+  }
+  .hn-badge {
+    font-size: 0.75rem;
+    background: rgba(240, 136, 62, 0.15);
+    color: var(--accent3);
+    border: 1px solid rgba(240, 136, 62, 0.35);
+    padding: 2px 8px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .link-row {
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+    word-break: break-all;
+  }
+  .link-row a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .link-row a:hover {
+    text-decoration: underline;
+  }
+  .desc {
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+  }
+  .highlights {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .highlights li {
+    position: relative;
+    padding-left: 18px;
+    font-size: 0.88rem;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .highlights li::before {
+    content: "✦";
+    position: absolute;
+    left: 0;
+    color: var(--accent2);
+  }
+  .footer {
+    margin-top: 32px;
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>⚡ 今日好玩项目发现</h1>
+  <div class="subtitle">2026-05-23 · 来源: Hacker News Show HN</div>
+
+  <div class="card">
+    <div class="card-header">
+      <a class="card-title" href="https://github.com/leodavinci1/kanbots" target="_blank">1. KanBots — AI 并行 agent 看板</a>
+      <span class="hn-badge">🔥 HN 221</span>
+    </div>
+    <div class="link-row">🔗 <a href="https://github.com/leodavinci1/kanbots" target="_blank">github.com/leodavinci1/kanbots</a> · 🌐 <a href="https://www.kanbots.dev/" target="_blank">kanbots.dev</a></div>
+    <div class="desc">拖入文件夹即可获得看板，可同时调度 Claude Code 或 Codex agent，各自在独立工作树中运行。支持 autopilot 自动分配任务。</div>
+    <ul class="highlights">
+      <li>本地优先，无需账号，零遥测</li>
+      <li>内置成本分析，实时追踪 agent 开销</li>
+      <li>MIT 协议，免费 forever</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <a class="card-title" href="https://github.com/antoinezambelli/forge" target="_blank">2. Forge — 本地 LLM agent 可靠性层</a>
+      <span class="hn-badge">🔥 HN 675</span>
+    </div>
+    <div class="link-row">🔗 <a href="https://github.com/antoinezambelli/forge" target="_blank">github.com/antoinezambelli/forge</a></div>
+    <div class="desc">通过 guardrails（重试提示、步骤执行、错误恢复、VRAM 感知上下文管理）让 8B 小模型在多步 agent 工作流中从 53% 提升到 99%。</div>
+    <ul class="highlights">
+      <li>8B 模型 + Forge 达到 99.3%，接近 Claude Sonnet</li>
+      <li>自带评估套件和交互式 dashboard</li>
+      <li>ACM CAIS '26 收录论文</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <a class="card-title" href="https://github.com/zakirullin/files.md" target="_blank">3. Files.md — Obsidian 开源替代品</a>
+      <span class="hn-badge">🔥 HN 717</span>
+    </div>
+    <div class="link-row">🔗 <a href="https://github.com/zakirullin/files.md" target="_blank">github.com/zakirullin/files.md</a></div>
+    <div class="desc">开源免费的 Obsidian 替代品，纯 Markdown 管理笔记，无专有格式锁定。</div>
+    <ul class="highlights">
+      <li>纯 Markdown，数据自由</li>
+      <li>开源免费</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <a class="card-title" href="https://github.com/MinishLab/semble" target="_blank">4. Semble — Agent 专用代码搜索（省 98% Token）</a>
+      <span class="hn-badge">🔥 HN 442</span>
+    </div>
+    <div class="link-row">🔗 <a href="https://github.com/MinishLab/semble" target="_blank">github.com/MinishLab/semble</a></div>
+    <div class="desc">专为 AI coding agent 设计的代码搜索工具。结合静态 Model2Vec 嵌入和 BM25，无需 GPU / API key。</div>
+    <ul class="highlights">
+      <li>比 grep+read 少用 98% token</li>
+      <li>~250ms 索引典型仓库，查询 ~1.5ms</li>
+      <li>MCP server 即插即用 Claude Code / Cursor / Codex</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <a class="card-title" href="https://github.com/helvesec/rmux" target="_blank">5. Rmux — 可编程终端多路复用器</a>
+      <span class="hn-badge">🔥 HN 182</span>
+    </div>
+    <div class="link-row">🔗 <a href="https://github.com/helvesec/rmux" target="_blank">github.com/helvesec/rmux</a> · 🌐 <a href="https://rmux.io" target="_blank">rmux.io</a></div>
+    <div class="desc">Rust 重写的终端多路复用器，带有 Playwright 风格的自动化 SDK。同时提供 tmux 兼容 CLI。</div>
+    <ul class="highlights">
+      <li>Linux / macOS / Windows 原生支持（含 ConPTY）</li>
+      <li>稳定 pane ID + 结构化快照 + locator 等待</li>
+      <li>Playwright 式终端自动化体验</li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    莫殇巡逻中 👀⚡ · 由 OpenClaw Heartbeat 自动生成
+  </div>
+</div>
+</body>
+</html>

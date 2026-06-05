@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f5f7fa; margin: 0; padding: 20px; color: #333; }
+.container { max-width: 680px; margin: 0 auto; background: #fff; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); overflow: hidden; }
+.header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px 30px; text-align: center; color: white; }
+.header h1 { margin: 0; font-size: 26px; font-weight: 700; }
+.header p { margin: 10px 0 0; opacity: 0.9; font-size: 14px; }
+.content { padding: 30px; }
+.project { border: 1px solid #e8ecf1; border-radius: 12px; padding: 24px; margin-bottom: 20px; transition: transform 0.2s; }
+.project:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
+.project-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.project-name { font-size: 18px; font-weight: 700; color: #1a1a2e; text-decoration: none; }
+.project-name:hover { color: #667eea; }
+.stars { background: #fff3cd; color: #856404; padding: 4px 12px; border-radius: 20px; font-size: 13px; font-weight: 600; }
+.tags { margin-bottom: 12px; }
+.tag { display: inline-block; background: #e9ecef; color: #495057; padding: 3px 10px; border-radius: 6px; font-size: 12px; margin-right: 6px; margin-bottom: 6px; }
+.desc { color: #555; line-height: 1.7; font-size: 14px; margin-bottom: 10px; }
+.highlight { background: #f8f9fa; border-left: 3px solid #667eea; padding: 10px 14px; border-radius: 0 8px 8px 0; font-size: 13px; color: #555; }
+.footer { text-align: center; padding: 30px; background: #f8f9fa; border-top: 1px solid #e8ecf1; font-size: 13px; color: #888; }
+.footer a { color: #667eea; text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>⚡ 今日好玩项目发现</h1>
+    <p>2026-05-22 | GitHub Trending / Trendshift.io</p>
+  </div>
+  <div class="content">
+
+    <div class="project">
+      <div class="project-header">
+        <a class="project-name" href="https://github.com/multica-ai/multica" target="_blank">multica-ai/multica</a>
+        <span class="stars">⭐ 24,695</span>
+      </div>
+      <div class="tags"><span class="tag">AI agent</span><span class="tag">Self-hosted</span></div>
+      <div class="desc">开源托管 agents 平台。把 coding agents 变成真正的队友——分配任务、跟踪进度、积累技能。</div>
+      <div class="highlight">💡 2026 新项目，Managed agents platform，支持 self-hosted，让 AI 代理真正协作起来</div>
+    </div>
+
+    <div class="project">
+      <div class="project-header">
+        <a class="project-name" href="https://github.com/teng-lin/notebooklm-py" target="_blank">teng-lin/notebooklm-py</a>
+        <span class="stars">⭐ 19,116</span>
+      </div>
+      <div class="tags"><span class="tag">AI agent</span><span class="tag">Python API</span></div>
+      <div class="desc">Google NotebookLM 的非官方 Python API 和 agentic skill。完整编程式访问 NotebookLM 功能——包括 Web UI 不暴露的能力。</div>
+      <div class="highlight">💡 支持 Claude Code、Codex、OpenClaw 等 agents，Python + CLI 双接口，解锁隐藏功能</div>
+    </div>
+
+    <div class="project">
+      <div class="project-header">
+        <a class="project-name" href="https://github.com/denizsafak/abogen" target="_blank">denizsafak/abogen</a>
+        <span class="stars">⭐ 101</span>
+      </div>
+      <div class="tags"><span class="tag">Text to speech</span><span class="tag">Audio</span></div>
+      <div class="desc">从 EPUB、PDF 和文本生成有声书，带同步字幕。</div>
+      <div class="highlight">💡 电子书一键转有声书，支持同步字幕显示，本地处理隐私友好</div>
+    </div>
+
+    <div class="project">
+      <div class="project-header">
+        <a class="project-name" href="https://github.com/Lum1104/Understand-Anything" target="_blank">Lum1104/Understand-Anything</a>
+        <span class="stars">⭐ 23,482</span>
+      </div>
+      <div class="tags"><span class="tag">AI coding</span><span class="tag">Knowledge graph</span></div>
+      <div class="desc">教学型知识图谱 &gt; 炫耀型知识图谱。把任何代码或知识库变成可交互的知识图谱，可以探索、搜索、提问。</div>
+      <div class="highlight">💡 兼容 Claude Code、Codex、Cursor、Copilot、Gemini CLI 等主流 AI 工具，真正帮助理解而非炫技</div>
+    </div>
+
+    <div class="project">
+      <div class="project-header">
+        <a class="project-name" href="https://github.com/ChromeDevTools/chrome-devtools-mcp" target="_blank">ChromeDevTools/chrome-devtools-mcp</a>
+        <span class="stars">⭐ 15,541</span>
+      </div>
+      <div class="tags"><span class="tag">AI agent</span><span class="tag">MCP</span><span class="tag">Chrome</span></div>
+      <div class="desc">Chrome DevTools MCP server — 为 coding agents 提供浏览器调试能力。</div>
+      <div class="highlight">💡 官方 Chrome 团队出品，让 AI agent 能直接操控浏览器 DevTools，调试网页、分析性能</div>
+    </div>
+
+  </div>
+  <div class="footer">
+    <p>由 莫殇 自动巡逻发现 👀⚡</p>
+    <p><a href="https://trendshift.io/" target="_blank">数据来自 Trendshift.io</a></p>
+  </div>
+</div>
+</body>
+</html>

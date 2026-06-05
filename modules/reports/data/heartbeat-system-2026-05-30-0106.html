@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>系统巡检报告 - 2026-05-30</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f0f23; color: #e0e0e0; margin: 0; padding: 20px; }
+  .container { max-width: 900px; margin: 0 auto; }
+  h1 { color: #00d4ff; border-bottom: 2px solid #00d4ff; padding-bottom: 10px; }
+  .timestamp { color: #888; font-size: 0.9em; margin-bottom: 20px; }
+  .card { background: #1a1a2e; border-radius: 12px; padding: 20px; margin-bottom: 20px; border: 1px solid #2a2a4e; }
+  .card h2 { margin-top: 0; color: #ff9f43; font-size: 1.2em; }
+  .metric { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #2a2a4e; }
+  .metric:last-child { border-bottom: none; }
+  .metric-label { color: #a0a0c0; }
+  .metric-value { font-weight: bold; }
+  .good { color: #00d9a3; }
+  .warn { color: #ff9f43; }
+  .bad { color: #ff6b6b; }
+  .alert { background: #2a0a0a; border: 1px solid #ff6b6b; border-radius: 8px; padding: 15px; margin-top: 10px; }
+  .alert-title { color: #ff6b6b; font-weight: bold; margin-bottom: 8px; }
+  pre { background: #0f0f1a; padding: 10px; border-radius: 6px; overflow-x: auto; font-size: 0.85em; color: #c0c0e0; }
+  .status-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+  .status-box { background: #0f0f1a; padding: 15px; border-radius: 8px; text-align: center; }
+  .status-box .value { font-size: 1.8em; font-weight: bold; }
+  .status-box .label { color: #888; font-size: 0.85em; margin-top: 5px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>⚡ 系统巡检报告</h1>
+  <div class="timestamp">生成时间: 2026-05-30 01:06 (Asia/Shanghai)</div>
+
+  <div class="card">
+    <h2>🖥️ 系统状态</h2>
+    <div class="status-grid">
+      <div class="status-box">
+        <div class="value good">15%</div>
+        <div class="label">磁盘使用率</div>
+      </div>
+      <div class="status-box">
+        <div class="value warn">66%</div>
+        <div class="label">内存使用率</div>
+      </div>
+      <div class="status-box">
+        <div class="value good">1.42</div>
+        <div class="label">1分钟负载</div>
+      </div>
+      <div class="status-box">
+        <div class="value good">0</div>
+        <div class="label">僵尸进程</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📊 详细指标</h2>
+    <div class="metric">
+      <span class="metric-label">磁盘空间 (根分区)</span>
+      <span class="metric-value good">3.7T 可用 3.1T (15%)</span>
+    </div>
+    <div class="metric">
+      <span class="metric-label">磁盘空间 (docker-init)</span>
+      <span class="metric-value warn">19G 可用 4.7G (74%)</span>
+    </div>
+    <div class="metric">
+      <span class="metric-label">内存</span>
+      <span class="metric-value">15G 总 / 10G 已用 / 4.6G 可用</span>
+    </div>
+    <div class="metric">
+      <span class="metric-label">Swap</span>
+      <span class="metric-value warn">9.7G 总 / 7.1G 已用</span>
+    </div>
+    <div class="metric">
+      <span class="metric-label">系统运行时间</span>
+      <span class="metric-value">6 天 10 小时</span>
+    </div>
+    <div class="metric">
+      <span class="metric-label">5分钟负载</span>
+      <span class="metric-value good">1.73</span>
+    </div>
+    <div class="metric">
+      <span class="metric-label">15分钟负载</span>
+      <span class="metric-value good">1.81</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📚 Wiki 状态</h2>
+    <div class="alert">
+      <div class="alert-title">⚠️ Wiki 编译异常</div>
+      <pre>Refusing to write imported source page over non-file: sources/bridge-workspace-ae26912a-memory-2d62c497.md</pre>
+      <p>wiki_status 和 wiki_lint 均返回相同错误。可能是 sources/ 目录下存在文件类型冲突，需要检查该路径。</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📧 邮件状态</h2>
+    <div class="metric">
+      <span class="metric-label">Stalwart 未读邮件</span>
+      <span class="metric-value good">0 封（全部已读）</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🌐 好玩项目</h2>
+    <p style="color: #888;">网络搜索工具暂时不可用，本次未获取到热门项目。</p>
+  </div>
+</div>
+</body>
+</html>

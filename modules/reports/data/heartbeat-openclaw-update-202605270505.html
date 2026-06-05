@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OpenClaw 版本更新报告</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background: #0f172a; color: #e2e8f0; margin: 0; padding: 20px; }
+  .container { max-width: 800px; margin: 0 auto; background: #1e293b; border-radius: 16px; padding: 32px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
+  h1 { color: #38bdf8; margin-top: 0; font-size: 28px; }
+  .badge { display: inline-block; padding: 6px 14px; border-radius: 999px; font-size: 14px; font-weight: 600; margin-right: 8px; }
+  .badge-current { background: #334155; color: #94a3b8; }
+  .badge-latest { background: #0ea5e9; color: #fff; }
+  .badge-update { background: #ef4444; color: #fff; }
+  .meta { margin: 20px 0; padding: 16px; background: #0f172a; border-radius: 12px; }
+  .meta-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #334155; }
+  .meta-row:last-child { border-bottom: none; }
+  .label { color: #94a3b8; }
+  .value { font-weight: 600; }
+  .highlight { color: #f59e0b; }
+  .changelog { margin-top: 24px; }
+  .changelog h2 { color: #38bdf8; font-size: 20px; border-bottom: 2px solid #334155; padding-bottom: 8px; }
+  .changelog pre { background: #0f172a; padding: 20px; border-radius: 12px; overflow-x: auto; font-size: 14px; line-height: 1.7; color: #cbd5e1; white-space: pre-wrap; word-wrap: break-word; }
+  .footer { margin-top: 32px; text-align: center; color: #64748b; font-size: 12px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>⚡ OpenClaw 新版本可用</h1>
+  <div>
+    <span class="badge badge-current">当前: 2026.5.6</span>
+    <span class="badge badge-latest">最新: v2026.5.22</span>
+    <span class="badge badge-update">需要更新</span>
+  </div>
+
+  <div class="meta">
+    <div class="meta-row">
+      <span class="label">发布名称</span>
+      <span class="value">openclaw 2026.5.22</span>
+    </div>
+    <div class="meta-row">
+      <span class="label">发布时间</span>
+      <span class="value">2026-05-22</span>
+    </div>
+    <div class="meta-row">
+      <span class="label">检查时间</span>
+      <span class="value">2026-05-27 05:05 CST</span>
+    </div>
+  </div>
+
+  <div class="changelog">
+    <h2>📝 更新日志</h2>
+    <pre>## 2026.5.22
+
+### Changes
+
+- Gateway/perf: reuse process-stable channel catalog reads, avoid repeated bundled-channel boundary checks, and rotate gateway watch CPU profiles so benchmark runs do not accumulate unbounded artifacts.
+- Gateway/perf: reuse immutable plugin metadata snapshots across startup, config, model, channel, setup, and secret metadata readers so hot paths avoid repeated plugin file stats and manifest registry reloads.
+- Gateway/perf: lazy-load startup-idle plugin work, core gateway method handlers, and the embedded ACPX runtime so Gateway health and ready signals no longer wait on unused handler trees or ACPX probes.
+- Gateway/perf: cache plugin SDK public-surface alias maps and skip irrelevant macOS Linuxbrew PATH probes so Gateway startup avoids repeated filesystem walks and slow missing-directory stats.
+- Meeting Notes: add a source-only external meeting-notes plugin and SDK source-provider contract outside the core npm package, with auto-start capture config, manual transcript imports, read-only `openclaw meeting-notes` CLI access, and Discord voice as the first live source.
+- Docs/channels/config: add Signal `configPath`, Telegram wildcard topic defaults, local-time backup archive names, Termux home fallback, include-path validation, secret-scanner-safe placeholder guidance, Gemini CLI/Antigravity media guidance, and macOS VM auto-login guidance.
+- Docs: clarify model-usage portability, Codex migration prerequisites, status bootstrap wording, thread-bound subagent limits, hook ownership, and config-preserving safety guidance.
+- Docs: clarify README onboarding and Gateway startup paths, WhatsApp QR/408 recovery, cron output language prompts, skill advanced features, gateway upstream 403 troubleshooting, and plugin fallback override guidance.
+- Docs: clarify context-pruning ratio bounds, local dashboard recovery, CLI env markers, remote onboarding token behavior, and Peekaboo Bridge permissions for subprocess agents.
+- Docs: clarify browser CDP diagnostics, Plugin SDK allowlist imports, status-reaction timing defaults, queue steering behavior, limited-tool troubleshooting, cron HEARTBEAT handling, Telegram multi-agent groups, Bitwarden SecretRef setup, and EasyRunner deployments.
+- Crabbox/Testbox: run clean sparse-checkout Testbox syncs from a temporary full checkout and route remote changed gates through Corepack pnpm.
+- Docs: clarify IPv4-only Gateway BYOH binding, trusted-proxy scope clearing, Android pairing approval, macOS Accessibility grants, Zalo profile env vars, password-store SecretRef setup, and Chinese memory navigation.
+- Docs: consolidate GLM under Z.AI, add the Upstash Box install guide and Gateway exposure runbook, clarify MEDIA directives, Copilot and Voyage setup, config path quoting, real behavior proof, and memory-file write guidance.
+- Docs: clarify media provider credentials, Codex/OpenClaw code-mode boundaries, Slack and Telegram ack reactions, Feishu dynamic agents, secrets plaintext boundaries, memory guidance, and Chinese glossary terms.
+- Packaging: exclude documentation images and assets from the npm tarball, reducing published package size without affecting runtime docs search or CLI behavior.</pre>
+  </div>
+
+  <div class="footer">
+    莫殇巡逻报告 · 自动生成的 OpenClaw 版本检查
+  </div>
+</div>
+</body>
+</html>

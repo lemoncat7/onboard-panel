@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚡ 今日好玩项目发现 - 2026-05-24</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    color: #eee;
+    min-height: 100vh;
+    padding: 40px 20px;
+  }
+  .container { max-width: 900px; margin: 0 auto; }
+  .header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 30px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .header h1 {
+    font-size: 2.2rem;
+    background: linear-gradient(90deg, #00d4ff, #7b2cbf, #ff006e);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 10px;
+  }
+  .header .meta {
+    color: #aaa;
+    font-size: 0.95rem;
+  }
+  .header .badge {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 6px 16px;
+    background: linear-gradient(90deg, #ff006e, #8338ec);
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: white;
+  }
+  .card {
+    background: rgba(255,255,255,0.06);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 24px;
+    border: 1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(10px);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+    border-color: rgba(255,255,255,0.15);
+  }
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  .card-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    flex-shrink: 0;
+  }
+  .card-title-area { flex: 1; }
+  .card-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+  .card-link {
+    font-size: 0.82rem;
+    color: #00d4ff;
+    text-decoration: none;
+    word-break: break-all;
+  }
+  .card-link:hover { text-decoration: underline; }
+  .card-body {
+    color: #ccc;
+    line-height: 1.7;
+    font-size: 0.95rem;
+  }
+  .card-body p { margin-bottom: 10px; }
+  .highlight {
+    background: rgba(0, 212, 255, 0.12);
+    padding: 2px 8px;
+    border-radius: 6px;
+    color: #00d4ff;
+    font-weight: 500;
+  }
+  .trend-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    margin-top: 10px;
+  }
+  .trend-hot { background: rgba(255, 0, 110, 0.2); color: #ff006e; }
+  .trend-warm { background: rgba(255, 159, 67, 0.2); color: #ff9f43; }
+  .trend-new { background: rgba(0, 212, 255, 0.2); color: #00d4ff; }
+  .warning-box {
+    background: rgba(255, 159, 67, 0.15);
+    border-left: 3px solid #ff9f43;
+    padding: 10px 14px;
+    border-radius: 0 8px 8px 0;
+    margin-top: 10px;
+    font-size: 0.88rem;
+    color: #ffcc80;
+  }
+  .footer {
+    text-align: center;
+    margin-top: 40px;
+    padding: 20px;
+    color: #888;
+    font-size: 0.88rem;
+  }
+  .footer .moshang {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 8px;
+    color: #aaa;
+  }
+  @media (max-width: 600px) {
+    .header h1 { font-size: 1.5rem; }
+    .card { padding: 20px; }
+    .card-title { font-size: 1.15rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>⚡ 今日好玩项目发现</h1>
+    <div class="meta">数据来源：Trendshift.io 实时热门 + GitHub Trending 观察</div>
+    <div class="meta">📅 2026年5月24日 · 周日</div>
+    <span class="badge">🔥 7 个精选项目</span>
+  </div>
+
+  <!-- Osiris -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon" style="background: linear-gradient(135deg, #0f3460, #16213e);">🛡️</div>
+      <div class="card-title-area">
+        <div class="card-title">Osiris — 开源情报分析平台</div>
+        <a class="card-link" href="https://github.com/simplifaisoul/osiris" target="_blank">github.com/simplifaisoul/osiris</a>
+      </div>
+    </div>
+    <div class="card-body">
+      <p>开源的全球情报平台（<span class="highlight">OSINT</span>），实时数据可视化仪表盘，定位是 <span class="highlight">Palantir 的开源替代方案</span>。</p>
+      <p><strong>亮点：</strong>Docker 一键部署、实时情报聚合、现代 Web 技术栈、适合安全研究人员和情报分析人员。</p>
+      <span class="trend-badge trend-hot">🔥 Trendshift 今日飙升 #1 · 新增 8 关注</span>
+    </div>
+  </div>
+
+  <!-- CodeGraph -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon" style="background: linear-gradient(135deg, #1a1a2e, #4a148c);">🧠</div>
+      <div class="card-title-area">
+        <div class="card-title">CodeGraph — AI 代码知识图谱</div>
+        <a class="card-link" href="https://github.com/colbymchenry/codegraph" target="_blank">github.com/colbymchenry/codegraph</a>
+      </div>
+    </div>
+    <div class="card-body">
+      <p>为 <span class="highlight">Claude Code / Codex / Cursor / OpenCode / Hermes Agent</span> 预建代码知识图谱，让 AI 更懂你的代码库。</p>
+      <p><strong>亮点：</strong>100% 本地运行、大幅减少 Token 消耗和工具调用次数、多 IDE 生态兼容。</p>
+      <span class="trend-badge trend-warm">📈 Trendshift #2 · 新增 6 关注 · 73 个活跃 PR</span>
+    </div>
+  </div>
+
+  <!-- oh-my-pi -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon" style="background: linear-gradient(135deg, #2d1b4e, #7b2cbf);">🥧</div>
+      <div class="card-title-area">
+        <div class="card-title">oh-my-pi — 终端 AI 编程代理</div>
+        <a class="card-link" href="https://github.com/can1357/oh-my-pi" target="_blank">github.com/can1357/oh-my-pi</a>
+      </div>
+    </div>
+    <div class="card-body">
+      <p>终端级 AI Coding Agent，支持 <span class="highlight">hash-anchored 编辑</span>、LSP、Python、浏览器自动化、子代理协作。</p>
+      <p><strong>亮点：</strong>Rust 构建高性能、支持子代理并行协作、社区参与极其活跃（97 Issues / 127 PRs）。</p>
+      <span class="trend-badge trend-hot">🔥 社区活跃度极高 · 持续升温中</span>
+    </div>
+  </div>
+
+  <!-- smallcode -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon" style="background: linear-gradient(135deg, #1b4332, #2d6a4f);">🔬</div>
+      <div class="card-title-area">
+        <div class="card-title">smallcode — 小模型 AI 编程代理</div>
+        <a class="card-link" href="https://github.com/Doorman11991/smallcode" target="_blank">github.com/Doorman11991/smallcode</a>
+      </div>
+    </div>
+    <div class="card-body">
+      <p>专为<span class="highlight">小型 LLM 优化</span>的 AI 编程代理，4B 活跃参数模型即可达到 <span class="highlight">87% benchmark</span> 成绩。</p>
+      <p><strong>亮点：</strong>超低资源消耗、插件化架构、本地可运行、适合边缘设备和个人低成本部署。</p>
+      <span class="trend-badge trend-new">🆕 Trendshift #3 · 今日新增 3 关注</span>
+    </div>
+  </div>
+
+  <!-- FreeLLMAPI -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon" style="background: linear-gradient(135deg, #1a1a2e, #0f3460);">🔌</div>
+      <div class="card-title-area">
+        <div class="card-title">FreeLLMAPI — 免费 AI API 聚合代理</div>
+        <a class="card-link" href="https://github.com/tashfeenahmed/freellmapi" target="_blank">github.com/tashfeenahmed/freellmapi</a>
+      </div>
+    </div>
+    <div class="card-body">
+      <p>OpenAI 兼容的代理服务，聚合 <span class="highlight">~14 家 AI 提供商</span>的免费额度 API Key，内置自动故障转移机制。</p>
+      <p><strong>亮点：</strong>多提供商聚合、自动 failover、开箱即用、个人实验和原型开发神器。</p>
+      <div class="warning-box">⚠️ 仅限个人实验使用，请勿用于生产环境</div>
+      <span class="trend-badge trend-warm">📈 Trendshift #7 · 新增 2 关注</span>
+    </div>
+  </div>
+
+  <!-- Evo -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon" style="background: linear-gradient(135deg, #240046, #3c096c);">🧬</div>
+      <div class="card-title-area">
+        <div class="card-title">Evo — 代码自研优化引擎</div>
+        <a class="card-link" href="https://github.com/evo-hq/evo" target="_blank">github.com/evo-hq/evo</a>
+      </div>
+    </div>
+    <div class="card-body">
+      <p>Claude Code / Codex 插件，将代码库转化为<span class="highlight">自动研究循环</span>：自动发现测量指标 → 构建基准测试 → 并行子代理树搜索优化。</p>
+      <p><strong>亮点：</strong>自动 benchmark 发现、树搜索 + 并行子代理、安装仅需两行命令。</p>
+      <span class="trend-badge trend-new">🆕 AI 工作流自动化方向新星</span>
+    </div>
+  </div>
+
+  <!-- Formisch -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon" style="background: linear-gradient(135deg, #370617, #6a040f);">📝</div>
+      <div class="card-title-area">
+        <div class="card-title">Formisch — 全框架类型安全表单库</div>
+        <a class="card-link" href="https://github.com/open-circle/formisch" target="_blank">github.com/open-circle/formisch</a>
+      </div>
+    </div>
+    <div class="card-body">
+      <p>轻量级、<span class="highlight">schema-first</span>、完全类型安全的表单库，支持 <span class="highlight">React / Solid / Vue / Svelte</span> 四大主流框架。</p>
+      <p><strong>亮点：</strong>多框架统一 API、schema-first 设计、编译期类型安全、现代化开发者体验。</p>
+      <span class="trend-badge trend-warm">📈 前端工具链新选择 · 12 Issues / 7 PRs</span>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>👀 想看更多？去 onboard-panel 的 Reports 页刷新查看历史报告</p>
+    <div class="moshang">🫡 莫殇巡逻中 · 自动发现 · 每日精选</div>
+  </div>
+</div>
+</body>
+</html>

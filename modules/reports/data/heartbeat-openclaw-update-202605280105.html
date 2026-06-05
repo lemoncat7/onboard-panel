@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OpenClaw 新版本通知 v2026.5.26</title>
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f0f23; color: #e0e0e0; padding: 20px; max-width: 900px; margin: 0 auto; }
+h1 { color: #00d4ff; border-bottom: 2px solid #00d4ff; padding-bottom: 10px; }
+.badge { display: inline-block; background: #ff4757; color: white; padding: 4px 12px; border-radius: 12px; font-size: 14px; margin-left: 10px; }
+.meta { background: #1a1a2e; padding: 15px; border-radius: 8px; margin: 15px 0; }
+.meta-row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #2a2a4a; }
+.meta-row:last-child { border-bottom: none; }
+.label { color: #888; }
+.value { color: #00d4ff; font-weight: bold; }
+.section { margin: 20px 0; }
+.section h2 { color: #ffa502; font-size: 18px; margin-bottom: 10px; }
+.section ul { list-style: none; padding-left: 0; }
+.section li { padding: 6px 0; padding-left: 20px; position: relative; }
+.section li::before { content: "⚡"; position: absolute; left: 0; }
+.highlights { background: #1a1a2e; padding: 15px; border-radius: 8px; border-left: 4px solid #00d4ff; }
+.fixes { background: #1a1a2e; padding: 15px; border-radius: 8px; border-left: 4px solid #2ed573; }
+.footer { margin-top: 30px; padding-top: 15px; border-top: 1px solid #2a2a4a; font-size: 12px; color: #666; text-align: center; }
+a { color: #00d4ff; }
+</style>
+</head>
+<body>
+<h1>OpenClaw 新版本通知 <span class="badge">NEW</span></h1>
+
+<div class="meta">
+  <div class="meta-row"><span class="label">最新版本</span><span class="value">v2026.5.26</span></div>
+  <div class="meta-row"><span class="label">当前运行版本</span><span class="value">2026.5.6</span></div>
+  <div class="meta-row"><span class="label">发布时间</span><span class="value">2026-05-26</span></div>
+  <div class="meta-row"><span class="label">检查时间</span><span class="value">2026-05-28 01:05 CST</span></div>
+</div>
+
+<div class="section">
+<h2>🚀 核心亮点</h2>
+<div class="highlights">
+<ul>
+  <li>更快的 Gateway 启动与回复：减少重复扫描，分离用户可见回复与后台工作</li>
+  <li>Transcripts 成为核心：会议摘要、来源提供者分块、媒体溯源、Codex 镜像等统一使用更可靠的 transcript 路径</li>
+  <li>更多频道达到生产就绪：Telegram、iMessage、WhatsApp、Discord 均有重大改进</li>
+  <li>更好的语音和 Talk 模式：实时 Talk 可在 Web UI 和 Discord 语音中检查、引导、取消</li>
+  <li>更安全的内容边界：浏览器快照 SSRF 策略、系统事件文本防注入、ClickClack 白名单等</li>
+  <li>Provider 和 Codex 更稳定：命名认证配置、采样参数透传、超时恢复、动态工具模式防护等</li>
+  <li>更可靠的安装/更新/发布路径：Alpine 安装、Docker 超时、Windows 计划任务、macOS 验证等</li>
+  <li>更好的可观测性：Activity 标签页、OTel LLM 指标、Gateway 启动追踪、丰富遥测信号</li>
+</ul>
+</div>
+</div>
+
+<div class="section">
+<h2>📦 下载与验证</h2>
+<div class="meta">
+  <div class="meta-row"><span class="label">npm 包</span><a href="https://www.npmjs.com/package/openclaw/v/2026.5.26">v2026.5.26</a></div>
+  <div class="meta-row"><span class="label">registry tarball</span><a href="https://registry.npmjs.org/openclaw/-/openclaw-2026.5.26.tgz">openclaw-2026.5.26.tgz</a></div>
+  <div class="meta-row"><span class="label">完整验证</span><a href="https://github.com/openclaw/openclaw/actions/runs/26508372964">GitHub Actions</a></div>
+  <div class="meta-row"><span class="label">macOS DMG</span><a href="https://github.com/openclaw/openclaw/releases/download/v2026.5.26/OpenClaw-2026.5.26.dmg">下载</a></div>
+  <div class="meta-row"><span class="label">appcast</span><a href="https://github.com/openclaw/openclaw/blob/main/appcast.xml">appcast.xml</a></div>
+</div>
+</div>
+
+<div class="footer">
+莫殇巡逻报告 | 由 OpenClaw Heartbeat 自动生成<br>
+详细变更列表请查看 <a href="https://github.com/openclaw/openclaw/releases/tag/v2026.5.26">GitHub Release</a>
+</div>
+</body>
+</html>
