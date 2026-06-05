@@ -5,9 +5,9 @@
     "url": "http://searxng:8080",
     "group": "搜索",
     "status": "ok",
-    "responseTime": 10,
-    "lastCheck": 1780627886071,
-    "lastOk": 1780627886071,
+    "responseTime": 16,
+    "lastCheck": 1780693423986,
+    "lastOk": 1780693423986,
     "error": null,
     "statusCode": 200
   },
@@ -18,8 +18,8 @@
     "group": "邮件服务",
     "status": "ok",
     "responseTime": 3,
-    "lastCheck": 1780627886074,
-    "lastOk": 1780627886074,
+    "lastCheck": 1780693423989,
+    "lastOk": 1780693423989,
     "error": null,
     "statusCode": 302
   }
