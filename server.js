@@ -172,12 +172,21 @@ const server = http.createServer(async (req, res) => {
   }
 
   let url = req.url;
+  const rawUrl = url;
   console.log(`${new Date().toISOString()} ${req.method} ${url}`);
 
   const prefix = '/onboard';
   if (url.startsWith(prefix + '/')) {
     url = url.slice(prefix.length);
   } else if (url === prefix) {
+    url = '/';
+  }
+
+  // 处理 /novels 前缀（用于不带 /onboard 的访问）
+  const novelsPrefix = '/novels';
+  if (url.startsWith(novelsPrefix + '/')) {
+    url = url.slice(novelsPrefix.length);
+  } else if (url === novelsPrefix) {
     url = '/';
   }
 
@@ -461,6 +470,11 @@ const server = http.createServer(async (req, res) => {
 
   // === 静态文件 ===
   if (url === '/' || url === '/login' || url === '/index.html') {
+    if (rawUrl === '/novels' || rawUrl === '/novels/' || rawUrl.startsWith('/novels?') ||
+        rawUrl === '/onboard/novels' || rawUrl === '/onboard/novels/' || rawUrl.startsWith('/onboard/novels?')) {
+      serveFile(res, path.join(__dirname, 'modules/novels/index.html'), 'text/html');
+      return;
+    }
     if (!isLoggedIn(req)) {
       serveFile(res, path.join(__dirname, 'login.html'), 'text/html');
       return;
