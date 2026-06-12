@@ -112,7 +112,7 @@ async function startChild() {
     log('port', port, 'already in use with healthy server, skipping start');
     return;
   }
-  const proc = spawn('node', ['server.js'], {
+  const proc = spawn('node', ['--watch', 'server.js'], {
     cwd: BASE_DIR,
     detached: false,
     stdio: 'inherit',
