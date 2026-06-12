@@ -5,16 +5,9 @@ const crypto = require('crypto');
 const { exec } = require('child_process');
 const history = require('./history');
 const services = require('./services');
-const novels = require('./modules/novels/novels');
-const novelsAuth = require('./modules/novels/auth');
-const novelsStats = require('./modules/novels/stats');
 const novelsRoutes = require('./modules/novels/routes');
 const reportsRoutes = require('./modules/reports/routes');
 const snacksRoutes = require('./modules/snacks/routes');
-
-// Init novel module
-novels.init();
-novelsAuth.initUsers();
 
 let statusCache = null;
 let statusCacheTime = 0;
