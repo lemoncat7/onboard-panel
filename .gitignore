@@ -4,3 +4,7 @@
 .supervisor.log
 .supervisor.pid
 .onboard.pid
+.server.log
+node_modules/
+modules/novels.bak/
+modules/reports/data/

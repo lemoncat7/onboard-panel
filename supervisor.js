@@ -112,7 +112,7 @@ async function startChild() {
     log('port', port, 'already in use with healthy server, skipping start');
     return;
   }
-  const proc = spawn('node', ['--watch', 'server.js'], {
+  const proc = spawn('node', ['server.js'], {
     cwd: BASE_DIR,
     detached: false,
     stdio: 'inherit',
@@ -134,7 +134,11 @@ async function startChild() {
       log('restarting in 3s... (', restartCount, '/', MAX_RESTARTS, ')');
       setTimeout(startChild, 3000);
     } else {
-      log('MAX_RESTARTS reached, giving up');
+      log('MAX_RESTARTS reached, will retry in 60s...');
+      setTimeout(() => {
+        restartCount = 0;
+        startChild().catch(e => log('retry error:', e.message));
+      }, 60000);
     }
   });
 }
@@ -201,12 +205,29 @@ const apiServer = http.createServer((req, res) => {
 
   if (req.url === '/restart' && req.method === 'POST') {
     log('manual restart requested');
+    const oldPid = child && !child._reused ? child.pid : readPid(CHILD_PID_FILE);
     if (child && !child._reused) {
       try { child.kill('SIGTERM'); } catch {}
     }
     child = null;
     restartCount = 0;
-    startChild().then(() => {
+
+    // 等旧进程退出，最多等 5 秒
+    const waitForExit = (pid, timeout) => new Promise((resolve) => {
+      if (!pid || !isProcessAlive(pid)) return resolve();
+      const deadline = Date.now() + timeout;
+      const check = () => {
+        if (!isProcessAlive(pid)) return resolve();
+        if (Date.now() > deadline) {
+          try { process.kill(pid, 'SIGKILL'); } catch {}
+          return resolve();
+        }
+        setTimeout(check, 200);
+      };
+      check();
+    });
+
+    waitForExit(oldPid, 5000).then(() => startChild()).then(() => {
       res.writeHead(200);
       res.end(JSON.stringify({ success: true, message: 'restarting' }));
     }).catch(err => {
