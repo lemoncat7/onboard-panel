@@ -175,17 +175,6 @@ const server = http.createServer(async (req, res) => {
     url = '/';
   }
 
-  // 处理 /novels 前缀（用于不带 /onboard 的访问）
-  // 只在独立访问时剥离，避免和 /onboard 前缀冲突
-  if (!rawUrl.startsWith('/onboard')) {
-    const novelsPrefix = '/novels';
-    if (url.startsWith(novelsPrefix + '/')) {
-      url = url.slice(novelsPrefix.length);
-    } else if (url === novelsPrefix) {
-      url = '/';
-    }
-  }
-
   // === 健康检查 ===
   if (url === '/health') {
     json(res, { status: 'ok', time: Date.now() });
@@ -460,6 +449,21 @@ const server = http.createServer(async (req, res) => {
 
 
   // === 模块路由 ===
+  // /data/covers/* 和 /modules/novels/data/covers/* → 小说封面（直接从文件系统读取）
+  if (urlPath.startsWith('/data/covers/') || urlPath.startsWith('/modules/novels/data/covers/')) {
+    const coversDir = path.join(__dirname, 'modules/novels/data/covers');
+    const fileName = urlPath.split('/data/covers/')[1];
+    if (fileName) {
+      const filePath = path.join(coversDir, fileName);
+      if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
+        const ext = path.extname(fileName).toLowerCase();
+        const ct = ext === '.png' ? 'image/png' : ext === '.jpg' || ext === '.jpeg' ? 'image/jpeg' : ext === '.gif' ? 'image/gif' : ext === '.webp' ? 'image/webp' : 'application/octet-stream';
+        serveFile(res, filePath, ct);
+        return;
+      }
+    }
+  }
+
   // /onboard 或 /onboard/ → 主服务首页，不交给模块
   if (rawUrl === '/onboard' || rawUrl === '/onboard/' || rawUrl === '/onboard?') {
     if (!isLoggedIn(req)) {
