@@ -176,11 +176,14 @@ const server = http.createServer(async (req, res) => {
   }
 
   // 处理 /novels 前缀（用于不带 /onboard 的访问）
-  const novelsPrefix = '/novels';
-  if (url.startsWith(novelsPrefix + '/')) {
-    url = url.slice(novelsPrefix.length);
-  } else if (url === novelsPrefix) {
-    url = '/';
+  // 只在独立访问时剥离，避免和 /onboard 前缀冲突
+  if (!rawUrl.startsWith('/onboard')) {
+    const novelsPrefix = '/novels';
+    if (url.startsWith(novelsPrefix + '/')) {
+      url = url.slice(novelsPrefix.length);
+    } else if (url === novelsPrefix) {
+      url = '/';
+    }
   }
 
   // === 健康检查 ===
@@ -457,6 +460,16 @@ const server = http.createServer(async (req, res) => {
 
 
   // === 模块路由 ===
+  // /onboard 或 /onboard/ → 主服务首页，不交给模块
+  if (rawUrl === '/onboard' || rawUrl === '/onboard/' || rawUrl === '/onboard?') {
+    if (!isLoggedIn(req)) {
+      serveFile(res, path.join(__dirname, 'login.html'), 'text/html');
+      return;
+    }
+    serveFile(res, path.join(__dirname, 'index.html'), 'text/html');
+    return;
+  }
+
   if (reportsRoutes.handle(req, res, url, urlPath, { serveFile, json })) return;
   if (snacksRoutes.handle(req, res, url, urlPath, { serveFile, json, runCmd })) return;
   if (novelsRoutes.handle(req, res, url, urlPath, { serveFile, json })) return;
