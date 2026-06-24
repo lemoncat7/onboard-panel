@@ -516,15 +516,18 @@ const LINEUP_ID_MAP = {
   '8410':null,'8409':null,'8406':null,'8407':null,'8428':null
 };
 const EQUIP = {
-  '2001':'珠光护手','2004':'蓝霸符','2005':'无尽之刃','2007':'死亡之帽',
-  '2009':'巨杀','2010':'轻语','2011':'泰坦','2012':'灭世帽',
+  '1001':'暴风大剑','1002':'反曲之弓','1003':'锁子甲','1004':'女神之泪',
+  '1005':'巨人腰带','1006':'负极斗篷','1007':'无用大棒','1008':'金铲铲','1009':'暴击拳套',
+  '2001':'珠光护手','2003':'大天使之杖','2004':'蓝霸符','2005':'无尽之刃',
+  '2006':'水银','2007':'死亡之帽','2009':'巨杀','2010':'轻语','2011':'泰坦','2012':'灭世帽',
   '2013':'破防','2014':'鬼索','2016':'复活甲','2017':'饮血',
-  '2018':'救赎','2019':'冰心','2022':'分裂弓','2023':'石像鬼',
+  '2018':'救赎','2019':'冰心','2020':'斯塔缇克电刃','2022':'分裂弓','2023':'石像鬼',
   '2024':'反甲','2025':'狂徒','2028':'狂徒','2029':'龙爪',
   '2031':'反甲','2032':'冰心','2034':'日炎','2037':'巨杀',
-  '2038':'正义','2039':'青龙刀','2041':'科技枪','2042':'分裂弓',
+  '2038':'正义','2039':'青龙刀','2040':'适应性头盔','2041':'科技枪','2042':'分裂弓',
   '2044':'灵风','2045':'法爆','2046':'破防',
-  '41706':'无尽','41709':'灭世帽','9251':'青龙刀','9252':'灭世帽'
+  '41704':'光明大天使','41706':'光明无尽','41709':'光明灭世帽',
+  '9251':'青龙刀','9252':'灭世帽','9255':'光明狂徒'
 };
 
 function img(id) {
@@ -804,9 +807,14 @@ async function loadData() {
       return {
         name: d.line_name || '?', quality: item.quality || 'B',
         heroes, carry_equips: ce,
-        level3: d.level_3_heros ? d.level_3_heros.split(',').filter(Boolean) : [],
+        level3: d.level_3_heros ? d.level_3_heros.split(',').filter(Boolean).map(toKeyId) : [],
         d_time: d.d_time || '', early: d.early_info || '',
         equip_order: d.equipment_order || '',
+        equip_info: d.equipment_info || '',
+        carry_replace: d.carry_hero_equip_replace || {},
+        hex_info: d.hex_info || '',
+        early_heros: (d.y21_early_heros || []).map(h => ({...h, hero_id: toKeyId(h.hero_id)})).filter(h => h.hero_id !== null),
+        metaphase_heros: (d.y21_metaphase_heros || []).map(h => ({...h, hero_id: toKeyId(h.hero_id)})).filter(h => h.hero_id !== null),
         hero_locations
       };
     });
@@ -881,7 +889,15 @@ function renderRecs() {
     let eq = '';
     const ce = Object.entries(c.carry_equips||{})[0];
     if (ce) eq += `<div class="eq-block"><div class="eq-label">🌟 主C ${HERO[ce[0]]||ce[0]}</div><div class="eq-flow">${ce[1].map((e,j)=>`<span class="eq-item">${EQUIP[e]||e}</span>${j<ce[1].length-1?'<span class="eq-arrow">→</span>':''}`).join('')}</div></div>`;
-    if (c.equip_order) { const eqs = c.equip_order.split(',').map(e=>EQUIP[e]||e); eq += `<div class="eq-block"><div class="eq-label">⚔️ 装备合成</div><div class="eq-flow">${eqs.map((e,j)=>`<span class="eq-item">${e}</span>${j<eqs.length-1?'<span class="eq-arrow">→</span>':''}`).join('')}</div></div>`; }
+    // carry_hero_equip_replace
+    const cr = c.carry_replace;
+    if (cr && cr.main) {
+      const mainItems = cr.main.split(',').map(e=>EQUIP[e]||e);
+      const backupItems = cr.backup ? cr.backup.split(',').map(e=>EQUIP[e]||e) : [];
+      eq += `<div class="eq-block"><div class="eq-label">🎒 主C推荐</div><div class="eq-flow"><span style="color:var(--neon);font-weight:700;">核心：</span>${mainItems.map(e=>`<span class="eq-item">${e}</span>`).join('<span class="eq-arrow">→</span>')}</div>${backupItems.length?`<div class="eq-flow" style="margin-top:6px"><span style="color:var(--text2);font-weight:700;">备选：</span>${backupItems.map(e=>`<span class="eq-item">${e}</span>`).join('<span class="eq-arrow">→</span>')}</div>`:''}</div>`;
+    }
+    if (c.equip_order) { const eqs = c.equip_order.split(',').map(e=>EQUIP[e]||e); eq += `<div class="eq-block"><div class="eq-label">⚔️ 选秀优先级</div><div class="eq-flow">${eqs.map((e,j)=>`<span class="eq-item">${e}</span>${j<eqs.length-1?'<span class="eq-arrow">→</span>':''}`).join('')}</div></div>`; }
+    if (c.equip_info) eq += `<div class="info-block"><div class="label">📝 装备思路</div><div class="text">${c.equip_info}</div></div>`;
     return `<div class="rec-card ${i===0&&c.pct>=30?'best':''} ${isActive?'active':''}" id="rc${i}">
       <div class="rec-header" onclick="toggleCard(${i}); applyLineup(${i})">
         <div class="rec-tier ${c.quality}">${c.quality}</div>
@@ -903,6 +919,9 @@ function renderRecs() {
         ${c.level3?.length?`<div class="info-block"><div class="label">🎯 追三</div><div class="text">${c.level3.map(id=>HERO[id]||id).join('、')}</div></div>`:''}
         <div class="info-block"><div class="label">💰 D牌</div><div class="text">${c.d_time||'—'}</div></div>
         <div class="info-block"><div class="label">📋 运营</div><div class="text">${c.early||'—'}</div></div>
+        ${c.hex_info?`<div class="info-block"><div class="label">✨ 海克斯</div><div class="text">${c.hex_info}</div></div>`:''}
+        ${c.early_heros?.length?`<div class="info-block"><div class="label">🌱 前期打工</div><div class="text">${c.early_heros.map(h=>HERO[h.hero_id]||h.hero_id).join('、')}</div></div>`:''}
+        ${c.metaphase_heros?.length?`<div class="info-block"><div class="label">🌿 中期过渡</div><div class="text">${c.metaphase_heros.map(h=>HERO[h.hero_id]||h.hero_id).join('、')}</div></div>`:''}
       </div>
     </div>`;
   }).join('');
