@@ -368,6 +368,15 @@
       background: linear-gradient(135deg, rgba(124, 58, 237, 0.08), rgba(2, 132, 199, 0.06));
       border: 1px solid rgba(124, 58, 237, 0.15);
       font-size: 12px; color: #7c3aed; font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .eq-item img {
+      width: 20px; height: 20px;
+      border-radius: 4px;
+      object-fit: cover;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
     .eq-arrow { color: var(--text2); font-size: 12px; }
 
@@ -543,6 +552,10 @@ const EQUIP = {
   '6098':'永恒契约','6106':'锤石的灯笼',
   '9255':'共感植入','41704':'暗星纹章'
 };
+
+function equipImg(id) {
+  return `https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/${id}.png`;
+}
 
 function img(id) {
   // 使用页面数据库中的 heroPaint 映射（key_id -> paint）
@@ -902,15 +915,15 @@ function renderRecs() {
     if (c.have.length > 0) haveChips = `<div class="miss-chips">${c.have.map(id => `<span class="chip have"><img src="${img(id)}" alt="">${HERO[id]||id}</span>`).join('')}</div>`;
     let eq = '';
     const ce = Object.entries(c.carry_equips||{})[0];
-    if (ce) eq += `<div class="eq-block"><div class="eq-label">🌟 主C ${HERO[ce[0]]||ce[0]}</div><div class="eq-flow">${ce[1].map((e,j)=>`<span class="eq-item">${EQUIP[e]||e}</span>${j<ce[1].length-1?'<span class="eq-arrow">→</span>':''}`).join('')}</div></div>`;
+    if (ce) eq += `<div class="eq-block"><div class="eq-label">🌟 主C ${HERO[ce[0]]||ce[0]}</div><div class="eq-flow">${ce[1].map((e,j)=>`<span class="eq-item"><img src="${equipImg(e)}" alt="" onerror="this.style.display='none'">${EQUIP[e]||e}</span>${j<ce[1].length-1?'<span class="eq-arrow">→</span>':''}`).join('')}</div></div>`;
     // carry_hero_equip_replace
     const cr = c.carry_replace;
     if (cr && cr.main) {
-      const mainItems = cr.main.split(',').map(e=>EQUIP[e]||e);
-      const backupItems = cr.backup ? cr.backup.split(',').map(e=>EQUIP[e]||e) : [];
-      eq += `<div class="eq-block"><div class="eq-label">🎒 主C推荐</div><div class="eq-flow"><span style="color:var(--neon);font-weight:700;">核心：</span>${mainItems.map(e=>`<span class="eq-item">${e}</span>`).join('<span class="eq-arrow">→</span>')}</div>${backupItems.length?`<div class="eq-flow" style="margin-top:6px"><span style="color:var(--text2);font-weight:700;">备选：</span>${backupItems.map(e=>`<span class="eq-item">${e}</span>`).join('<span class="eq-arrow">→</span>')}</div>`:''}</div>`;
+      const mainIds = cr.main.split(',');
+      const backupIds = cr.backup ? cr.backup.split(',') : [];
+      eq += `<div class="eq-block"><div class="eq-label">🎒 主C推荐</div><div class="eq-flow"><span style="color:var(--neon);font-weight:700;">核心：</span>${mainIds.map(eid=>`<span class="eq-item"><img src="${equipImg(eid)}" alt="" onerror="this.style.display='none'">${EQUIP[eid]||eid}</span>`).join('<span class="eq-arrow">→</span>')}</div>${backupIds.length?`<div class="eq-flow" style="margin-top:6px"><span style="color:var(--text2);font-weight:700;">备选：</span>${backupIds.map(eid=>`<span class="eq-item"><img src="${equipImg(eid)}" alt="" onerror="this.style.display='none'">${EQUIP[eid]||eid}</span>`).join('<span class="eq-arrow">→</span>')}</div>`:''}</div>`;
     }
-    if (c.equip_order) { const eqs = c.equip_order.split(',').map(e=>EQUIP[e]||e); eq += `<div class="eq-block"><div class="eq-label">⚔️ 选秀优先级</div><div class="eq-flow">${eqs.map((e,j)=>`<span class="eq-item">${e}</span>${j<eqs.length-1?'<span class="eq-arrow">→</span>':''}`).join('')}</div></div>`; }
+    if (c.equip_order) { const eqIds = c.equip_order.split(','); eq += `<div class="eq-block"><div class="eq-label">⚔️ 选秀优先级</div><div class="eq-flow">${eqIds.map((eid,j)=>`<span class="eq-item"><img src="${equipImg(eid)}" alt="" onerror="this.style.display='none'">${EQUIP[eid]||eid}</span>${j<eqIds.length-1?'<span class="eq-arrow">→</span>':''}`).join('')}</div></div>`; }
     if (c.equip_info) eq += `<div class="info-block"><div class="label">📝 装备思路</div><div class="text">${c.equip_info}</div></div>`;
     return `<div class="rec-card ${i===0&&c.pct>=30?'best':''} ${isActive?'active':''}" id="rc${i}">
       <div class="rec-header" onclick="toggleCard(${i}); applyLineup(${i})">
