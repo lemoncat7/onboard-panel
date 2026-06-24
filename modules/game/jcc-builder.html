@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>⚔️ TFT 星神阵容构建器</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #f5f7fa;
+      --bg2: #e9edf2;
+      --card: #ffffff;
+      --card2: #f7f9fb;
+      --border: rgba(0, 0, 0, 0.06);
+      --border2: rgba(0, 0, 0, 0.12);
+      --neon: #0d9488;
+      --neon2: #0284c7;
+      --accent: #7c3aed;
+      --accent2: #a78bfa;
+      --danger: #dc2626;
+      --gold: #d97706;
+      --text: #1f2937;
+      --text2: #6b7280;
+      --text3: #9ca3af;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+      min-height: 100vh;
+      padding-bottom: 24px;
+      overflow-x: hidden;
+    }
+
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.9));
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .brand { display: flex; align-items: center; gap: 10px; }
+    .brand-logo {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--neon), var(--neon2));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+      box-shadow: 0 0 20px rgba(13, 148, 136, 0.25);
+    }
+    .brand-text { font-size: 16px; font-weight: 800; letter-spacing: 0.5px; }
+    .top-actions { display: flex; gap: 8px; align-items: center; }
+    .pop-select {
+      background: var(--card2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 7px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      outline: none;
+    }
+    .btn-clear {
+      background: rgba(220, 38, 38, 0.08);
+      border: 1px solid rgba(220, 38, 38, 0.25);
+      color: var(--danger);
+      padding: 7px 16px;
+      border-radius: 8px;
+      font-size: 13px; font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-clear:hover { background: rgba(220, 38, 38, 0.15); box-shadow: 0 0 12px rgba(220, 38, 38, 0.15); }
+
+    .section { padding: 16px; }
+    .sec-title {
+      font-size: 12px; font-weight: 700;
+      color: var(--text2);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .sec-title::before {
+      content: '';
+      width: 3px; height: 14px;
+      background: linear-gradient(180deg, var(--neon), var(--neon2));
+      border-radius: 2px;
+    }
+
+    /* Board */
+    .board-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 20px 16px;
+      background: linear-gradient(180deg, var(--card), var(--bg2));
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    .board-wrap::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(0, 170, 255, 0.04), transparent 60%);
+      pointer-events: none;
+    }
+    .board-row { display: flex; gap: 6px; }
+    .board-cell {
+      width: 50px; height: 50px;
+      border-radius: 12px;
+      border: 1.5px solid var(--border);
+      background: rgba(0, 0, 0, 0.04);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.15s;
+      position: relative;
+      -webkit-tap-highlight-color: transparent;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 2px 4px rgba(0,0,0,0.06);
+    }
+    .board-cell:hover { border-color: var(--neon2); background: rgba(2, 132, 199, 0.06); box-shadow: 0 0 16px rgba(2, 132, 199, 0.12); }
+    .board-cell .cell-hero {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      object-fit: cover;
+      pointer-events: none;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    .board-cell .cell-ghost {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      opacity: 0.35;
+      filter: grayscale(0.8);
+      pointer-events: none;
+      border: 1.5px dashed var(--border2);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .board-cell .cell-ghost-label {
+      position: absolute;
+      bottom: 2px; right: 2px;
+      font-size: 8px; font-weight: 800; color: var(--danger);
+      background: rgba(255,255,255,0.85); padding: 1px 4px; border-radius: 4px;
+      pointer-events: none;
+    }
+    .board-cell .cell-remove {
+      position: absolute; top: -6px; right: -6px;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: var(--danger); color: #fff;
+      font-size: 10px; font-weight: 800;
+      display: none; align-items: center; justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
+      z-index: 2;
+    }
+    .board-cell:hover .cell-remove { display: flex; }
+    .board-cell .cell-cost {
+      position: absolute; bottom: -2px; left: -2px;
+      width: 14px; height: 14px; border-radius: 50%;
+      font-size: 8px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+      z-index: 2;
+      border: 1.5px solid var(--card);
+    }
+    .board-label {
+      font-size: 10px; color: var(--text3);
+      margin-top: 2px;
+      font-weight: 600;
+    }
+    .pop-count {
+      text-align: center;
+      font-size: 14px;
+      color: var(--text2);
+      margin-top: 10px;
+      font-weight: 600;
+    }
+    .pop-count .current { color: var(--neon); font-weight: 800; }
+    .pop-count .over { color: var(--danger); }
+    .board-note {
+      text-align: center;
+      font-size: 11px;
+      color: var(--text3);
+      margin-top: 8px;
+    }
+
+    /* Cost Tabs */
+    .cost-tabs {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+    .tab {
+      padding: 7px 16px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--card2);
+      color: var(--text2);
+      font-size: 13px; font-weight: 600;
+      cursor: pointer; transition: all 0.15s;
+    }
+    .tab:hover { border-color: var(--neon2); color: var(--neon); }
+    .tab.active {
+      background: linear-gradient(135deg, rgba(13, 148, 136, 0.12), rgba(124, 58, 237, 0.08));
+      border-color: var(--neon);
+      color: var(--neon);
+      box-shadow: 0 0 12px rgba(13, 148, 136, 0.15);
+    }
+
+    /* Hero Grid */
+    .hero-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+      gap: 8px;
+    }
+    .hero-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 7px 3px;
+      border-radius: 14px;
+      border: 2px solid var(--border);
+      background: var(--card2);
+      cursor: grab;
+      transition: all 0.15s;
+      position: relative;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .hero-item:hover {
+      border-color: var(--neon2);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(2, 132, 199, 0.08);
+    }
+    .hero-item:active { cursor: grabbing; }
+    .hero-item.on-board { opacity: 0.25; pointer-events: none; filter: grayscale(0.8); }
+    .hero-item.highlight {
+      border-color: var(--gold);
+      box-shadow: 0 0 20px rgba(217, 119, 6, 0.2);
+      animation: pulse-gold 1.5s infinite;
+    }
+    @keyframes pulse-gold { 0%,100% { box-shadow: 0 0 20px rgba(217,119,6,0.2); } 50% { box-shadow: 0 0 30px rgba(217,119,6,0.35); } }
+    .hero-item img {
+      width: 38px; height: 38px;
+      border-radius: 10px;
+      pointer-events: none;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+    }
+    .hero-name {
+      font-size: 9px; color: var(--text2);
+      margin-top: 3px; font-weight: 600;
+      text-align: center;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      max-width: 54px;
+    }
+    .cost-badge {
+      position: absolute; top: 3px; right: 3px;
+      width: 15px; height: 15px; border-radius: 50%;
+      font-size: 9px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    }
+    .c1 { background: #6b7280; }
+    .c2 { background: #2563eb; }
+    .c3 { background: #9333ea; }
+    .c4 { background: #d97706; }
+    .c5 { background: #dc2626; }
+
+    /* Rec Cards */
+    .rec-list { display: flex; flex-direction: column; gap: 10px; }
+    .rec-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.2s;
+      position: relative;
+      cursor: pointer;
+    }
+    .rec-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border2), transparent);
+    }
+    .rec-card:hover { border-color: var(--border2); }
+    .rec-card.best { border-color: rgba(13, 148, 136, 0.3); box-shadow: 0 0 20px rgba(13, 148, 136, 0.08); }
+    .rec-card.active { border-color: var(--neon); box-shadow: 0 0 16px rgba(13, 148, 136, 0.12); }
+    .rec-header {
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .rec-tier {
+      width: 36px; height: 36px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 800; color: #fff;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    }
+    .rec-tier.S { background: linear-gradient(135deg, #fbbf24, #ef4444); }
+    .rec-tier.A { background: linear-gradient(135deg, #6366f1, #8b5cf6); }
+    .rec-tier.B { background: linear-gradient(135deg, #64748b, #94a3b8); }
+    .rec-info { flex: 1; min-width: 0; }
+    .rec-name { font-size: 15px; font-weight: 700; }
+    .rec-meta {
+      font-size: 12px; color: var(--text2);
+      margin-top: 3px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .rec-meta .have { color: var(--neon); font-weight: 700; }
+    .rec-meta .miss { color: var(--danger); font-weight: 700; }
+    .rec-meta .pct { background: rgba(124, 58, 237, 0.12); color: #7c3aed; padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: 700; }
+    .rec-meta .pop { background: rgba(13, 148, 136, 0.1); color: var(--neon); padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: 700; }
+    .rec-meta .pop.warn { background: rgba(220, 38, 38, 0.1); color: var(--danger); }
+    .rec-arrow { font-size: 14px; color: var(--text2); transition: transform 0.3s; margin-left: auto; }
+    .rec-card.open .rec-arrow { transform: rotate(180deg); }
+    .rec-body { display: none; padding: 0 16px 16px; }
+    .rec-card.open .rec-body { display: block; }
+
+    .miss-chips { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 12px; }
+    .chip {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 4px 10px; border-radius: 8px;
+      font-size: 11px; font-weight: 600;
+    }
+    .chip.miss { background: rgba(220, 38, 38, 0.06); border: 1px solid rgba(220, 38, 38, 0.15); color: #dc2626; }
+    .chip.have { background: rgba(13, 148, 136, 0.08); border: 1px solid rgba(13, 148, 136, 0.18); color: #0d9488; }
+    .chip img { width: 16px; height: 16px; border-radius: 4px; }
+
+    .eq-block {
+      background: var(--card2);
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 8px;
+    }
+    .eq-label {
+      font-size: 11px; color: var(--text2);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      margin-bottom: 8px;
+    }
+    .eq-flow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+    }
+    .eq-item {
+      padding: 5px 12px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, rgba(124, 58, 237, 0.08), rgba(2, 132, 199, 0.06));
+      border: 1px solid rgba(124, 58, 237, 0.15);
+      font-size: 12px; color: #7c3aed; font-weight: 600;
+    }
+    .eq-arrow { color: var(--text2); font-size: 12px; }
+
+    .info-block {
+      background: var(--card2);
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 8px;
+    }
+    .info-block .label {
+      font-size: 10px; color: var(--text2); font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 5px;
+    }
+    .info-block .text {
+      font-size: 13px; color: #4b5563; line-height: 1.7;
+    }
+
+    .match-bar {
+      height: 5px;
+      background: rgba(0,0,0,0.06);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+    .match-fill {
+      height: 100%; border-radius: 3px;
+      transition: width 0.6s cubic-bezier(0.4,0,0.2,1);
+    }
+    .match-fill.high { background: linear-gradient(90deg, var(--neon), var(--neon2)); }
+    .match-fill.mid { background: linear-gradient(90deg, var(--gold), #f59e0b); }
+    .match-fill.low { background: linear-gradient(90deg, var(--danger), #ff6b8a); }
+
+    .empty {
+      text-align: center;
+      padding: 50px 24px;
+      color: var(--text3);
+    }
+    .empty .icon { font-size: 48px; margin-bottom: 12px; opacity: 0.5; }
+
+    @media (max-width: 380px) {
+      .board-cell { width: 44px; height: 44px; }
+      .board-cell .cell-hero { width: 34px; height: 34px; }
+      .hero-grid { grid-template-columns: repeat(auto-fill, minmax(52px, 1fr)); }
+      .hero-item img { width: 34px; height: 34px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="brand">
+    <div class="brand-logo">⚔️</div>
+    <div class="brand-text">TFT 星神构建器</div>
+  </div>
+    <div class="top-actions">
+      <select class="pop-select" id="pop-select" onchange="setPopulation(this.value)">
+      <option value="7">人口 7</option>
+      <option value="8">人口 8</option>
+      <option value="9" selected>人口 9</option>
+      <option value="10">人口 10</option>
+    </select>
+    <button class="btn-clear" onclick="clearBoard()">清空</button>
+  </div>
+</div>
+
+<!-- 1. Board -->
+<div class="section">
+  <div class="sec-title">棋盘</div>
+  <div class="board-wrap" id="board"></div>
+  <div class="pop-count" id="pop-count">已放置 <span class="current">0</span>/9</div>
+  <div class="board-note" id="board-note">点击下方英雄，添加到棋盘</div>
+</div>
+
+<!-- 2. Hero Pool -->
+<div class="section">
+  <div class="sec-title">英雄池</div>
+  <div class="cost-tabs" id="cost-tabs"></div>
+  <div class="hero-grid" id="hero-grid"></div>
+</div>
+
+<!-- 3. Recommendations -->
+<div class="section">
+  <div class="sec-title">推荐阵容</div>
+  <div class="rec-list" id="recs">
+    <div class="empty"><div class="icon">⏳</div><div>加载中...</div></div>
+  </div>
+</div>
+
+<script>
+const ROWS = 4, COLS = 7;
+let board = {};
+let population = 9;
+let activeCost = 1;
+let comps = [];
+let activeComp = null;
+let highlightHeroId = null;
+let currentSeason = 18;
+let currentMode = 17;
+let HERO = {};
+let COST = {};
+
+// Drag state
+let dragHero = null;
+let dragFrom = null;
+let dragFromKey = null;
+let touchDragEl = null;
+let touchStartX = 0, touchStartY = 0;
+let touchDragFrom = null;
+let isTouchDrag = false;
+let touchHandled = false;
+
+// 页面数据库中的权威数据 (https://jcc.qq.com/m/m202206/#/database/hero/17,S18)
+// key_id -> 中文名 (去重,每个中文名只保留一个key_id)
+const BASE_HERO = {
+  // 1费 (14)
+  '1450':'崔斯特','1451':'伊泽瑞尔','1452':'泰隆','1453':'内瑟斯','1454':'蕾欧娜','1455':'雷克塞','1456':'凯特琳','1457':'丽桑卓',
+  '1458':'亚托克斯','1459':'科加斯','1460':'提莫','1461':'维迦','1462':'波比','1463':'贝蕾亚',
+  // 2费 (13)
+  '2450':'纳尔','2451':'格温','2452':'派克','2453':'佐伊','2454':'卑尔维斯','2455':'古拉加斯','2456':'米利欧','2457':'莫德凯撒',
+  '2458':'金克丝','2459':'潘森','2460':'小木灵','2461':'阿卡丽','2462':'贾克斯',
+  // 3费 (13)
+  '3450':'卡莎','3451':'厄加特','3452':'维克托','3453':'奥恩','3454':'璐璐','3455':'菲兹','3457':'茂凯','3458':'黛安娜',
+  '3459':'拉亚斯特','3460':'俄洛伊','3461':'莎弥拉','3462':'阿萝拉','3465':'厄运小姐',
+  // 4费 (14)
+  '4370':'易','4371':'努努和威朗普','4372':'库奇','4373':'卡尔玛','4374':'千珏','4375':'锐雯','4376':'拉莫斯','4377':'娜美',
+  '4378':'塔姆','4379':'超级机甲','4380':'乐芙兰','4381':'霞','4382':'奥瑞利安·索尔','5434':'莫甘娜',
+  // 5费 (9)
+  '5420':'巴德','5421':'布里茨','5422':'薇古丝','5423':'格雷福斯','5424':'慎','5425':'娑娜','5426':'菲奥娜','5427':'烬','5428':'劫'
+};
+const BASE_COST = {
+  '1450':1,'1451':1,'1452':1,'1453':1,'1454':1,'1455':1,'1456':1,'1457':1,'1458':1,'1459':1,'1460':1,'1461':1,'1462':1,'1463':1,
+  '2450':2,'2451':2,'2452':2,'2453':2,'2454':2,'2455':2,'2456':2,'2457':2,'2458':2,'2459':2,'2460':2,'2461':2,'2462':2,
+  '3450':3,'3451':3,'3452':3,'3453':3,'3454':3,'3455':3,'3457':3,'3458':3,'3459':3,'3460':3,'3461':3,'3462':3,'3465':3,
+  '4370':4,'4371':4,'4372':4,'4373':4,'4374':4,'4375':4,'4376':4,'4377':4,'4378':4,'4379':4,'4380':4,'4381':4,'4382':4,'5434':4,
+  '5420':5,'5421':5,'5422':5,'5423':5,'5424':5,'5425':5,'5426':5,'5427':5,'5428':5
+};
+// 阵容数据中重复的hero_id映射到主key_id (去掉首位1后的key_id)
+const LINEUP_ID_MAP = {
+  '1464':'1453','1465':'1451','1466':'1451','1467':'1458','1468':'1462','1469':'1459','1470':'1459',
+  '2463':'2455','2464':'2452','2465':'2457','2466':'2460','2467':'2462',
+  '3464':'3451','3466':'3465','3467':'3465','3468':'3454','3469':'3454','3470':'3454','3471':'3454','3472':'3454','3473':'3454','3474':'3454',
+  '4383':'4382','4384':'4379','5435':'5434',
+  '5429':'5423','5432':'5427','5433':'5428',
+  '8410':null,'8409':null,'8406':null,'8407':null,'8428':null
+};
+const EQUIP = {
+  '2001':'珠光护手','2004':'蓝霸符','2005':'无尽之刃','2007':'死亡之帽',
+  '2009':'巨杀','2010':'轻语','2011':'泰坦','2012':'灭世帽',
+  '2013':'破防','2014':'鬼索','2016':'复活甲','2017':'饮血',
+  '2018':'救赎','2019':'冰心','2022':'分裂弓','2023':'石像鬼',
+  '2024':'反甲','2025':'狂徒','2028':'狂徒','2029':'龙爪',
+  '2031':'反甲','2032':'冰心','2034':'日炎','2037':'巨杀',
+  '2038':'正义','2039':'青龙刀','2041':'科技枪','2042':'分裂弓',
+  '2044':'灵风','2045':'法爆','2046':'破防',
+  '41706':'无尽','41709':'灭世帽','9251':'青龙刀','9252':'灭世帽'
+};
+
+function img(id) {
+  // 使用页面数据库中的 heroPaint 映射（key_id -> paint）
+  const JK = {
+    '1450':'twistedfate','1451':'ezreal','1452':'talon','1453':'nasus','1454':'leona','1455':'reksai','1456':'caitlyn','1457':'lissandra',
+    '1458':'aatrox','1459':'chogath','1460':'teemo','1461':'veigar','1462':'poppy','1463':'briar',
+    '2450':'gnar','2451':'gwen','2452':'pyke','2453':'zoe','2454':'belveth','2455':'gragas','2456':'milio','2457':'mordekaiser',
+    '2458':'jinx','2459':'pantheon','2460':'meepsie','2461':'akali','2462':'jax',
+    '3450':'kaisa','3451':'urgot','3452':'viktor','3453':'ornn','3454':'lulu','3455':'fizz','3457':'maokai','3458':'diana',
+    '3459':'rhaast','3460':'illaoi','3461':'samira','3462':'aurora','3465':'missfortune',
+    '4370':'masteryi','4371':'nunu','4372':'corki','4373':'karma','4374':'kindred','4375':'riven','4376':'rammus','4377':'nami',
+    '4378':'tahmkench','4379':'galio','4380':'leblanc','4381':'xayah','4382':'aurelionsol','5434':'morgana',
+    '5420':'bard','5421':'blitzcrank','5422':'vex','5423':'graves','5424':'shen','5425':'sona','5426':'fiora','5427':'jhin','5428':'zed'
+  };
+  const modePrefix = `mode${currentMode}s${currentSeason}`;
+  const imgPrefix = `s${currentMode}`;
+  if (JK[id]) return `https://game.gtimg.cn/images/lol/act/jkzlk/${modePrefix}/hero/${imgPrefix}_${JK[id]}.png`;
+  return '';
+}
+
+// ===== RENDER =====
+function renderBoard() {
+  const container = document.getElementById('board');
+  let html = '';
+  const labels = ['前排', '第2排', '第3排', '后排'];
+  for (let r = 0; r < ROWS; r++) {
+    html += `<div class="board-row">`;
+    for (let c = 0; c < COLS; c++) {
+      const key = `${r},${c}`;
+      const heroId = board[key];
+      if (heroId) {
+        const cost = COST[heroId] || '';
+        html += `<div class="board-cell" data-key="${key}" data-row="${r}" data-col="${c}"
+          ondrop="drop(event)" ondragover="dragOver(event)" ondragleave="dragLeave(event)"
+          draggable="true" ondragstart="dragStartBoard(event)"
+          ontouchstart="touchStart(event)" ontouchmove="touchMove(event)" ontouchend="touchEnd(event)">
+          <img class="cell-hero" src="${img(heroId)}" alt="${HERO[heroId]}">
+          <div class="cell-remove" onclick="event.stopPropagation();removeHero('${key}')">✕</div>
+          <div class="cell-cost c${cost}">${cost}</div>
+        </div>`;
+      } else if (activeComp && activeComp.placements[key]) {
+        const ghostId = activeComp.placements[key];
+        const cost = COST[ghostId] || '';
+        html += `<div class="board-cell" data-key="${key}" data-row="${r}" data-col="${c}"
+          ondrop="drop(event)" ondragover="dragOver(event)" ondragleave="dragLeave(event)"
+          ontouchstart="touchStart(event)" ontouchmove="touchMove(event)" ontouchend="touchEnd(event)"
+          onclick="highlightGhost('${ghostId}')">
+          <img class="cell-ghost" src="${img(ghostId)}" alt="${HERO[ghostId]}">
+          <div class="cell-ghost-label">缺</div>
+          <div class="cell-cost c${cost}">${cost}</div>
+        </div>`;
+      } else {
+        html += `<div class="board-cell" data-key="${key}" data-row="${r}" data-col="${c}"
+          ondrop="drop(event)" ondragover="dragOver(event)" ondragleave="dragLeave(event)"></div>`;
+      }
+    }
+    html += `</div><div class="board-label">${labels[r]}</div>`;
+  }
+  container.innerHTML = html;
+
+  const count = Object.keys(board).length;
+  const popEl = document.getElementById('pop-count');
+  popEl.innerHTML = `已放置 <span class="current ${count > population ? 'over' : ''}">${count}</span>/${population}`;
+
+  const note = document.getElementById('board-note');
+  if (activeComp) {
+    const needed = activeComp.heroes.length;
+    const warn = needed > population ? ` (⚠️ 推荐${needed}人口，当前${population})` : '';
+    note.textContent = `当前阵容：${activeComp.name} | ${needed}人口${warn}`;
+  } else {
+    note.textContent = '点击下方英雄，添加到棋盘';
+  }
+
+  renderPool();
+  renderRecs();
+}
+
+function renderPool() {
+  const tabs = document.getElementById('cost-tabs');
+  tabs.innerHTML = [1,2,3,4,5].map(c => `<div class="tab ${activeCost===c?'active':''}" onclick="setCost(${c})">${'★'.repeat(c)}</div>`).join('');
+
+  const onBoard = new Set(Object.values(board));
+  const ids = Object.keys(HERO).filter(id => COST[id]).sort((a,b)=>(COST[a]||0)-(COST[b]||0));
+
+  document.getElementById('hero-grid').innerHTML = ids.filter(id => !activeCost || COST[id] === activeCost).map(id => {
+    const placed = onBoard.has(id);
+    const c = COST[id] || 1;
+    const hl = highlightHeroId === id ? 'highlight' : '';
+    return `<div class="hero-item ${placed?'on-board':''} ${hl}" draggable="true" data-hero-id="${id}"
+      ondragstart="dragStartPool(event)" onclick="if(!touchHandled)addHero('${id}')"
+      ontouchstart="touchStart(event)" ontouchmove="touchMove(event)" ontouchend="touchEnd(event)">
+      <span class="cost-badge c${c}">${c}</span>
+      <img src="${img(id)}" alt="${HERO[id]}">
+      <div class="hero-name">${HERO[id]}</div>
+    </div>`;
+  }).join('');
+}
+
+// ===== DRAG & DROP (Desktop) =====
+function dragStartPool(e) {
+  dragHero = e.currentTarget.dataset.heroId;
+  dragFrom = 'pool';
+  e.dataTransfer.effectAllowed = 'copy';
+}
+function dragStartBoard(e) {
+  const el = e.currentTarget;
+  if (!el.dataset.key) return;
+  dragHero = board[el.dataset.key];
+  dragFrom = 'board';
+  dragFromKey = el.dataset.key;
+  e.dataTransfer.effectAllowed = 'move';
+}
+function dragOver(e) {
+  e.preventDefault();
+  e.currentTarget.classList.add('drag-over');
+  e.dataTransfer.dropEffect = dragFrom === 'pool' ? 'copy' : 'move';
+}
+function dragLeave(e) { e.currentTarget.classList.remove('drag-over'); }
+function drop(e) {
+  e.preventDefault();
+  e.currentTarget.classList.remove('drag-over');
+  if (!dragHero) return;
+  const row = parseInt(e.currentTarget.dataset.row || e.currentTarget.closest('.board-cell').dataset.row);
+  const col = parseInt(e.currentTarget.dataset.col || e.currentTarget.closest('.board-cell').dataset.col);
+  const key = `${row},${col}`;
+  if (dragFrom === 'board') {
+    if (dragFromKey === key) { resetDrag(); return; }
+    if (board[key]) { board[dragFromKey] = board[key]; } else { delete board[dragFromKey]; }
+  }
+  board[key] = dragHero;
+  resetDrag();
+  renderBoard();
+}
+function resetDrag() { dragHero = null; dragFrom = null; dragFromKey = null; }
+
+// ===== TOUCH (Mobile) =====
+function touchStart(e) {
+  const el = e.currentTarget;
+  if (el.classList.contains('on-board')) { e.preventDefault(); return; }
+  const heroId = el.dataset.heroId || board[el.dataset.key];
+  if (!heroId) { e.preventDefault(); return; }
+  dragHero = heroId;
+  touchDragFrom = el;
+  touchStartX = e.touches[0].clientX;
+  touchStartY = e.touches[0].clientY;
+  isTouchDrag = false;
+  e.preventDefault();
+}
+function touchMove(e) {
+  if (!dragHero || !touchDragFrom) return;
+  const x = e.touches[0].clientX; const y = e.touches[0].clientY;
+  const dx = x - touchStartX; const dy = y - touchStartY;
+  if (!isTouchDrag && (Math.abs(dx) > 8 || Math.abs(dy) > 8)) {
+    isTouchDrag = true;
+    if (!touchDragEl) {
+      touchDragEl = document.createElement('div');
+      touchDragEl.style.cssText = 'position:fixed;z-index:9999;width:48px;height:48px;border-radius:10px;pointer-events:none;opacity:0.85;box-shadow:0 4px 20px rgba(0,0,0,0.2);';
+      touchDragEl.innerHTML = `<img src="${img(dragHero)}" style="width:100%;height:100%;border-radius:10px;object-fit:cover">`;
+      document.body.appendChild(touchDragEl);
+    }
+  }
+  if (isTouchDrag && touchDragEl) { touchDragEl.style.left = (x - 24) + 'px'; touchDragEl.style.top = (y - 24) + 'px'; }
+  e.preventDefault();
+}
+function touchEnd(e) {
+  if (!dragHero || !touchDragFrom) { resetTouch(); return; }
+  touchHandled = false;
+  if (isTouchDrag && touchDragEl) {
+    const ct = e.changedTouches[0]; let targetEl = document.elementFromPoint(ct.clientX, ct.clientY);
+    while (targetEl && !targetEl.classList.contains('board-cell')) { targetEl = targetEl.parentElement; }
+    if (targetEl) {
+      const row = targetEl.dataset.row; const col = targetEl.dataset.col;
+      if (row !== undefined && col !== undefined) {
+        const key = `${row},${col}`;
+        if (touchDragFrom.classList.contains('board-cell')) {
+          const fromKey = touchDragFrom.dataset.key;
+          if (fromKey !== key) { if (board[key]) { board[fromKey] = board[key]; } else { delete board[fromKey]; } }
+        }
+        board[key] = dragHero; renderBoard();
+      }
+    }
+    touchDragEl.remove(); touchDragEl = null;
+  } else {
+    if (touchDragFrom.classList.contains('hero-item') && !touchDragFrom.classList.contains('on-board')) { addHero(dragHero); touchHandled = true; }
+    else if (touchDragFrom.classList.contains('board-cell')) { const key = touchDragFrom.dataset.key; if (board[key]) { removeHero(key); touchHandled = true; } }
+  }
+  e.preventDefault(); resetTouch();
+}
+function resetTouch() { if (touchDragEl) { touchDragEl.remove(); touchDragEl = null; } dragHero = null; touchDragFrom = null; isTouchDrag = false; setTimeout(() => { touchHandled = false; }, 100); }
+
+// ===== ACTIONS =====
+function addHero(id) {
+  if (Object.values(board).includes(id)) return;
+  for (let r = 0; r < ROWS; r++) { for (let c = 0; c < COLS; c++) { const key = `${r},${c}`; if (!board[key]) { board[key] = id; highlightHeroId = null; renderBoard(); return; } } }
+}
+function removeHero(key) { delete board[key]; renderBoard(); }
+function setCost(c) { activeCost = c; renderPool(); }
+function setPopulation(p) { population = parseInt(p); renderBoard(); }
+function clearBoard() { board = {}; activeComp = null; renderBoard(); }
+
+async function loadData() {
+  document.getElementById('recs').innerHTML = '<div class="empty"><div class="icon">⏳</div><div>加载中...</div></div>';
+  try {
+    let data;
+    const cached = getCachedData();
+    if (cached) {
+      data = cached.data;
+    } else {
+      const url = `https://game.gtimg.cn/images/lol/act/jkzlkauto/json/lineupJson/m${currentSeason}/11/${currentMode}/lineup_detail_total.json`;
+      const res = await fetch(url);
+      data = await res.json();
+      setCachedData(currentSeason, currentMode, data);
+    }
+
+    // Detect season and mode from first item
+    if (data.lineup_list && data.lineup_list.length > 0) {
+      const first = data.lineup_list[0];
+      currentSeason = parseInt(first.season) || currentSeason;
+      currentMode = parseInt(first.mode) || currentMode;
+    }
+
+    // Convert lineup hero_id to page key_id: strip leading '1', then map duplicates
+    function toKeyId(heroId) {
+      const s = String(heroId);
+      const keyId = s.startsWith('1') ? s.slice(1) : s;
+      // Map duplicate key_ids to main key_id
+      return LINEUP_ID_MAP[keyId] !== undefined ? LINEUP_ID_MAP[keyId] : keyId;
+    }
+
+    // Collect all unique key_ids with usage count from lineups
+    const heroUsage = {};
+    data.lineup_list.forEach(item => {
+      const d = JSON.parse(item.detail || '{}');
+      Object.values(d.levelMap || {}).forEach(levelHeroes => {
+        levelHeroes.forEach(h => {
+          const keyId = toKeyId(h.hero_id);
+          if (keyId === null) return; // skip special units
+          heroUsage[keyId] = (heroUsage[keyId] || 0) + 1;
+        });
+      });
+    });
+
+    // Deduplicate: for each name, keep only the most used key_id
+    const nameToBestId = {};
+    Object.entries(heroUsage).forEach(([keyId, count]) => {
+      const name = BASE_HERO[keyId] || '未知';
+      if (!nameToBestId[name] || heroUsage[nameToBestId[name]] < count) {
+        nameToBestId[name] = keyId;
+      }
+    });
+
+    // Build HERO and COST with only the heroes that appear in lineups
+    const bestIds = new Set(Object.values(nameToBestId));
+    HERO = {};
+    COST = {};
+    bestIds.forEach(keyId => {
+      if (BASE_HERO[keyId]) {
+        HERO[keyId] = BASE_HERO[keyId];
+        COST[keyId] = BASE_COST[keyId] || 1;
+      }
+    });
+
+    // Build comps with key_id conversion
+    comps = data.lineup_list.map(item => {
+      const d = JSON.parse(item.detail || '{}');
+      const heroes = (d.levelMap?.['9'] || []).map(h => toKeyId(h.hero_id)).filter(Boolean);
+      const ce = {};
+      (d.levelMap?.['9'] || []).forEach(h => {
+        const keyId = toKeyId(h.hero_id);
+        if (keyId && h.is_carry_hero && h.equipment_id) ce[keyId] = h.equipment_id.split(',');
+      });
+      const hero_locations = (d.hero_location || []).map(h => ({
+        ...h,
+        hero_id: toKeyId(h.hero_id)
+      })).filter(h => h.hero_id !== null);
+      return {
+        name: d.line_name || '?', quality: item.quality || 'B',
+        heroes, carry_equips: ce,
+        level3: d.level_3_heros ? d.level_3_heros.split(',').filter(Boolean) : [],
+        d_time: d.d_time || '', early: d.early_info || '',
+        equip_order: d.equipment_order || '',
+        hero_locations
+      };
+    });
+
+    board = {}; activeComp = null;
+    renderBoard(); renderPool(); renderRecs();
+
+    // Preload images in background
+    preloadHeroImages();
+  } catch (e) {
+    document.getElementById('recs').innerHTML = `<div class="empty"><div class="icon">❌</div><div>${e.message}</div></div>`;
+  }
+}
+
+function highlightGhost(heroId) {
+  highlightHeroId = heroId;
+  document.getElementById('hero-grid').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  renderPool();
+  setTimeout(() => { highlightHeroId = null; renderPool(); }, 3000);
+}
+
+function toggleCard(i) {
+  const el = document.getElementById('rc'+i);
+  el.classList.toggle('open');
+}
+
+function applyLineup(i) {
+  const el = document.getElementById('rc'+i);
+  const scored = getSortedComps();
+  if (!scored[i]) return;
+  const c = scored[i];
+  activeComp = c;
+  const placements = {};
+  (c.hero_locations || []).forEach(h => {
+    if (h.location) {
+      const [row, col] = h.location.split(',').map(Number);
+      placements[`${row-1},${col-1}`] = h.hero_id;
+    }
+  });
+  c.placements = placements;
+  document.querySelectorAll('.rec-card').forEach(card => card.classList.remove('active'));
+  el.classList.add('active');
+  renderBoard();
+}
+
+function getSortedComps() {
+  const onBoard = new Set(Object.values(board));
+  return comps.map(c => {
+    const have = c.heroes.filter(id => onBoard.has(id));
+    const miss = c.heroes.filter(id => !onBoard.has(id));
+    const pct = c.heroes.length ? Math.round(have.length/c.heroes.length*100) : 0;
+    return {...c, have, miss, pct};
+  }).sort((a,b) => b.pct-a.pct || ({S:3,A:2,B:1})[b.quality]-({S:3,A:2,B:1})[a.quality]);
+}
+
+function renderRecs() {
+  const el = document.getElementById('recs');
+  const onBoard = new Set(Object.values(board));
+  if (!comps.length) {
+    el.innerHTML = '<div class="empty"><div class="icon">⏳</div><div>加载中...</div></div>';
+    return;
+  }
+  const scored = getSortedComps();
+
+  el.innerHTML = scored.slice(0,10).map((c,i) => {
+    const bar = c.pct>=70?'high':c.pct>=40?'mid':'low';
+    const isActive = activeComp && activeComp.name === c.name;
+    const popWarn = c.heroes.length > population;
+    let missChips = ''; let haveChips = '';
+    if (c.miss.length > 0) missChips = `<div class="miss-chips">${c.miss.map(id => `<span class="chip miss"><img src="${img(id)}" alt="">${HERO[id]||id}</span>`).join('')}</div>`;
+    if (c.have.length > 0) haveChips = `<div class="miss-chips">${c.have.map(id => `<span class="chip have"><img src="${img(id)}" alt="">${HERO[id]||id}</span>`).join('')}</div>`;
+    let eq = '';
+    const ce = Object.entries(c.carry_equips||{})[0];
+    if (ce) eq += `<div class="eq-block"><div class="eq-label">🌟 主C ${HERO[ce[0]]||ce[0]}</div><div class="eq-flow">${ce[1].map((e,j)=>`<span class="eq-item">${EQUIP[e]||e}</span>${j<ce[1].length-1?'<span class="eq-arrow">→</span>':''}`).join('')}</div></div>`;
+    if (c.equip_order) { const eqs = c.equip_order.split(',').map(e=>EQUIP[e]||e); eq += `<div class="eq-block"><div class="eq-label">⚔️ 装备合成</div><div class="eq-flow">${eqs.map((e,j)=>`<span class="eq-item">${e}</span>${j<eqs.length-1?'<span class="eq-arrow">→</span>':''}`).join('')}</div></div>`; }
+    return `<div class="rec-card ${i===0&&c.pct>=30?'best':''} ${isActive?'active':''}" id="rc${i}">
+      <div class="rec-header" onclick="toggleCard(${i}); applyLineup(${i})">
+        <div class="rec-tier ${c.quality}">${c.quality}</div>
+        <div class="rec-info">
+          <div class="rec-name">${c.name}</div>
+          <div class="rec-meta">
+            <span class="have">已有${c.have.length}</span><span>/</span><span class="miss">缺${c.miss.length}</span>
+            <span class="pct">${c.pct}%</span>
+            <span class="pop ${popWarn?'warn':''}">${c.heroes.length}人口</span>
+          </div>
+        </div>
+        <div class="rec-arrow">▾</div>
+      </div>
+      <div class="rec-body">
+        <div class="match-bar"><div class="match-fill ${bar}" style="width:${c.pct}%"></div></div>
+        ${c.have.length>0?'<div style="font-size:10px;color:var(--text2);font-weight:700;margin-bottom:6px;">✅ 已有</div>'+haveChips:''}
+        ${c.miss.length>0?'<div style="font-size:10px;color:var(--text2);font-weight:700;margin-bottom:6px;">❌ 缺位</div>'+missChips:''}
+        ${eq}
+        ${c.level3?.length?`<div class="info-block"><div class="label">🎯 追三</div><div class="text">${c.level3.map(id=>HERO[id]||id).join('、')}</div></div>`:''}
+        <div class="info-block"><div class="label">💰 D牌</div><div class="text">${c.d_time||'—'}</div></div>
+        <div class="info-block"><div class="label">📋 运营</div><div class="text">${c.early||'—'}</div></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ===== CACHE =====
+const CACHE_KEY = 'jcc-builder-data';
+const CACHE_EXPIRY = 24 * 60 * 60 * 1000; // 24 hours
+
+function getCachedData() {
+  const cached = localStorage.getItem(CACHE_KEY);
+  if (!cached) return null;
+  try {
+    const { season, mode, data, timestamp } = JSON.parse(cached);
+    if (Date.now() - timestamp > CACHE_EXPIRY) return null;
+    return { season, mode, data };
+  } catch (e) { return null; }
+}
+
+function setCachedData(season, mode, data) {
+  localStorage.setItem(CACHE_KEY, JSON.stringify({ season, mode, data, timestamp: Date.now() }));
+}
+
+async function cacheImage(url) {
+  if (!url) return url;
+  try {
+    const cache = await caches.open('jcc-hero-images');
+    const cached = await cache.match(url);
+    if (cached) {
+      const blob = await cached.blob();
+      return URL.createObjectURL(blob);
+    }
+    const res = await fetch(url, { mode: 'cors' });
+    if (res.ok) {
+      await cache.put(url, res.clone());
+      const blob = await res.blob();
+      return URL.createObjectURL(blob);
+    }
+  } catch (e) {}
+  return url;
+}
+
+async function preloadHeroImages() {
+  const ids = Object.keys(HERO);
+  await Promise.all(ids.map(async id => {
+    const url = img(id);
+    if (!url) return;
+    try {
+      const cache = await caches.open('jcc-hero-images');
+      const cached = await cache.match(url);
+      if (!cached) {
+        const res = await fetch(url, { mode: 'cors' });
+        if (res.ok) await cache.put(url, res.clone());
+      }
+    } catch (e) {}
+  }));
+}
+
+// ===== INIT =====
+HERO = { ...BASE_HERO };
+COST = { ...BASE_COST };
+renderBoard();
+renderPool();
+loadData();
+</script>
+
+</body>
+</html>

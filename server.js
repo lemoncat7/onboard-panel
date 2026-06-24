@@ -474,6 +474,16 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
+  // === 游戏攻略页面（放在模块路由之前，避免被 novels 吞掉）===
+  if (url === '/game' || url === '/game/' || url === '/game/jcc-star' || url === '/game/jcc-star.html') {
+    serveFile(res, path.join(__dirname, 'modules/game/jcc-star.html'), 'text/html');
+    return;
+  }
+  if (url === '/game/builder' || url === '/game/builder.html') {
+    serveFile(res, path.join(__dirname, 'modules/game/jcc-builder.html'), 'text/html');
+    return;
+  }
+
   if (reportsRoutes.handle(req, res, url, urlPath, { serveFile, json })) return;
   if (snacksRoutes.handle(req, res, url, urlPath, { serveFile, json, runCmd })) return;
   if (novelsRoutes.handle(req, res, url, urlPath, { serveFile, json })) return;
