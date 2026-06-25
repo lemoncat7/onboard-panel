@@ -56,41 +56,42 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC'
 
 /* Center: board */
 .center-panel { flex: 1; min-width: 0; display: flex; flex-direction: column; overflow: hidden; position: relative; background: #0d0a08; }
-/* 棋盘主体 - 背景图替换所有CSS伪元素 */
+/* 棋盘主体 - 背景图铺满整个中间区域 */
 .board-wrap { 
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 16px;
+  padding: 0;
   position: relative;
   overflow: hidden;
-  background: #0d0a08;
+  background-image: url('/onboard/game/board-bg.jpg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
 }
-.board-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; position: relative; z-index: 1; background: rgba(20,12,6,0.7); padding: 6px 12px; border-radius: 8px; border: 1px solid rgba(90,70,45,0.3); }
+.board-header { display: flex; justify-content: space-between; align-items: center; margin: 8px 12px; position: relative; z-index: 1; background: rgba(20,12,6,0.7); padding: 6px 12px; border-radius: 8px; border: 1px solid rgba(90,70,45,0.3); }
 .board-comp-name { font-size: 13px; font-weight: 700; color: #e0c878; }
 .board-status { font-size: 12px; color: #c0b8a8; }
 .board-status .current { font-weight: 700; color: #e0c878; }
 .board-status .over { color: var(--danger); }
 
-/* 棋盘 - 4x7 格子覆盖在背景图上，自适应大小 */
+/* 棋盘 - 4x7 固定格子，交错覆盖在背景图上 */
 .board { 
-  position: relative; z-index: 1;
-  display: flex; flex-direction: column; justify-content: space-between;
-  padding: 1.5%; border-radius: 12px;
-  aspect-ratio: 1280 / 720;
-  max-width: 100%; max-height: 100%;
-  /* 棋盘背景图 */
-  background-image: url('/onboard/game/board-bg.jpg');
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  background-position: center;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
 }
-.board-row { display: flex; justify-content: space-between; flex: 1; gap: 1%; }
+.board-row { display: flex; gap: 8px; }
+/* 第2、4行偏移半个格子，形成交错布局 */
+.board-row:nth-child(2) { margin-left: 36px; }
+.board-row:nth-child(4) { margin-left: 36px; }
 .board-cell {
-  flex: 1; aspect-ratio: 1 / 1; border-radius: 50%;
+  width: 64px; height: 64px; border-radius: 50%;
   /* 低透明底色，让背景图纹理透出来 */
   background: rgba(20,15,10,0.35);
   border: 1px solid rgba(120,90,55,0.3); 
