@@ -1,569 +1,187 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>⚔️ TFT 星神阵容构建器</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    :root {
-      --bg: #f5f7fa;
-      --bg2: #e9edf2;
-      --card: #ffffff;
-      --card2: #f7f9fb;
-      --border: rgba(0, 0, 0, 0.06);
-      --border2: rgba(0, 0, 0, 0.12);
-      --neon: #0d9488;
-      --neon2: #0284c7;
-      --accent: #7c3aed;
-      --accent2: #a78bfa;
-      --danger: #dc2626;
-      --gold: #d97706;
-      --text: #1f2937;
-      --text2: #6b7280;
-      --text3: #9ca3af;
-    }
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
-      min-height: 100vh;
-      padding-bottom: 24px;
-      overflow-x: hidden;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>金铲铲阵容构建器</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #f5f5f5; --panel: #ffffff; --text: #1a1a1a; --text2: #555; --text3: #888; --border: #e0e0e0;
+  --neon: #1e9bff; --danger: #e74c3c; --success: #2ecc71; --gold: #d4a52c;
+  --c1: #8a8a8a; --c2: #2ecc71; --c3: #3498db; --c4: #9b59b6; --c5: #d4a52c;
+  --tier-s: #d4a52c; --tier-a: #e74c3c; --tier-b: #3498db;
+}
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
 
-    .top-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 14px 16px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.9));
-      border-bottom: 1px solid var(--border);
-      backdrop-filter: blur(12px);
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    }
-    .brand { display: flex; align-items: center; gap: 10px; }
-    .brand-logo {
-      width: 38px; height: 38px; border-radius: 10px;
-      background: linear-gradient(135deg, var(--neon), var(--neon2));
-      display: flex; align-items: center; justify-content: center;
-      font-size: 20px;
-      box-shadow: 0 0 20px rgba(13, 148, 136, 0.25);
-    }
-    .brand-text { font-size: 16px; font-weight: 800; letter-spacing: 0.5px; }
-    .top-actions { display: flex; gap: 8px; align-items: center; }
-    .pop-select {
-      background: var(--card2);
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 7px 12px;
-      border-radius: 8px;
-      font-size: 13px;
-      outline: none;
-    }
-    .btn-clear {
-      background: rgba(220, 38, 38, 0.08);
-      border: 1px solid rgba(220, 38, 38, 0.25);
-      color: var(--danger);
-      padding: 7px 16px;
-      border-radius: 8px;
-      font-size: 13px; font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .btn-clear:hover { background: rgba(220, 38, 38, 0.15); box-shadow: 0 0 12px rgba(220, 38, 38, 0.15); }
+/* Top bar */
+.topbar { display: flex; align-items: center; justify-content: space-between; padding: 8px 16px; background: var(--panel); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
+.topbar h1 { font-size: 16px; }
+.topbar-actions { display: flex; gap: 8px; }
+.topbar-actions button { padding: 4px 10px; font-size: 12px; border: none; border-radius: 6px; background: var(--neon); color: #fff; cursor: pointer; }
 
-    .section { padding: 16px; }
-    .sec-title {
-      font-size: 12px; font-weight: 700;
-      color: var(--text2);
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      margin-bottom: 14px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .sec-title::before {
-      content: '';
-      width: 3px; height: 14px;
-      background: linear-gradient(180deg, var(--neon), var(--neon2));
-      border-radius: 2px;
-    }
+/* Population tabs */
+.pop-tabs { display: flex; justify-content: center; gap: 4px; padding: 8px 0; background: var(--panel); border-bottom: 1px solid var(--border); position: sticky; top: 40px; z-index: 99; }
+.pop-tab { padding: 4px 12px; font-size: 13px; font-weight: 600; border-radius: 20px; cursor: pointer; border: 1px solid var(--border); background: var(--panel); }
+.pop-tab.active { background: var(--neon); color: #fff; border-color: var(--neon); }
 
-    /* Board */
-    .board-wrap {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      padding: 20px 16px;
-      background: linear-gradient(180deg, var(--card), var(--bg2));
-      border-radius: 20px;
-      border: 1px solid var(--border);
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    }
-    .board-wrap::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: radial-gradient(ellipse at 50% 0%, rgba(0, 170, 255, 0.04), transparent 60%);
-      pointer-events: none;
-    }
-    .board-row { display: flex; gap: 6px; }
-    .board-cell {
-      width: 50px; height: 50px;
-      border-radius: 12px;
-      border: 1.5px solid var(--border);
-      background: rgba(0, 0, 0, 0.04);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.15s;
-      position: relative;
-      -webkit-tap-highlight-color: transparent;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 2px 4px rgba(0,0,0,0.06);
-    }
-    .board-cell:hover { border-color: var(--neon2); background: rgba(2, 132, 199, 0.06); box-shadow: 0 0 16px rgba(2, 132, 199, 0.12); }
-    .board-cell .cell-hero {
-      width: 40px; height: 40px;
-      border-radius: 10px;
-      object-fit: cover;
-      pointer-events: none;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    }
-    .board-cell .cell-ghost {
-      width: 40px; height: 40px;
-      border-radius: 10px;
-      opacity: 0.35;
-      filter: grayscale(0.8);
-      pointer-events: none;
-      border: 1.5px dashed var(--border2);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    .board-cell .cell-ghost-label {
-      position: absolute;
-      bottom: 2px; right: 2px;
-      font-size: 8px; font-weight: 800; color: var(--danger);
-      background: rgba(255,255,255,0.85); padding: 1px 4px; border-radius: 4px;
-      pointer-events: none;
-    }
-    .board-cell .cell-remove {
-      position: absolute; top: -6px; right: -6px;
-      width: 18px; height: 18px; border-radius: 50%;
-      background: var(--danger); color: #fff;
-      font-size: 10px; font-weight: 800;
-      display: none; align-items: center; justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
-      z-index: 2;
-    }
-    .board-cell:hover .cell-remove { display: flex; }
-    .board-cell .cell-cost {
-      position: absolute; bottom: -2px; left: -2px;
-      width: 14px; height: 14px; border-radius: 50%;
-      font-size: 8px; font-weight: 800;
-      display: flex; align-items: center; justify-content: center;
-      color: #fff;
-      z-index: 2;
-      border: 1.5px solid var(--card);
-    }
-    .board-label {
-      font-size: 10px; color: var(--text3);
-      margin-top: 2px;
-      font-weight: 600;
-    }
-    .pop-count {
-      text-align: center;
-      font-size: 14px;
-      color: var(--text2);
-      margin-top: 10px;
-      font-weight: 600;
-    }
-    .pop-count .current { color: var(--neon); font-weight: 800; }
-    .pop-count .over { color: var(--danger); }
-    .board-note {
-      text-align: center;
-      font-size: 11px;
-      color: var(--text3);
-      margin-top: 8px;
-    }
+/* Main layout */
+.main-layout { display: flex; gap: 12px; padding: 12px; max-width: 1400px; margin: 0 auto; align-items: flex-start; }
+@media (max-width: 768px) {
+  .main-layout { flex-direction: column; padding: 8px; }
+}
 
-    /* Board Info */
-    .board-info {
-      margin-top: 12px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 14px 16px;
-      display: none;
-    }
-    .board-info.active { display: block; }
-    .board-info .info-title {
-      font-size: 14px; font-weight: 800;
-      color: var(--text);
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .board-info .info-title .tier {
-      font-size: 11px; font-weight: 800;
-      padding: 2px 8px; border-radius: 6px;
-      color: #fff;
-    }
-    .board-info .info-title .tier.S { background: linear-gradient(135deg, #fbbf24, #ef4444); }
-    .board-info .info-title .tier.A { background: linear-gradient(135deg, #6366f1, #8b5cf6); }
-    .board-info .info-title .tier.B { background: linear-gradient(135deg, #64748b, #94a3b8); }
-    .board-info .info-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 10px;
-    }
-    .board-info .info-row:last-child { margin-bottom: 0; }
-    .board-info .info-label {
-      font-size: 11px; color: var(--text2); font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1.2px;
-      margin-bottom: 6px;
-      width: 100%;
-    }
-    .board-info .eq-chip {
-      display: inline-flex; align-items: center; gap: 4px;
-      padding: 5px 10px; border-radius: 8px;
-      background: linear-gradient(135deg, rgba(124, 58, 237, 0.08), rgba(2, 132, 199, 0.06));
-      border: 1px solid rgba(124, 58, 237, 0.15);
-      font-size: 12px; color: #7c3aed; font-weight: 600;
-    }
-    .board-info .eq-chip img { width: 18px; height: 18px; border-radius: 4px; }
-    .board-info .eq-arrow { color: var(--text2); font-size: 11px; }
-    .board-info .info-text {
-      font-size: 13px; color: #4b5563; line-height: 1.7;
-      width: 100%;
-    }
-    .board-info .d-time {
-      font-size: 13px; font-weight: 700; color: var(--neon);
-    }
+/* Left panel: equip */
+.left-panel { width: 260px; flex-shrink: 0; background: var(--panel); border-radius: 12px; border: 1px solid var(--border); padding: 12px; height: calc(100vh - 140px); overflow-y: auto; }
+@media (max-width: 768px) { .left-panel { width: 100%; height: auto; max-height: 300px; } }
+.panel-title { font-size: 14px; font-weight: 700; margin-bottom: 10px; color: var(--text); }
 
-    /* Cost Tabs */
-    .cost-tabs {
-      display: flex;
-      gap: 6px;
-      margin-bottom: 14px;
-      flex-wrap: wrap;
-    }
-    .tab {
-      padding: 7px 16px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      background: var(--card2);
-      color: var(--text2);
-      font-size: 13px; font-weight: 600;
-      cursor: pointer; transition: all 0.15s;
-    }
-    .tab:hover { border-color: var(--neon2); color: var(--neon); }
-    .tab.active {
-      background: linear-gradient(135deg, rgba(13, 148, 136, 0.12), rgba(124, 58, 237, 0.08));
-      border-color: var(--neon);
-      color: var(--neon);
-      box-shadow: 0 0 12px rgba(13, 148, 136, 0.15);
-    }
+.eq-panel { font-size: 12px; }
+.eq-title { font-size: 13px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+.eq-tier { padding: 2px 6px; border-radius: 4px; font-size: 11px; color: #fff; }
+.eq-tier.S { background: var(--tier-s); }
+.eq-tier.A { background: var(--tier-a); }
+.eq-tier.B { background: var(--tier-b); }
+.eq-section { margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+.eq-label { font-weight: 700; color: var(--text2); margin-bottom: 4px; font-size: 11px; }
+.eq-items { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.eq-item { display: flex; align-items: center; gap: 2px; font-size: 11px; }
+.eq-item img { width: 20px; height: 20px; border-radius: 3px; }
+.eq-arrow { color: var(--text3); font-size: 10px; }
+.eq-text { color: var(--text2); line-height: 1.5; font-size: 12px; }
+.eq-d { font-size: 12px; color: var(--text); font-weight: 600; }
+.eq-empty { color: var(--text3); font-size: 12px; padding: 20px 0; text-align: center; }
 
-    /* Hero Grid */
-    .hero-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
-      gap: 8px;
-    }
-    .hero-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 7px 3px;
-      border-radius: 14px;
-      border: 2px solid var(--border);
-      background: var(--card2);
-      cursor: grab;
-      transition: all 0.15s;
-      position: relative;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .hero-item:hover {
-      border-color: var(--neon2);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(2, 132, 199, 0.08);
-    }
-    .hero-item:active { cursor: grabbing; }
-    .hero-item.on-board { opacity: 0.25; pointer-events: none; filter: grayscale(0.8); }
-    .hero-item.highlight {
-      border-color: var(--gold);
-      box-shadow: 0 0 20px rgba(217, 119, 6, 0.2);
-      animation: pulse-gold 1.5s infinite;
-    }
-    @keyframes pulse-gold { 0%,100% { box-shadow: 0 0 20px rgba(217,119,6,0.2); } 50% { box-shadow: 0 0 30px rgba(217,119,6,0.35); } }
-    .hero-item img {
-      width: 38px; height: 38px;
-      border-radius: 10px;
-      pointer-events: none;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.12);
-    }
-    .hero-name {
-      font-size: 9px; color: var(--text2);
-      margin-top: 3px; font-weight: 600;
-      text-align: center;
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-      max-width: 54px;
-    }
-    .cost-badge {
-      position: absolute; top: 3px; right: 3px;
-      width: 15px; height: 15px; border-radius: 50%;
-      font-size: 9px; font-weight: 800;
-      display: flex; align-items: center; justify-content: center;
-      color: #fff;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
-    }
-    .c1 { background: #6b7280; }
-    .c2 { background: #2563eb; }
-    .c3 { background: #9333ea; }
-    .c4 { background: #d97706; }
-    .c5 { background: #dc2626; }
+/* Center: board */
+.center-panel { flex: 1; min-width: 0; }
+.board-wrap { background: var(--panel); border-radius: 12px; border: 1px solid var(--border); padding: 12px; }
+.board-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.board-comp-name { font-size: 13px; font-weight: 700; color: var(--neon); }
+.board-status { font-size: 12px; color: var(--text2); }
+.board-status .current { font-weight: 700; color: var(--neon); }
+.board-status .over { color: var(--danger); }
 
-    /* Rec Cards */
-    .rec-list { display: flex; flex-direction: column; gap: 10px; }
-    .rec-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      overflow: hidden;
-      transition: all 0.2s;
-      position: relative;
-      cursor: pointer;
-    }
-    .rec-card::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--border2), transparent);
-    }
-    .rec-card:hover { border-color: var(--border2); }
-    .rec-card.best { border-color: rgba(13, 148, 136, 0.3); box-shadow: 0 0 20px rgba(13, 148, 136, 0.08); }
-    .rec-card.active { border-color: var(--neon); box-shadow: 0 0 16px rgba(13, 148, 136, 0.12); }
-    .rec-header {
-      padding: 14px 16px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .rec-tier {
-      width: 36px; height: 36px; border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 14px; font-weight: 800; color: #fff;
-      flex-shrink: 0;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-    }
-    .rec-tier.S { background: linear-gradient(135deg, #fbbf24, #ef4444); }
-    .rec-tier.A { background: linear-gradient(135deg, #6366f1, #8b5cf6); }
-    .rec-tier.B { background: linear-gradient(135deg, #64748b, #94a3b8); }
-    .rec-info { flex: 1; min-width: 0; }
-    .rec-name { font-size: 15px; font-weight: 700; }
-    .rec-meta {
-      font-size: 12px; color: var(--text2);
-      margin-top: 3px;
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    .rec-meta .have { color: var(--neon); font-weight: 700; }
-    .rec-meta .miss { color: var(--danger); font-weight: 700; }
-    .rec-meta .pct { background: rgba(124, 58, 237, 0.12); color: #7c3aed; padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: 700; }
-    .rec-meta .pop { background: rgba(13, 148, 136, 0.1); color: var(--neon); padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: 700; }
-    .rec-meta .pop.warn { background: rgba(220, 38, 38, 0.1); color: var(--danger); }
-    .rec-arrow { font-size: 14px; color: var(--text2); transition: transform 0.3s; margin-left: auto; }
-    .rec-card.open .rec-arrow { transform: rotate(180deg); }
-    .rec-body { display: none; padding: 0 16px 16px; }
-    .rec-card.open .rec-body { display: block; }
+.board { display: flex; flex-direction: column; gap: 2px; }
+.board-row { display: flex; gap: 4px; justify-content: center; }
+.board-cell {
+  width: 48px; height: 48px; border-radius: 8px;
+  background: #2a1a0a; border: 1px solid #5a3a1a;
+  display: flex; align-items: center; justify-content: center; position: relative;
+  cursor: pointer; transition: transform 0.15s;
+}
+.board-cell:hover { transform: scale(1.05); }
+.board-cell.drag-over { border-color: var(--neon); box-shadow: 0 0 8px var(--neon); }
+.cell-hero { width: 40px; height: 40px; border-radius: 6px; object-fit: cover; }
+.cell-ghost { width: 40px; height: 40px; border-radius: 6px; object-fit: cover; opacity: 0.45; filter: grayscale(0.6); }
+.cell-ghost-label { position: absolute; bottom: 2px; right: 2px; font-size: 9px; color: #fff; background: rgba(0,0,0,0.5); padding: 0 3px; border-radius: 3px; }
+.cell-cost { position: absolute; top: 2px; left: 2px; font-size: 9px; font-weight: 700; color: #fff; padding: 1px 3px; border-radius: 3px; }
+.cell-cost.c1 { background: var(--c1); } .cell-cost.c2 { background: var(--c2); } .cell-cost.c3 { background: var(--c3); }
+.cell-cost.c4 { background: var(--c4); } .cell-cost.c5 { background: var(--c5); }
+.cell-remove { position: absolute; top: -4px; right: -4px; width: 16px; height: 16px; border-radius: 50%; background: var(--danger); color: #fff; font-size: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0; transition: opacity 0.2s; }
+.board-cell:hover .cell-remove { opacity: 1; }
+.board-label { text-align: center; font-size: 10px; color: var(--text3); margin-top: 2px; margin-bottom: 4px; }
 
-    .miss-chips { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 12px; }
-    .chip {
-      display: inline-flex; align-items: center; gap: 4px;
-      padding: 4px 10px; border-radius: 8px;
-      font-size: 11px; font-weight: 600;
-    }
-    .chip.miss { background: rgba(220, 38, 38, 0.06); border: 1px solid rgba(220, 38, 38, 0.15); color: #dc2626; }
-    .chip.have { background: rgba(13, 148, 136, 0.08); border: 1px solid rgba(13, 148, 136, 0.18); color: #0d9488; }
-    .chip img { width: 16px; height: 16px; border-radius: 4px; }
+/* Right panel: hero pool */
+.right-panel { width: 260px; flex-shrink: 0; background: var(--panel); border-radius: 12px; border: 1px solid var(--border); padding: 12px; height: calc(100vh - 140px); overflow-y: auto; }
+@media (max-width: 768px) { .right-panel { width: 100%; height: auto; max-height: 400px; } }
+.cost-tabs { display: flex; gap: 4px; margin-bottom: 10px; flex-wrap: wrap; }
+.cost-tab { padding: 3px 8px; font-size: 12px; border-radius: 6px; cursor: pointer; border: 1px solid var(--border); background: var(--panel); }
+.cost-tab.active { background: var(--neon); color: #fff; border-color: var(--neon); }
+.hero-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.hero-item { display: flex; flex-direction: column; align-items: center; cursor: pointer; padding: 4px; border-radius: 6px; transition: background 0.15s; position: relative; }
+.hero-item:hover { background: var(--bg); }
+.hero-item.on-board { opacity: 0.4; pointer-events: none; }
+.hero-item img { width: 40px; height: 40px; border-radius: 6px; object-fit: cover; }
+.hero-name { font-size: 10px; text-align: center; margin-top: 2px; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; }
+.cost-badge { position: absolute; top: 2px; left: 2px; font-size: 9px; font-weight: 700; color: #fff; padding: 1px 3px; border-radius: 3px; z-index: 2; }
+.cost-badge.c1 { background: var(--c1); } .cost-badge.c2 { background: var(--c2); } .cost-badge.c3 { background: var(--c3); }
+.cost-badge.c4 { background: var(--c4); } .cost-badge.c5 { background: var(--c5); }
 
-    .eq-block {
-      background: var(--card2);
-      border-radius: 12px;
-      padding: 12px;
-      margin-bottom: 8px;
-    }
-    .eq-label {
-      font-size: 11px; color: var(--text2);
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1.2px;
-      margin-bottom: 8px;
-    }
-    .eq-flow {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      align-items: center;
-    }
-    .eq-item {
-      padding: 5px 12px;
-      border-radius: 8px;
-      background: linear-gradient(135deg, rgba(124, 58, 237, 0.08), rgba(2, 132, 199, 0.06));
-      border: 1px solid rgba(124, 58, 237, 0.15);
-      font-size: 12px; color: #7c3aed; font-weight: 600;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-    .eq-item img {
-      width: 20px; height: 20px;
-      border-radius: 4px;
-      object-fit: cover;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    }
-    .eq-arrow { color: var(--text2); font-size: 12px; }
+/* Bottom recommendations */
+.bottom-panel { max-width: 1400px; margin: 12px auto; background: var(--panel); border-radius: 12px; border: 1px solid var(--border); padding: 10px 16px; }
+.bottom-title { font-size: 13px; font-weight: 700; margin-bottom: 8px; }
+.rec-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
+.rec-scroll::-webkit-scrollbar { height: 4px; }
+.rec-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+.rec-hero { display: flex; flex-direction: column; align-items: center; cursor: pointer; padding: 4px; border-radius: 6px; transition: background 0.15s; position: relative; min-width: 56px; }
+.rec-hero:hover { background: var(--bg); }
+.rec-hero img { width: 40px; height: 40px; border-radius: 6px; object-fit: cover; }
+.rec-hero .name { font-size: 10px; text-align: center; margin-top: 2px; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; }
 
-    .info-block {
-      background: var(--card2);
-      border-radius: 12px;
-      padding: 12px;
-      margin-bottom: 8px;
-    }
-    .info-block .label {
-      font-size: 10px; color: var(--text2); font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      margin-bottom: 5px;
-    }
-    .info-block .text {
-      font-size: 13px; color: #4b5563; line-height: 1.7;
-    }
-
-    .match-bar {
-      height: 5px;
-      background: rgba(0,0,0,0.06);
-      border-radius: 3px;
-      overflow: hidden;
-      margin-bottom: 12px;
-    }
-    .match-fill {
-      height: 100%; border-radius: 3px;
-      transition: width 0.6s cubic-bezier(0.4,0,0.2,1);
-    }
-    .match-fill.high { background: linear-gradient(90deg, var(--neon), var(--neon2)); }
-    .match-fill.mid { background: linear-gradient(90deg, var(--gold), #f59e0b); }
-    .match-fill.low { background: linear-gradient(90deg, var(--danger), #ff6b8a); }
-
-    .empty {
-      text-align: center;
-      padding: 50px 24px;
-      color: var(--text3);
-    }
-    .empty .icon { font-size: 48px; margin-bottom: 12px; opacity: 0.5; }
-
-    @media (max-width: 380px) {
-      .board-cell { width: 44px; height: 44px; }
-      .board-cell .cell-hero { width: 34px; height: 34px; }
-      .hero-grid { grid-template-columns: repeat(auto-fill, minmax(52px, 1fr)); }
-      .hero-item img { width: 34px; height: 34px; }
-    }
-  </style>
+/* Modal */
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; }
+.modal-overlay.active { display: flex; }
+.modal { background: var(--panel); border-radius: 12px; max-width: 400px; width: 90%; max-height: 80vh; overflow-y: auto; padding: 16px; }
+.modal-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.modal-header img { width: 48px; height: 48px; border-radius: 8px; }
+.modal-header .name { font-size: 16px; font-weight: 700; }
+.modal-header .cost { font-size: 12px; color: var(--text2); }
+.modal-close { margin-left: auto; background: none; border: none; font-size: 20px; cursor: pointer; color: var(--text3); }
+.modal-section { margin-bottom: 12px; }
+.modal-label { font-size: 12px; font-weight: 700; color: var(--text2); margin-bottom: 4px; }
+</style>
 </head>
 <body>
 
-<div class="top-bar">
-  <div class="brand">
-    <div class="brand-logo">⚔️</div>
-    <div class="brand-text">TFT 星神构建器</div>
-  </div>
-    <div class="top-actions">
-      <select class="pop-select" id="pop-select" onchange="setPopulation(this.value)">
-      <option value="7">人口 7</option>
-      <option value="8">人口 8</option>
-      <option value="9" selected>人口 9</option>
-      <option value="10">人口 10</option>
-    </select>
-    <button class="btn-clear" onclick="clearBoard()">清空</button>
+<div class="topbar">
+  <h1>金铲铲阵容构建器</h1>
+  <div class="topbar-actions">
+    <button onclick="clearBoard()">清空</button>
   </div>
 </div>
 
-<!-- 1. Board -->
-<div class="section">
-  <div class="sec-title">棋盘</div>
-  <div class="board-wrap" id="board"></div>
-  <div class="pop-count" id="pop-count">已放置 <span class="current">0</span>/9</div>
-  <div class="board-note" id="board-note">点击下方英雄，添加到棋盘</div>
-  <div class="board-info" id="board-info"></div>
+<div class="pop-tabs" id="pop-tabs"></div>
+
+<div class="main-layout">
+  <div class="left-panel" id="eq-panel">
+    <div class="panel-title">🛡️ 装备</div>
+    <div class="eq-empty">拖动英雄到棋盘，或选择推荐阵容</div>
+  </div>
+
+  <div class="center-panel">
+    <div class="board-wrap">
+      <div class="board-header">
+        <div class="board-comp-name" id="board-comp-name"></div>
+        <div class="board-status" id="board-status">已放置 0/9</div>
+      </div>
+      <div class="board" id="board"></div>
+    </div>
+  </div>
+
+  <div class="right-panel">
+    <div class="panel-title">🦸 英雄池</div>
+    <div class="cost-tabs" id="cost-tabs"></div>
+    <div class="hero-grid" id="hero-grid"></div>
+  </div>
 </div>
 
-<!-- 2. Hero Pool -->
-<div class="section">
-  <div class="sec-title">英雄池</div>
-  <div class="cost-tabs" id="cost-tabs"></div>
-  <div class="hero-grid" id="hero-grid"></div>
+<div class="bottom-panel">
+  <div class="bottom-title" id="bottom-title">🛒 推荐购买</div>
+  <div class="rec-scroll" id="rec-scroll">
+    <div style="font-size:12px;color:var(--text3);padding:10px 0;">拖动英雄到棋盘，查看推荐</div>
+  </div>
 </div>
 
-<!-- 3. Recommendations -->
-<div class="section">
-  <div class="sec-title">推荐阵容</div>
-  <div class="rec-list" id="recs">
-    <div class="empty"><div class="icon">⏳</div><div>加载中...</div></div>
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal" id="modal" onclick="event.stopPropagation()">
+    <div class="modal-header" id="modal-header"></div>
+    <div id="modal-body"></div>
   </div>
 </div>
 
 <script>
+// ===== DATA =====
 const ROWS = 4, COLS = 7;
-let board = {};
-let population = 9;
-let activeCost = 1;
-let comps = [];
-let activeComp = null;
-let highlightHeroId = null;
-let currentSeason = 18;
-let currentMode = 17;
-let HERO = {};
-let COST = {};
-
-// Drag state
-let dragHero = null;
-let dragFrom = null;
-let dragFromKey = null;
-let touchDragEl = null;
-let touchStartX = 0, touchStartY = 0;
-let touchDragFrom = null;
-let isTouchDrag = false;
-let touchHandled = false;
-
-// 页面数据库中的权威数据 (https://jcc.qq.com/m/m202206/#/database/hero/17,S18)
-// key_id -> 中文名 (去重,每个中文名只保留一个key_id)
+const POP_OPTIONS = [4, 5, 6, 7, 8, 9, 10];
 const BASE_HERO = {
-  // 1费 (14)
   '1450':'崔斯特','1451':'伊泽瑞尔','1452':'泰隆','1453':'内瑟斯','1454':'蕾欧娜','1455':'雷克塞','1456':'凯特琳','1457':'丽桑卓',
   '1458':'亚托克斯','1459':'科加斯','1460':'提莫','1461':'维迦','1462':'波比','1463':'贝蕾亚',
-  // 2费 (13)
   '2450':'纳尔','2451':'格温','2452':'派克','2453':'佐伊','2454':'卑尔维斯','2455':'古拉加斯','2456':'米利欧','2457':'莫德凯撒',
   '2458':'金克丝','2459':'潘森','2460':'小木灵','2461':'阿卡丽','2462':'贾克斯',
-  // 3费 (13)
   '3450':'卡莎','3451':'厄加特','3452':'维克托','3453':'奥恩','3454':'璐璐','3455':'菲兹','3457':'茂凯','3458':'黛安娜',
   '3459':'拉亚斯特','3460':'俄洛伊','3461':'莎弥拉','3462':'阿萝拉','3465':'厄运小姐',
-  // 4费 (14)
   '4370':'易','4371':'努努和威朗普','4372':'库奇','4373':'卡尔玛','4374':'千珏','4375':'锐雯','4376':'拉莫斯','4377':'娜美',
   '4378':'塔姆','4379':'超级机甲','4380':'乐芙兰','4381':'霞','4382':'奥瑞利安·索尔','5434':'莫甘娜',
-  // 5费 (9)
   '5420':'巴德','5421':'布里茨','5422':'薇古丝','5423':'格雷福斯','5424':'慎','5425':'娑娜','5426':'菲奥娜','5427':'烬','5428':'劫'
 };
 const BASE_COST = {
@@ -573,7 +191,6 @@ const BASE_COST = {
   '4370':4,'4371':4,'4372':4,'4373':4,'4374':4,'4375':4,'4376':4,'4377':4,'4378':4,'4379':4,'4380':4,'4381':4,'4382':4,'5434':4,
   '5420':5,'5421':5,'5422':5,'5423':5,'5424':5,'5425':5,'5426':5,'5427':5,'5428':5
 };
-// 阵容数据中重复的hero_id映射到主key_id (去掉首位1后的key_id)
 const LINEUP_ID_MAP = {
   '1464':'1453','1465':'1451','1466':'1451','1467':'1458','1468':'1462','1469':'1459','1470':'1459',
   '2463':'2455','2464':'2452','2465':'2457','2466':'2460','2467':'2462',
@@ -583,40 +200,28 @@ const LINEUP_ID_MAP = {
   '8410':null,'8409':null,'8406':null,'8407':null,'8428':null
 };
 const EQUIP = {
-  '1001':'暴风之剑','1002':'反曲之弓','1003':'无用大棒','1004':'女神之泪',
-  '1005':'锁子甲','1006':'负极斗篷','1007':'巨人腰带','1008':'金铲铲','1009':'拳套','1010':'金锅锅',
-  '2001':'无尽之刃','2003':'海克斯科技枪刃','2004':'朔极之矛','2005':'夜之锋刃',
-  '2006':'汲取剑','2007':'斯特拉克的挑战护手','2009':'红霸符','2010':'鬼索的狂暴之刃','2011':'虚空之杖','2012':'泰坦的坚决',
-  '2013':'海妖之怒','2014':'纳什之牙','2016':'班克斯的魔法帽','2017':'大天使之杖',
-  '2018':'冕卫','2019':'离子火花','2020':'莫雷洛秘典','2022':'蓝霸符','2023':'圣盾使的誓约',
-  '2024':'适应性头盔','2025':'振奋盔甲','2027':'棘刺背心','2028':'石像鬼石板甲','2029':'日炎斗篷',
-  '2031':'巨龙之爪','2032':'薄暮法袍','2034':'狂徒铠甲','2036':'金铲铲冠冕','2037':'最后的轻语',
-  '2038':'珠光护手','2039':'正义之手','2040':'坚定之心','2041':'水银','2042':'强袭者的链枷',
-  '2044':'秘法手套','2045':'锐利之刃','2046':'巨人捕手','2047':'金锅锅冠冕','2048':'金锅铲冠冕',
-  '2059':'光明版无尽之刃','2060':'光明版海克斯科技枪刃','2061':'光明版朔极之矛','2062':'光明版夜之锋刃',
-  '2063':'光明版汲取剑','2064':'光明版斯特拉克的挑战护手','2065':'光明版红霸符','2066':'光明版鬼索的狂暴之刃','2067':'光明版虚空之杖',
-  '2068':'光明版泰坦的坚决','2069':'光明版海妖之怒','2070':'光明版纳什之牙','2071':'光明版班克斯的魔法帽','2072':'光明版大天使之杖',
-  '2073':'光明版冕卫','2074':'光明版离子火花','2075':'光明版莫雷洛秘典','2076':'光明版蓝霸符','2077':'光明版圣盾使的誓约',
-  '2078':'光明版适应性头盔','2079':'光明版振奋盔甲','2080':'光明版棘刺背心','2081':'光明版石像鬼石板甲','2082':'光明版日炎斗篷',
-  '2083':'光明版巨龙之爪','2084':'光明版薄暮法袍','2085':'光明版狂徒铠甲','2086':'光明版最后的轻语','2087':'光明版珠光护手',
-  '2088':'光明版正义之手','2089':'光明版坚定之心','2090':'光明版水银','2091':'光明版强袭者的链枷','2092':'光明版秘法手套',
-  '2093':'光明版锐利之刃','2094':'光明版巨人捕手',
+  '1001':'暴风之剑','1002':'反曲之弓','1003':'无用大棒','1004':'女神之泪','1005':'锁子甲','1006':'负极斗篷','1007':'巨人腰带','1008':'金铲铲','1009':'拳套','1010':'金锅锅',
+  '2001':'无尽之刃','2003':'海克斯科技枪刃','2004':'朔极之矛','2005':'夜之锋刃','2006':'汲取剑','2007':'斯特拉克的挑战护手','2009':'红霸符','2010':'鬼索的狂暴之刃','2011':'虚空之杖','2012':'泰坦的坚决','2013':'海妖之怒','2014':'纳什之牙','2016':'班克斯的魔法帽','2017':'大天使之杖','2018':'冕卫','2019':'离子火花','2020':'莫雷洛秘典','2022':'蓝霸符','2023':'圣盾使的誓约','2024':'适应性头盔','2025':'振奋盔甲','2027':'棘刺背心','2028':'石像鬼石板甲','2029':'日炎斗篷','2031':'巨龙之爪','2032':'薄暮法袍','2034':'狂徒铠甲','2036':'金铲铲冠冕','2037':'最后的轻语','2038':'珠光护手','2039':'正义之手','2040':'坚定之心','2041':'水银','2042':'强袭者的链甲','2044':'秘法手套','2045':'锐利之刃','2046':'巨人捕手','2047':'金锅锅冠冕','2048':'金锅铲冠冕',
+  '2059':'光明版无尽之刃','2060':'光明版海克斯科技枪刃','2061':'光明版朔极之矛','2062':'光明版夜之锋刃','2063':'光明版汲取剑','2064':'光明版斯特拉克的挑战护手','2065':'光明版红霸符','2066':'光明版鬼索的狂暴之刃','2067':'光明版虚空之杖','2068':'光明版泰坦的坚决','2069':'光明版海妖之怒','2070':'光明版纳什之牙','2071':'光明版班克斯的魔法帽','2072':'光明版大天使之杖','2073':'光明版冕卫','2074':'光明版离子火花','2075':'光明版莫雷洛秘典','2076':'光明版蓝霸符','2077':'光明版圣盾使的誓约','2078':'光明版适应性头盔','2079':'光明版振奋盔甲','2080':'光明版棘刺背心','2081':'光明版石像鬼石板甲','2082':'光明版日炎斗篷','2083':'光明版巨龙之爪','2084':'光明版薄暮法袍','2085':'光明版狂徒铠甲','2086':'光明版最后的轻语','2087':'光明版珠光护手','2088':'光明版正义之手','2089':'光明版坚定之心','2090':'光明版水银','2091':'光明版强袭者的链甲','2092':'光明版秘法手套','2093':'光明版锐利之刃','2094':'光明版巨人捕手',
   '3029':'幸运装备宝箱','3030':'光明版幸运装备宝箱',
-  '6052':'大亨之铠','6054':'死亡之蔑','6057':'三相之力','6059':'金币收集者','6060':'中娅悖论','6061':'碎舰者',
-  '6063':'狙击手的专注','6065':'投机者之刃','6067':'飞升护符','6069':'鱼骨头','6070':'连指手套','6071':'卢登的激荡',
-  '6072':'密银黎明','6073':'暗行者之爪','6075':'智慧末刃','6080':'疾射火炮','6083':'枯萎珠宝','6084':'探索者的护臂',
-  '6085':'光盾徽章','6086':'巫妖之祸','6087':'烁刃','6088':'斯塔缇克电刃','6089':'顽强不屈','6090':'巨型九头蛇',
-  '6091':'黎明核心','6092':'黎明圣盾','6093':'黄昏圣盾','6094':'虚空护手','6095':'帽子饮品','6096':'恶火小斧',
-  '6098':'永恒契约','6106':'锤石的灯笼',
-  '9255':'共感植入','41704':'暗星纹章'
+  '6052':'大亨之铠','6054':'死亡之蔑','6057':'三相之力','6059':'金币收集者','6060':'中娅悖论','6061':'碎舰者','6063':'狙击手的专注','6065':'投机者之刃','6067':'飞升护符','6069':'鱼骨头','6070':'连指手套','6071':'卢登的激荡','6072':'密银黎明','6073':'暗行者之爪','6075':'智慧末刃','6080':'疾射火炮','6083':'枯萎珠宝','6084':'探索者的护臂','6085':'光盾徽章','6086':'巫妖之祸','6087':'烁刃','6088':'斯塔缇克电刃','6089':'顽强不屈','6090':'巨型九头蛇','6091':'黎明核心','6092':'黎明圣盾','6093':'黄昏圣盾','6094':'虚空护臂','6095':'帽子饮品','6096':'恶火小斧','6098':'永恒契约','6106':'锤石的灯笼','9255':'共鸣植入','41704':'暗星纹章'
+};
+const EQUIP_COMBINE = {
+  '2001':['1001','1009'], '2003':['1001','1003'], '2004':['1001','1004'], '2005':['1001','1005'],
+  '2006':['1001','1006'], '2007':['1001','1007'], '2009':['1001','1002'], '2010':['1002','1003'],
+  '2011':['1002','1003'], '2012':['1002','1005'], '2013':['1002','1006'], '2014':['1002','1004'],
+  '2016':['1003','1003'], '2017':['1003','1004'], '2018':['1003','1005'], '2019':['1003','1006'],
+  '2020':['1003','1007'], '2022':['1004','1004'], '2023':['1004','1005'], '2024':['1004','1006'],
+  '2025':['1004','1007'], '2027':['1005','1005'], '2028':['1005','1006'], '2029':['1005','1007'],
+  '2031':['1006','1006'], '2032':['1006','1007'], '2034':['1007','1007'], '2036':['1008','1008'],
+  '2037':['1002','1009'], '2038':['1003','1009'], '2039':['1009','1009'], '2040':['1005','1009'],
+  '2041':['1006','1009'], '2042':['1007','1009'], '2044':['1009','1009'], '2045':['1001','1001'],
+  '2046':['1002','1009'], '2047':['1010','1010'], '2048':['1008','1010']
 };
 
-function equipImg(id) {
-  return `https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/${id}.png`;
-}
+function equipImg(id) { return `https://game.gtimg.cn/images/lol/act/jkzlk/gamedata/equip/${id}.png`; }
 
 function img(id) {
-  // 使用页面数据库中的 heroPaint 映射（key_id -> paint）
   const JK = {
     '1450':'twistedfate','1451':'ezreal','1452':'talon','1453':'nasus','1454':'leona','1455':'reksai','1456':'caitlyn','1457':'lissandra',
     '1458':'aatrox','1459':'chogath','1460':'teemo','1461':'veigar','1462':'poppy','1463':'briar',
@@ -634,11 +239,31 @@ function img(id) {
   return '';
 }
 
-// ===== RENDER =====
+// ===== STATE =====
+let board = {};
+let population = 9;
+let activeCost = 1;
+let comps = [];
+let activeComp = null;
+let currentSeason = 18;
+let currentMode = 17;
+let HERO = {};
+let COST = {};
+let dragHero = null, dragFrom = null, dragFromKey = null;
+let touchDragEl = null, touchStartX = 0, touchStartY = 0, touchDragFrom = null, isTouchDrag = false, touchHandled = false;
+
+// ===== RENDER: POP TABS =====
+function renderPopTabs() {
+  document.getElementById('pop-tabs').innerHTML = POP_OPTIONS.map(p =>
+    `<div class="pop-tab ${p===population?'active':''}" onclick="setPopulation(${p})" data-pop="${p}">${p}</div>`
+  ).join('');
+}
+
+// ===== RENDER: BOARD =====
 function renderBoard() {
   const container = document.getElementById('board');
   let html = '';
-  const labels = ['前排', '第2排', '第3排', '后排'];
+  const labels = ['前排','第2排','第3排','后排'];
   for (let r = 0; r < ROWS; r++) {
     html += `<div class="board-row">`;
     for (let c = 0; c < COLS; c++) {
@@ -650,18 +275,18 @@ function renderBoard() {
           ondrop="drop(event)" ondragover="dragOver(event)" ondragleave="dragLeave(event)"
           draggable="true" ondragstart="dragStartBoard(event)"
           ontouchstart="touchStart(event)" ontouchmove="touchMove(event)" ontouchend="touchEnd(event)">
-          <img class="cell-hero" src="${img(heroId)}" alt="${HERO[heroId]}">
-          <div class="cell-remove" onclick="event.stopPropagation();removeHero('${key}')">✕</div>
+          <img class="cell-hero" src="${img(heroId)}" alt="${HERO[heroId]||''}">
+          <div class="cell-remove" onclick="event.stopPropagation();removeHero('${key}')">×</div>
           <div class="cell-cost c${cost}">${cost}</div>
         </div>`;
-      } else if (activeComp && activeComp.placements[key]) {
+      } else if (activeComp && activeComp.placements && activeComp.placements[key]) {
         const ghostId = activeComp.placements[key];
         const cost = COST[ghostId] || '';
         html += `<div class="board-cell" data-key="${key}" data-row="${r}" data-col="${c}"
           ondrop="drop(event)" ondragover="dragOver(event)" ondragleave="dragLeave(event)"
           ontouchstart="touchStart(event)" ontouchmove="touchMove(event)" ontouchend="touchEnd(event)"
-          onclick="highlightGhost('${ghostId}')">
-          <img class="cell-ghost" src="${img(ghostId)}" alt="${HERO[ghostId]}">
+          onclick="showHeroInfo('${ghostId}')">
+          <img class="cell-ghost" src="${img(ghostId)}" alt="${HERO[ghostId]||''}">
           <div class="cell-ghost-label">缺</div>
           <div class="cell-cost c${cost}">${cost}</div>
         </div>`;
@@ -675,101 +300,31 @@ function renderBoard() {
   container.innerHTML = html;
 
   const count = Object.keys(board).length;
-  const popEl = document.getElementById('pop-count');
-  popEl.innerHTML = `已放置 <span class="current ${count > population ? 'over' : ''}">${count}</span>/${population}`;
+  const status = document.getElementById('board-status');
+  status.innerHTML = `已放置 <span class="current ${count>population?'over':''}">${count}</span>/${population}`;
 
-  const note = document.getElementById('board-note');
-  if (activeComp) {
-    note.textContent = `已选中：${activeComp.name}`;
-  } else {
-    note.textContent = '点击下方英雄，添加到棋盘';
-  }
+  const compName = document.getElementById('board-comp-name');
+  compName.textContent = activeComp ? activeComp.name : '';
 
-  renderBoardInfo();
   renderPool();
-  renderRecs();
+  renderEquipPanel();
+  renderBottomRecs();
 }
 
-function renderBoardInfo() {
-  const el = document.getElementById('board-info');
-  if (!activeComp) {
-    el.classList.remove('active');
-    return;
-  }
-  const c = activeComp;
-  let html = '';
-  // 标题
-  const tierClass = c.quality || 'B';
-  html += `<div class="info-title"><span class="tier ${tierClass}">${tierClass}</span>${c.name}</div>`;
-  // 人口警告
-  const needed = c.heroes.length;
-  if (needed > population) {
-    html += `<div class="info-row" style="margin-bottom:12px"><span style="color:var(--danger);font-size:13px;font-weight:700;">⚠️ 推荐${needed}人口，当前设置${population}</span></div>`;
-  }
-  // 主C装备
-  const ce = Object.entries(c.carry_equips||{})[0];
-  if (ce) {
-    html += `<div class="info-label">🌟 主C ${HERO[ce[0]]||ce[0]}</div>`;
-    html += `<div class="info-row">${ce[1].map((e,j)=>`<span class="eq-chip"><img src="${equipImg(e)}" alt="" onerror="this.style.display='none'">${EQUIP[e]||e}</span>${j<ce[1].length-1?'<span class="eq-arrow">→</span>':''}`).join('')}</div>`;
-  }
-  // carry_hero_equip_replace
-  const cr = c.carry_replace;
-  if (cr && cr.main) {
-    const mainIds = cr.main.split(',');
-    const backupIds = cr.backup ? cr.backup.split(',') : [];
-    html += `<div class="info-label">🎒 主C推荐</div>`;
-    html += `<div class="info-row"><span style="color:var(--neon);font-weight:700;font-size:12px;">核心：</span>${mainIds.map(eid=>`<span class="eq-chip"><img src="${equipImg(eid)}" alt="" onerror="this.style.display='none'">${EQUIP[eid]||eid}</span>`).join('<span class="eq-arrow">→</span>')}</div>`;
-    if (backupIds.length) {
-      html += `<div class="info-row" style="margin-top:4px"><span style="color:var(--text2);font-weight:700;font-size:12px;">备选：</span>${backupIds.map(eid=>`<span class="eq-chip"><img src="${equipImg(eid)}" alt="" onerror="this.style.display='none'">${EQUIP[eid]||eid}</span>`).join('<span class="eq-arrow">→</span>')}</div>`;
-    }
-  }
-  // 选秀优先级
-  if (c.equip_order) {
-    const eqIds = c.equip_order.split(',');
-    html += `<div class="info-label">⚔️ 选秀优先级</div>`;
-    html += `<div class="info-row">${eqIds.map((eid,j)=>`<span class="eq-chip"><img src="${equipImg(eid)}" alt="" onerror="this.style.display='none'">${EQUIP[eid]||eid}</span>${j<eqIds.length-1?'<span class="eq-arrow">→</span>':''}`).join('')}</div>`;
-  }
-  // 装备思路
-  if (c.equip_info) {
-    html += `<div class="info-label">📝 装备思路</div>`;
-    html += `<div class="info-text">${c.equip_info}</div>`;
-  }
-  // D牌
-  if (c.d_time) {
-    html += `<div class="info-label">💰 D牌</div>`;
-    html += `<div class="info-row"><span class="d-time">${c.d_time}</span></div>`;
-  }
-  // 运营
-  if (c.early) {
-    html += `<div class="info-label">📋 运营</div>`;
-    html += `<div class="info-text">${c.early}</div>`;
-  }
-  // 追三
-  if (c.level3?.length) {
-    html += `<div class="info-label">🎯 追三</div>`;
-    html += `<div class="info-text">${c.level3.map(id=>HERO[id]||id).join('、')}</div>`;
-  }
-  // 海克斯
-  if (c.hex_info) {
-    html += `<div class="info-label">✨ 海克斯</div>`;
-    html += `<div class="info-text">${c.hex_info}</div>`;
-  }
-  el.innerHTML = html;
-  el.classList.add('active');
-}
-
+// ===== RENDER: POOL =====
 function renderPool() {
   const tabs = document.getElementById('cost-tabs');
-  tabs.innerHTML = [1,2,3,4,5].map(c => `<div class="tab ${activeCost===c?'active':''}" onclick="setCost(${c})">${'★'.repeat(c)}</div>`).join('');
+  tabs.innerHTML = [1,2,3,4,5].map(c =>
+    `<div class="cost-tab ${activeCost===c?'active':''}" onclick="setCost(${c})">${'★'.repeat(c)}</div>`
+  ).join('');
 
   const onBoard = new Set(Object.values(board));
   const ids = Object.keys(HERO).filter(id => COST[id]).sort((a,b)=>(COST[a]||0)-(COST[b]||0));
 
-  document.getElementById('hero-grid').innerHTML = ids.filter(id => !activeCost || COST[id] === activeCost).map(id => {
+  document.getElementById('hero-grid').innerHTML = ids.filter(id => COST[id] === activeCost).map(id => {
     const placed = onBoard.has(id);
     const c = COST[id] || 1;
-    const hl = highlightHeroId === id ? 'highlight' : '';
-    return `<div class="hero-item ${placed?'on-board':''} ${hl}" draggable="true" data-hero-id="${id}"
+    return `<div class="hero-item ${placed?'on-board':''}" draggable="true" data-hero-id="${id}"
       ondragstart="dragStartPool(event)" onclick="if(!touchHandled)addHero('${id}')"
       ontouchstart="touchStart(event)" ontouchmove="touchMove(event)" ontouchend="touchEnd(event)">
       <span class="cost-badge c${c}">${c}</span>
@@ -779,7 +334,154 @@ function renderPool() {
   }).join('');
 }
 
-// ===== DRAG & DROP (Desktop) =====
+// ===== RENDER: EQUIP PANEL =====
+function renderEquipPanel() {
+  const el = document.getElementById('eq-panel');
+  if (!activeComp) {
+    el.innerHTML = `<div class="panel-title">🛡️ 装备</div><div class="eq-empty">拖动英雄到棋盘，或选择推荐阵容</div>`;
+    return;
+  }
+  const c = activeComp;
+  let html = `<div class="eq-panel">`;
+  html += `<div class="eq-title"><span class="eq-tier ${c.quality}">${c.quality}</span> ${c.name}</div>`;
+
+  const needed = c.heroes.length;
+  if (needed > population) {
+    html += `<div class="eq-section"><span style="color:var(--danger);font-size:12px;font-weight:700;">⚠️ 推荐${needed}人口，当前${population}</span></div>`;
+  }
+
+  const ce = Object.entries(c.carry_equips||{})[0];
+  if (ce) {
+    html += `<div class="eq-section"><div class="eq-label">🌟 主C ${HERO[ce[0]]||ce[0]}</div>`;
+    html += `<div class="eq-items">${renderEquipList(ce[1])}</div></div>`;
+  }
+
+  const cr = c.carry_replace;
+  if (cr && cr.main) {
+    const mainIds = cr.main.split(',');
+    const backupIds = cr.backup ? cr.backup.split(',') : [];
+    html += `<div class="eq-section"><div class="eq-label">🎒 主C推荐</div>`;
+    html += `<div class="eq-items"><span style="color:var(--neon);font-weight:700;font-size:11px;">核心：</span>${renderEquipList(mainIds)}</div>`;
+    if (backupIds.length) {
+      html += `<div class="eq-items" style="margin-top:4px"><span style="color:var(--text2);font-weight:700;font-size:11px;">备选：</span>${renderEquipList(backupIds)}</div>`;
+    }
+    html += `</div>`;
+  }
+
+  const allEquipIds = new Set();
+  if (ce) ce[1].forEach(e => allEquipIds.add(e));
+  if (cr && cr.main) cr.main.split(',').forEach(e => allEquipIds.add(e));
+  if (c.equip_order) c.equip_order.split(',').forEach(e => allEquipIds.add(e));
+  const combineInfo = [];
+  allEquipIds.forEach(eid => {
+    const parts = EQUIP_COMBINE[eid];
+    if (parts) {
+      combineInfo.push(`<span class="eq-item"><img src="${equipImg(parts[0])}" onerror="this.style.display='none'">${EQUIP[parts[0]]}</span><span class="eq-arrow">+</span><span class="eq-item"><img src="${equipImg(parts[1])}" onerror="this.style.display='none'">${EQUIP[parts[1]]}</span><span class="eq-arrow">=</span><span class="eq-item"><img src="${equipImg(eid)}" onerror="this.style.display='none'">${EQUIP[eid]}</span>`);
+    }
+  });
+  if (combineInfo.length) {
+    html += `<div class="eq-section"><div class="eq-label">🔧 散件合成</div>`;
+    html += `<div class="eq-items" style="flex-direction:column;gap:8px;">${combineInfo.join('')}</div></div>`;
+  }
+
+  if (c.equip_order) {
+    const eqIds = c.equip_order.split(',');
+    html += `<div class="eq-section"><div class="eq-label">⚔️ 选秀优先级</div>`;
+    html += `<div class="eq-items">${renderEquipList(eqIds)}</div></div>`;
+  }
+
+  if (c.equip_info) {
+    html += `<div class="eq-section"><div class="eq-label">📝 装备思路</div><div class="eq-text">${c.equip_info}</div></div>`;
+  }
+
+  if (c.d_time) {
+    html += `<div class="eq-section"><div class="eq-label">💰 D牌</div><div class="eq-d">${c.d_time}</div></div>`;
+  }
+
+  if (c.early) {
+    html += `<div class="eq-section"><div class="eq-label">📋 运营</div><div class="eq-text">${c.early}</div></div>`;
+  }
+
+  if (c.level3?.length) {
+    html += `<div class="eq-section"><div class="eq-label">🎯 追三</div><div class="eq-text">${c.level3.map(id=>HERO[id]||id).join('、')}</div></div>`;
+  }
+
+  if (c.hex_info) {
+    html += `<div class="eq-section"><div class="eq-label">✨ 海克斯</div><div class="eq-text">${c.hex_info}</div></div>`;
+  }
+
+  html += `</div>`;
+  el.innerHTML = html;
+}
+
+function renderEquipList(ids) {
+  return ids.map((eid,j) => `<span class="eq-item"><img src="${equipImg(eid)}" alt="" onerror="this.style.display='none'">${EQUIP[eid]||eid}</span>${j<ids.length-1?'<span class="eq-arrow">→</span>':''}`).join('');
+}
+
+// ===== RENDER: BOTTOM RECOMMENDATIONS =====
+function renderBottomRecs() {
+  const el = document.getElementById('rec-scroll');
+  const title = document.getElementById('bottom-title');
+  if (!activeComp) {
+    title.textContent = '🛒 推荐购买';
+    el.innerHTML = '<div style="font-size:12px;color:var(--text3);padding:10px 0;">拖动英雄到棋盘，查看推荐</div>';
+    return;
+  }
+  const c = activeComp;
+  const onBoard = new Set(Object.values(board));
+  const missing = c.heroes.filter(id => !onBoard.has(id));
+  if (missing.length === 0) {
+    title.textContent = `🎉 ${c.name} - 已集齐`;
+    el.innerHTML = '<div style="font-size:12px;color:var(--neon);padding:10px 0;font-weight:700;">阵容已集齐！</div>';
+    return;
+  }
+  title.textContent = `🛒 ${c.name} - 建议购买 (${missing.length}个缺位)`;
+  el.innerHTML = missing.map(id => {
+    const cost = COST[id] || 1;
+    return `<div class="rec-hero" onclick="addHero('${id}')">
+      <span class="cost-badge c${cost}">${cost}</span>
+      <img src="${img(id)}" alt="${HERO[id]}">
+      <div class="name">${HERO[id]}</div>
+    </div>`;
+  }).join('');
+}
+
+// ===== HERO INFO MODAL =====
+function showHeroInfo(heroId) {
+  const overlay = document.getElementById('modal-overlay');
+  const header = document.getElementById('modal-header');
+  const body = document.getElementById('modal-body');
+  const cost = COST[heroId] || 1;
+  const name = HERO[heroId] || heroId;
+
+  header.innerHTML = `
+    <img src="${img(heroId)}" alt="${name}">
+    <div><div class="name">${name}</div><div class="cost">${cost}费</div></div>
+    <button class="modal-close" onclick="closeModal()">×</button>
+  `;
+
+  let html = '';
+  if (activeComp) {
+    const carryEquip = activeComp.carry_equips?.[heroId];
+    if (carryEquip) {
+      html += `<div class="modal-section"><div class="modal-label">🌟 主C装备</div><div class="eq-items">${renderEquipList(carryEquip)}</div></div>`;
+    }
+  }
+  const usedIn = comps.filter(c => c.heroes.includes(heroId)).slice(0, 5);
+  if (usedIn.length) {
+    html += `<div class="modal-section"><div class="modal-label">📋 常用阵容</div><div class="eq-text">${usedIn.map(c => c.name).join('、')}</div></div>`;
+  }
+  body.innerHTML = html || '<div class="eq-text">暂无详细信息</div>';
+  overlay.classList.add('active');
+}
+
+function closeModal(e) {
+  if (!e || e.target.id === 'modal-overlay') {
+    document.getElementById('modal-overlay').classList.remove('active');
+  }
+}
+
+// ===== DRAG & DROP =====
 function dragStartPool(e) {
   dragHero = e.currentTarget.dataset.heroId;
   dragFrom = 'pool';
@@ -793,15 +495,10 @@ function dragStartBoard(e) {
   dragFromKey = el.dataset.key;
   e.dataTransfer.effectAllowed = 'move';
 }
-function dragOver(e) {
-  e.preventDefault();
-  e.currentTarget.classList.add('drag-over');
-  e.dataTransfer.dropEffect = dragFrom === 'pool' ? 'copy' : 'move';
-}
+function dragOver(e) { e.preventDefault(); e.currentTarget.classList.add('drag-over'); e.dataTransfer.dropEffect = dragFrom==='pool'?'copy':'move'; }
 function dragLeave(e) { e.currentTarget.classList.remove('drag-over'); }
 function drop(e) {
-  e.preventDefault();
-  e.currentTarget.classList.remove('drag-over');
+  e.preventDefault(); e.currentTarget.classList.remove('drag-over');
   if (!dragHero) return;
   const row = parseInt(e.currentTarget.dataset.row || e.currentTarget.closest('.board-cell').dataset.row);
   const col = parseInt(e.currentTarget.dataset.col || e.currentTarget.closest('.board-cell').dataset.col);
@@ -811,28 +508,24 @@ function drop(e) {
     if (board[key]) { board[dragFromKey] = board[key]; } else { delete board[dragFromKey]; }
   }
   board[key] = dragHero;
-  resetDrag();
-  renderBoard();
+  resetDrag(); renderBoard();
 }
 function resetDrag() { dragHero = null; dragFrom = null; dragFromKey = null; }
 
-// ===== TOUCH (Mobile) =====
+// ===== TOUCH =====
 function touchStart(e) {
   const el = e.currentTarget;
   if (el.classList.contains('on-board')) { e.preventDefault(); return; }
   const heroId = el.dataset.heroId || board[el.dataset.key];
   if (!heroId) { e.preventDefault(); return; }
-  dragHero = heroId;
-  touchDragFrom = el;
-  touchStartX = e.touches[0].clientX;
-  touchStartY = e.touches[0].clientY;
-  isTouchDrag = false;
-  e.preventDefault();
+  dragHero = heroId; touchDragFrom = el;
+  touchStartX = e.touches[0].clientX; touchStartY = e.touches[0].clientY;
+  isTouchDrag = false; e.preventDefault();
 }
 function touchMove(e) {
   if (!dragHero || !touchDragFrom) return;
-  const x = e.touches[0].clientX; const y = e.touches[0].clientY;
-  const dx = x - touchStartX; const dy = y - touchStartY;
+  const x = e.touches[0].clientX, y = e.touches[0].clientY;
+  const dx = x - touchStartX, dy = y - touchStartY;
   if (!isTouchDrag && (Math.abs(dx) > 8 || Math.abs(dy) > 8)) {
     isTouchDrag = true;
     if (!touchDragEl) {
@@ -842,7 +535,7 @@ function touchMove(e) {
       document.body.appendChild(touchDragEl);
     }
   }
-  if (isTouchDrag && touchDragEl) { touchDragEl.style.left = (x - 24) + 'px'; touchDragEl.style.top = (y - 24) + 'px'; }
+  if (isTouchDrag && touchDragEl) { touchDragEl.style.left = (x-24)+'px'; touchDragEl.style.top = (y-24)+'px'; }
   e.preventDefault();
 }
 function touchEnd(e) {
@@ -869,93 +562,101 @@ function touchEnd(e) {
   }
   e.preventDefault(); resetTouch();
 }
-function resetTouch() { if (touchDragEl) { touchDragEl.remove(); touchDragEl = null; } dragHero = null; touchDragFrom = null; isTouchDrag = false; setTimeout(() => { touchHandled = false; }, 100); }
+function resetTouch() { if (touchDragEl) { touchDragEl.remove(); touchDragEl = null; } dragHero = null; touchDragFrom = null; isTouchDrag = false; setTimeout(()=>{touchHandled=false;},100); }
 
 // ===== ACTIONS =====
 function addHero(id) {
   if (Object.values(board).includes(id)) return;
-  for (let r = 0; r < ROWS; r++) { for (let c = 0; c < COLS; c++) { const key = `${r},${c}`; if (!board[key]) { board[key] = id; highlightHeroId = null; renderBoard(); return; } } }
+  for (let r = 0; r < ROWS; r++) { for (let c = 0; c < COLS; c++) { const key = `${r},${c}`; if (!board[key]) { board[key] = id; renderBoard(); return; } } }
 }
 function removeHero(key) { delete board[key]; renderBoard(); }
 function setCost(c) { activeCost = c; renderPool(); }
 function setPopulation(p) { population = parseInt(p); renderBoard(); }
-function clearBoard() { board = {}; activeComp = null; renderBoard(); renderBoardInfo(); }
+function clearBoard() { board = {}; activeComp = null; renderBoard(); }
+
+// ===== RECOMMENDATION LOGIC =====
+function getSortedComps() {
+  const onBoard = new Set(Object.values(board));
+  return comps.map(c => {
+    const have = c.heroes.filter(id => onBoard.has(id));
+    const miss = c.heroes.filter(id => !onBoard.has(id));
+    const pct = c.heroes.length ? Math.round(have.length/c.heroes.length*100) : 0;
+    return {...c, have, miss, pct};
+  }).sort((a,b) => b.pct-a.pct || ({S:3,A:2,B:1})[b.quality]-({S:3,A:2,B:1})[a.quality]);
+}
+
+function autoRecommend() {
+  const scored = getSortedComps();
+  if (!scored.length) return;
+  if (Object.keys(board).length === 0) return;
+  const best = scored[0];
+  if (best.pct > 0) applyComp(best);
+}
+
+function applyComp(c) {
+  activeComp = c;
+  const placements = {};
+  (c.hero_locations || []).forEach(h => {
+    if (h.location) {
+      const [row, col] = h.location.split(',').map(Number);
+      placements[`${row-1},${col-1}`] = h.hero_id;
+    }
+  });
+  c.placements = placements;
+  renderBoard();
+}
+
+// ===== DATA LOADING =====
+const CACHE_KEY = 'jcc-builder-data-v2';
+const CACHE_EXPIRY = 24 * 60 * 60 * 1000;
+
+function getCachedData() {
+  const cached = localStorage.getItem(CACHE_KEY);
+  if (!cached) return null;
+  try { const {season,mode,data,timestamp} = JSON.parse(cached); if (Date.now()-timestamp > CACHE_EXPIRY) return null; return {season,mode,data}; }
+  catch(e) { return null; }
+}
+function setCachedData(season, mode, data) { localStorage.setItem(CACHE_KEY, JSON.stringify({season,mode,data,timestamp:Date.now()})); }
 
 async function loadData() {
-  document.getElementById('recs').innerHTML = '<div class="empty"><div class="icon">⏳</div><div>加载中...</div></div>';
   try {
     let data;
     const cached = getCachedData();
-    if (cached) {
-      data = cached.data;
-    } else {
+    if (cached) { data = cached.data; }
+    else {
       const url = `https://game.gtimg.cn/images/lol/act/jkzlkauto/json/lineupJson/m${currentSeason}/11/${currentMode}/lineup_detail_total.json`;
-      const res = await fetch(url);
-      data = await res.json();
-      setCachedData(currentSeason, currentMode, data);
+      const res = await fetch(url); data = await res.json(); setCachedData(currentSeason, currentMode, data);
     }
-
-    // Detect season and mode from first item
     if (data.lineup_list && data.lineup_list.length > 0) {
-      const first = data.lineup_list[0];
-      currentSeason = parseInt(first.season) || currentSeason;
-      currentMode = parseInt(first.mode) || currentMode;
+      currentSeason = parseInt(data.lineup_list[0].season) || currentSeason;
+      currentMode = parseInt(data.lineup_list[0].mode) || currentMode;
     }
-
-    // Convert lineup hero_id to page key_id: strip leading '1', then map duplicates
     function toKeyId(heroId) {
-      const s = String(heroId);
-      const keyId = s.startsWith('1') ? s.slice(1) : s;
-      // Map duplicate key_ids to main key_id
+      const s = String(heroId); const keyId = s.startsWith('1') ? s.slice(1) : s;
       return LINEUP_ID_MAP[keyId] !== undefined ? LINEUP_ID_MAP[keyId] : keyId;
     }
-
-    // Collect all unique key_ids with usage count from lineups
     const heroUsage = {};
     data.lineup_list.forEach(item => {
       const d = JSON.parse(item.detail || '{}');
       Object.values(d.levelMap || {}).forEach(levelHeroes => {
-        levelHeroes.forEach(h => {
-          const keyId = toKeyId(h.hero_id);
-          if (keyId === null) return; // skip special units
-          heroUsage[keyId] = (heroUsage[keyId] || 0) + 1;
-        });
+        levelHeroes.forEach(h => { const keyId = toKeyId(h.hero_id); if (keyId === null) return; heroUsage[keyId] = (heroUsage[keyId]||0)+1; });
       });
     });
-
-    // Deduplicate: for each name, keep only the most used key_id
     const nameToBestId = {};
-    Object.entries(heroUsage).forEach(([keyId, count]) => {
+    Object.entries(heroUsage).forEach(([keyId,count]) => {
       const name = BASE_HERO[keyId] || '未知';
-      if (!nameToBestId[name] || heroUsage[nameToBestId[name]] < count) {
-        nameToBestId[name] = keyId;
-      }
+      if (!nameToBestId[name] || heroUsage[nameToBestId[name]] < count) nameToBestId[name] = keyId;
     });
-
-    // Build HERO and COST with only the heroes that appear in lineups
     const bestIds = new Set(Object.values(nameToBestId));
-    HERO = {};
-    COST = {};
-    bestIds.forEach(keyId => {
-      if (BASE_HERO[keyId]) {
-        HERO[keyId] = BASE_HERO[keyId];
-        COST[keyId] = BASE_COST[keyId] || 1;
-      }
-    });
+    HERO = {}; COST = {};
+    bestIds.forEach(keyId => { if (BASE_HERO[keyId]) { HERO[keyId] = BASE_HERO[keyId]; COST[keyId] = BASE_COST[keyId] || 1; } });
 
-    // Build comps with key_id conversion
     comps = data.lineup_list.map(item => {
       const d = JSON.parse(item.detail || '{}');
       const heroes = (d.levelMap?.['9'] || []).map(h => toKeyId(h.hero_id)).filter(Boolean);
       const ce = {};
-      (d.levelMap?.['9'] || []).forEach(h => {
-        const keyId = toKeyId(h.hero_id);
-        if (keyId && h.is_carry_hero && h.equipment_id) ce[keyId] = h.equipment_id.split(',');
-      });
-      const hero_locations = (d.hero_location || []).map(h => ({
-        ...h,
-        hero_id: toKeyId(h.hero_id)
-      })).filter(h => h.hero_id !== null);
+      (d.levelMap?.['9'] || []).forEach(h => { const keyId = toKeyId(h.hero_id); if (keyId && h.is_carry_hero && h.equipment_id) ce[keyId] = h.equipment_id.split(','); });
+      const hero_locations = (d.hero_location || []).map(h => ({...h, hero_id: toKeyId(h.hero_id)})).filter(h => h.hero_id !== null);
       return {
         name: d.line_name || '?', quality: item.quality || 'B',
         heroes, carry_equips: ce,
@@ -971,183 +672,26 @@ async function loadData() {
       };
     });
 
-    board = {}; activeComp = null;
-    renderBoard(); renderPool(); renderRecs();
-
-    // Preload images in background
-    preloadHeroImages();
+    renderPopTabs(); renderBoard(); renderPool();
+    if (comps.length) { activeComp = {...comps[0]}; applyComp(activeComp); }
   } catch (e) {
-    document.getElementById('recs').innerHTML = `<div class="empty"><div class="icon">❌</div><div>${e.message}</div></div>`;
+    console.error('Load data failed:', e);
   }
 }
 
-function highlightGhost(heroId) {
-  highlightHeroId = heroId;
-  document.getElementById('hero-grid').scrollIntoView({ behavior: 'smooth', block: 'center' });
-  renderPool();
-  setTimeout(() => { highlightHeroId = null; renderPool(); }, 3000);
-}
-
-function toggleCard(i) {
-  const el = document.getElementById('rc'+i);
-  el.classList.toggle('open');
-}
-
-function applyLineup(i) {
-  const el = document.getElementById('rc'+i);
-  const scored = getSortedComps();
-  if (!scored[i]) return;
-  const c = scored[i];
-  activeComp = c;
-  const placements = {};
-  (c.hero_locations || []).forEach(h => {
-    if (h.location) {
-      const [row, col] = h.location.split(',').map(Number);
-      placements[`${row-1},${col-1}`] = h.hero_id;
-    }
-  });
-  c.placements = placements;
-  document.querySelectorAll('.rec-card').forEach(card => card.classList.remove('active'));
-  el.classList.add('active');
-  renderBoard();
-}
-
-function getSortedComps() {
-  const onBoard = new Set(Object.values(board));
-  return comps.map(c => {
-    const have = c.heroes.filter(id => onBoard.has(id));
-    const miss = c.heroes.filter(id => !onBoard.has(id));
-    const pct = c.heroes.length ? Math.round(have.length/c.heroes.length*100) : 0;
-    return {...c, have, miss, pct};
-  }).sort((a,b) => b.pct-a.pct || ({S:3,A:2,B:1})[b.quality]-({S:3,A:2,B:1})[a.quality]);
-}
-
-function renderRecs() {
-  const el = document.getElementById('recs');
-  const onBoard = new Set(Object.values(board));
-  // 保存已展开的卡片索引
-  const openCards = new Set();
-  document.querySelectorAll('.rec-card.open').forEach(card => {
-    const id = card.id;
-    if (id && id.startsWith('rc')) openCards.add(parseInt(id.replace('rc', '')));
-  });
-  if (!comps.length) {
-    el.innerHTML = '<div class="empty"><div class="icon">⏳</div><div>加载中...</div></div>';
-    return;
-  }
-  const scored = getSortedComps();
-
-  el.innerHTML = scored.slice(0,10).map((c,i) => {
-    const bar = c.pct>=70?'high':c.pct>=40?'mid':'low';
-    const isActive = activeComp && activeComp.name === c.name;
-    const popWarn = c.heroes.length > population;
-    let missChips = ''; let haveChips = '';
-    if (c.miss.length > 0) missChips = `<div class="miss-chips">${c.miss.map(id => `<span class="chip miss"><img src="${img(id)}" alt="">${HERO[id]||id}</span>`).join('')}</div>`;
-    if (c.have.length > 0) haveChips = `<div class="miss-chips">${c.have.map(id => `<span class="chip have"><img src="${img(id)}" alt="">${HERO[id]||id}</span>`).join('')}</div>`;
-    let eq = '';
-    const ce = Object.entries(c.carry_equips||{})[0];
-    if (ce) eq += `<div class="eq-block"><div class="eq-label">🌟 主C ${HERO[ce[0]]||ce[0]}</div><div class="eq-flow">${ce[1].map((e,j)=>`<span class="eq-item"><img src="${equipImg(e)}" alt="" onerror="this.style.display='none'">${EQUIP[e]||e}</span>${j<ce[1].length-1?'<span class="eq-arrow">→</span>':''}`).join('')}</div></div>`;
-    // carry_hero_equip_replace
-    const cr = c.carry_replace;
-    if (cr && cr.main) {
-      const mainIds = cr.main.split(',');
-      const backupIds = cr.backup ? cr.backup.split(',') : [];
-      eq += `<div class="eq-block"><div class="eq-label">🎒 主C推荐</div><div class="eq-flow"><span style="color:var(--neon);font-weight:700;">核心：</span>${mainIds.map(eid=>`<span class="eq-item"><img src="${equipImg(eid)}" alt="" onerror="this.style.display='none'">${EQUIP[eid]||eid}</span>`).join('<span class="eq-arrow">→</span>')}</div>${backupIds.length?`<div class="eq-flow" style="margin-top:6px"><span style="color:var(--text2);font-weight:700;">备选：</span>${backupIds.map(eid=>`<span class="eq-item"><img src="${equipImg(eid)}" alt="" onerror="this.style.display='none'">${EQUIP[eid]||eid}</span>`).join('<span class="eq-arrow">→</span>')}</div>`:''}</div>`;
-    }
-    if (c.equip_order) { const eqIds = c.equip_order.split(','); eq += `<div class="eq-block"><div class="eq-label">⚔️ 选秀优先级</div><div class="eq-flow">${eqIds.map((eid,j)=>`<span class="eq-item"><img src="${equipImg(eid)}" alt="" onerror="this.style.display='none'">${EQUIP[eid]||eid}</span>${j<eqIds.length-1?'<span class="eq-arrow">→</span>':''}`).join('')}</div></div>`; }
-    if (c.equip_info) eq += `<div class="info-block"><div class="label">📝 装备思路</div><div class="text">${c.equip_info}</div></div>`;
-    return `<div class="rec-card ${i===0&&c.pct>=30?'best':''} ${isActive?'active':''}" id="rc${i}">
-      <div class="rec-header" onclick="toggleCard(${i}); applyLineup(${i})">
-        <div class="rec-tier ${c.quality}">${c.quality}</div>
-        <div class="rec-info">
-          <div class="rec-name">${c.name}</div>
-          <div class="rec-meta">
-            <span class="have">已有${c.have.length}</span><span>/</span><span class="miss">缺${c.miss.length}</span>
-            <span class="pct">${c.pct}%</span>
-            <span class="pop ${popWarn?'warn':''}">${c.heroes.length}人口</span>
-          </div>
-        </div>
-        <div class="rec-arrow">▾</div>
-      </div>
-      <div class="rec-body">
-        <div class="match-bar"><div class="match-fill ${bar}" style="width:${c.pct}%"></div></div>
-        ${c.have.length>0?'<div style="font-size:10px;color:var(--text2);font-weight:700;margin-bottom:6px;">✅ 已有</div>'+haveChips:''}
-        ${c.miss.length>0?'<div style="font-size:10px;color:var(--text2);font-weight:700;margin-bottom:6px;">❌ 缺位</div>'+missChips:''}
-        ${eq}
-        ${c.level3?.length?`<div class="info-block"><div class="label">🎯 追三</div><div class="text">${c.level3.map(id=>HERO[id]||id).join('、')}</div></div>`:''}
-        <div class="info-block"><div class="label">💰 D牌</div><div class="text">${c.d_time||'—'}</div></div>
-        <div class="info-block"><div class="label">📋 运营</div><div class="text">${c.early||'—'}</div></div>
-        ${c.hex_info?`<div class="info-block"><div class="label">✨ 海克斯</div><div class="text">${c.hex_info}</div></div>`:''}
-        ${c.early_heros?.length?`<div class="info-block"><div class="label">🌱 前期打工</div><div class="text">${c.early_heros.map(h=>HERO[h.hero_id]||h.hero_id).join('、')}</div></div>`:''}
-        ${c.metaphase_heros?.length?`<div class="info-block"><div class="label">🌿 中期过渡</div><div class="text">${c.metaphase_heros.map(h=>HERO[h.hero_id]||h.hero_id).join('、')}</div></div>`:''}
-      </div>
-    </div>`;
-  }).join('');
-  // 恢复已展开的卡片
-  openCards.forEach(i => {
-    const card = document.getElementById('rc'+i);
-    if (card) card.classList.add('open');
-  });
-}
-
-// ===== CACHE =====
-const CACHE_KEY = 'jcc-builder-data';
-const CACHE_EXPIRY = 24 * 60 * 60 * 1000; // 24 hours
-
-function getCachedData() {
-  const cached = localStorage.getItem(CACHE_KEY);
-  if (!cached) return null;
-  try {
-    const { season, mode, data, timestamp } = JSON.parse(cached);
-    if (Date.now() - timestamp > CACHE_EXPIRY) return null;
-    return { season, mode, data };
-  } catch (e) { return null; }
-}
-
-function setCachedData(season, mode, data) {
-  localStorage.setItem(CACHE_KEY, JSON.stringify({ season, mode, data, timestamp: Date.now() }));
-}
-
-async function cacheImage(url) {
-  if (!url) return url;
-  try {
-    const cache = await caches.open('jcc-hero-images');
-    const cached = await cache.match(url);
-    if (cached) {
-      const blob = await cached.blob();
-      return URL.createObjectURL(blob);
-    }
-    const res = await fetch(url, { mode: 'cors' });
-    if (res.ok) {
-      await cache.put(url, res.clone());
-      const blob = await res.blob();
-      return URL.createObjectURL(blob);
-    }
-  } catch (e) {}
-  return url;
-}
-
-async function preloadHeroImages() {
-  const ids = Object.keys(HERO);
-  await Promise.all(ids.map(async id => {
-    const url = img(id);
-    if (!url) return;
-    try {
-      const cache = await caches.open('jcc-hero-images');
-      const cached = await cache.match(url);
-      if (!cached) {
-        const res = await fetch(url, { mode: 'cors' });
-        if (res.ok) await cache.put(url, res.clone());
-      }
-    } catch (e) {}
-  }));
-}
+// ===== WHEEL POPULATION =====
+document.addEventListener('wheel', (e) => {
+  const boardWrap = document.getElementById('board');
+  if (!boardWrap || !boardWrap.contains(e.target)) return;
+  e.preventDefault();
+  const idx = POP_OPTIONS.indexOf(population);
+  if (e.deltaY > 0 && idx < POP_OPTIONS.length - 1) setPopulation(POP_OPTIONS[idx + 1]);
+  else if (e.deltaY < 0 && idx > 0) setPopulation(POP_OPTIONS[idx - 1]);
+}, { passive: false });
 
 // ===== INIT =====
-HERO = { ...BASE_HERO };
-COST = { ...BASE_COST };
-renderBoard();
-renderPool();
+HERO = {...BASE_HERO}; COST = {...BASE_COST};
+renderPopTabs(); renderBoard(); renderPool();
 loadData();
 </script>
 
