@@ -174,7 +174,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC'
 .hero-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
 .hero-item { display: flex; flex-direction: column; align-items: center; cursor: pointer; padding: 4px; border-radius: 6px; transition: background 0.15s; position: relative; }
 .hero-item:hover { background: rgba(255,255,255,0.05); }
-.hero-item.on-board { opacity: 0.3; pointer-events: none; }
+.hero-item.on-board { opacity: 0.3; }
 .hero-item img { width: 44px; height: 44px; border-radius: 8px; object-fit: cover; }
 .hero-name { font-size: 10px; text-align: center; margin-top: 2px; color: #b0a898; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; }
 .cost-badge { position: absolute; top: 2px; left: 2px; font-size: 9px; font-weight: 700; color: #fff; padding: 1px 3px; border-radius: 3px; z-index: 2; }
@@ -694,7 +694,7 @@ function touchEnd(e) {
   }
   e.preventDefault(); resetTouch();
 }
-function resetTouch() { if (touchDragEl) { touchDragEl.remove(); touchDragEl = null; } dragHero = null; touchDragFrom = null; isTouchDrag = false; setTimeout(()=>{touchHandled=false;},100); }
+function resetTouch() { if (touchDragEl) { touchDragEl.remove(); touchDragEl = null; } dragHero = null; touchDragFrom = null; isTouchDrag = false; setTimeout(()=>{touchHandled=false;},500); }
 
 // ===== ACTIONS =====
 function addHero(id) {
