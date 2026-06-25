@@ -372,7 +372,8 @@ function renderBoard() {
         html += `<div class="board-cell" data-key="${key}" data-row="${r}" data-col="${c}"
           ondrop="drop(event)" ondragover="dragOver(event)" ondragleave="dragLeave(event)"
           draggable="true" ondragstart="dragStartBoard(event)"
-          ontouchstart="touchStart(event)" ontouchmove="touchMove(event)" ontouchend="touchEnd(event)">
+          ontouchstart="touchStart(event)" ontouchmove="touchMove(event)" ontouchend="touchEnd(event)"
+          onclick="removeHero('${key}')">
           <img class="cell-hero" src="${img(heroId)}" alt="${HERO[heroId]||''}">
           <div class="cell-remove" onclick="event.stopPropagation();removeHero('${key}')">×</div>
           <div class="cell-cost c${cost}">${cost}</div>
