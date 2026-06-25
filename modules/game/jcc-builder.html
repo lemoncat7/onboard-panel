@@ -7,23 +7,23 @@
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --bg: #1a1a2e; --panel: #16213e; --text: #eee; --text2: #aaa; --text3: #888; --border: #2a2a4a;
-  --neon: #1e9bff; --danger: #e74c3c; --success: #2ecc71; --gold: #d4a52c;
+  --bg: #f5f3ef; --panel: #ffffff; --text: #333; --text2: #666; --text3: #999; --border: #e0ddd8;
+  --neon: #1e9bff; --danger: #e74c3c; --success: #2ecc71; --gold: #c8941f;
   --c1: #8a8a8a; --c2: #2ecc71; --c3: #3498db; --c4: #9b59b6; --c5: #d4a52c;
   --tier-s: #d4a52c; --tier-a: #e74c3c; --tier-b: #3498db;
 }
 html, body { height: 100%; overflow: hidden; }
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', sans-serif; background: #0d0a08; color: var(--text); }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', sans-serif; background: #f5f3ef; color: var(--text); }
 
 /* Top bar */
-.topbar { height: 44px; flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; background: linear-gradient(135deg, #1a1510 0%, #14100c 100%); border-bottom: 1px solid rgba(90,70,45,0.3); }
+.topbar { height: 44px; flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; background: linear-gradient(135deg, #fff 0%, #f5f0e8 100%); border-bottom: 1px solid rgba(180,170,150,0.3); }
 .topbar h1 { font-size: 16px; color: var(--gold); text-shadow: 0 0 10px rgba(212,165,44,0.3); }
 .topbar-actions { display: flex; gap: 8px; }
 .topbar-actions button { padding: 4px 12px; font-size: 12px; border: none; border-radius: 6px; background: linear-gradient(135deg, var(--neon), #0d8bf0); color: #fff; cursor: pointer; font-weight: 600; }
 
 /* Population tabs */
-.pop-tabs { height: 40px; flex-shrink: 0; display: flex; justify-content: center; align-items: center; gap: 6px; background: #1a1510; border-bottom: 1px solid rgba(90,70,45,0.3); padding: 0 12px; }
-.pop-tab { padding: 5px 14px; font-size: 13px; font-weight: 700; border-radius: 20px; cursor: pointer; border: 1px solid rgba(90,70,45,0.4); background: #14100c; color: #a09070; transition: all 0.2s; }
+.pop-tabs { height: 40px; flex-shrink: 0; display: flex; justify-content: center; align-items: center; gap: 6px; background: #f5f0e8; border-bottom: 1px solid rgba(180,170,150,0.3); padding: 0 12px; }
+.pop-tab { padding: 5px 14px; font-size: 13px; font-weight: 700; border-radius: 20px; cursor: pointer; border: 1px solid rgba(180,170,150,0.4); background: #fff; color: #888; transition: all 0.2s; }
 .pop-tab:hover { border-color: var(--gold); color: var(--gold); }
 .pop-tab.active { background: linear-gradient(135deg, var(--gold), #b8941f); color: #1a1510; border-color: var(--gold); box-shadow: 0 0 12px rgba(212,165,44,0.3); }
 
@@ -43,14 +43,14 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC'
   .cell-remove { width: 16px; height: 16px; font-size: 10px; top: -5px; right: -5px; }
   .board-row { gap: 3px; margin-left: 0 !important; }
   .board { padding: 4px; gap: 3px; }
-  .board-wrap { background-image: none !important; background-color: #1a1510; }
+  .board-wrap { background-image: none !important; background-color: #f5f0e8; }
 }
 
 /* Left panel: equip - leather/wood style */
-.left-panel { flex-shrink: 0; background: linear-gradient(180deg, #16120e 0%, #1a1612 100%); border-right: 1px solid rgba(90,70,45,0.3); padding: 12px; overflow-y: auto; overflow-x: hidden; color: #d0c8b8; }
+.left-panel { flex-shrink: 0; background: linear-gradient(180deg, #faf8f5 0%, #f5f3ef 100%); border-right: 1px solid rgba(180,170,150,0.3); padding: 12px; overflow-y: auto; overflow-x: hidden; color: #333; }
 @media (min-width: 769px) { .left-panel { width: 280px; } }
 @media (max-width: 768px) { .left-panel { width: 100%; } }
-.panel-title { font-size: 14px; font-weight: 700; margin-bottom: 10px; color: #e0c878; text-shadow: 0 0 8px rgba(224,200,120,0.2); }
+.panel-title { font-size: 14px; font-weight: 700; margin-bottom: 10px; color: #c8941f; text-shadow: 0 0 8px rgba(224,200,120,0.15); }
 
 .eq-panel { font-size: 12px; }
 .eq-title { font-size: 13px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; color: var(--text); }
@@ -58,7 +58,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC'
 .eq-tier.S { background: linear-gradient(135deg, #d4a52c, #b8941f); }
 .eq-tier.A { background: linear-gradient(135deg, #e74c3c, #c0392b); }
 .eq-tier.B { background: linear-gradient(135deg, #3498db, #2980b9); }
-.eq-section { margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.eq-section { margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid rgba(0,0,0,0.06); }
 .eq-label { font-weight: 700; color: var(--text2); margin-bottom: 4px; font-size: 11px; }
 .eq-items { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
 .eq-item { display: flex; align-items: center; gap: 2px; font-size: 11px; color: var(--text); }
@@ -69,9 +69,20 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC'
 .eq-empty { color: var(--text3); font-size: 12px; padding: 20px 0; text-align: center; }
 
 /* Center: board */
-.center-panel { flex: 1; min-width: 0; display: flex; flex-direction: column; overflow: hidden; position: relative; background: #0d0a08; }
+.center-panel { flex: 1; min-width: 0; display: flex; flex-direction: column; overflow: hidden; position: relative; background: transparent; }
 /* 棋盘主体 - 背景图铺满整个中间区域 */
-.board-wrap { 
+.board-wrap::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('/onboard/game/board-bg.jpg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: blur(5px) brightness(0.8);
+  z-index: 0;
+}
+.board-wrap {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -80,15 +91,11 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC'
   padding: 0;
   position: relative;
   overflow: hidden;
-  background-image: url('/onboard/game/board-bg.jpg');
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  background-position: center;
 }
-.board-header { display: flex; justify-content: space-between; align-items: center; margin: 8px 12px; position: relative; z-index: 1; background: rgba(20,12,6,0.7); padding: 6px 12px; border-radius: 8px; border: 1px solid rgba(90,70,45,0.3); }
-.board-comp-name { font-size: 13px; font-weight: 700; color: #e0c878; }
-.board-status { font-size: 12px; color: #c0b8a8; }
-.board-status .current { font-weight: 700; color: #e0c878; }
+.board-header { display: flex; justify-content: space-between; align-items: center; margin: 8px 12px; position: relative; z-index: 1; background: rgba(255,255,255,0.6); padding: 6px 12px; border-radius: 8px; border: 1px solid rgba(180,170,150,0.3); backdrop-filter: blur(10px); }
+.board-comp-name { font-size: 13px; font-weight: 700; color: #c8941f; }
+.board-status { font-size: 12px; color: #666; }
+.board-status .current { font-weight: 700; color: #c8941f; }
 .board-status .over { color: var(--danger); }
 
 /* 棋盘 - 4x7 固定格子，交错覆盖在背景图上 */
@@ -105,16 +112,16 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC'
   width: 64px; height: 56px;
   /* 六边形裁切 */
   clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-  /* 深色底色，让背景图纹理透出来 */
-  background: rgba(8, 6, 3, 0.65);
-  border: 1px solid rgba(100, 80, 50, 0.4); 
+  /* 半透明白色，毛玻璃效果 */
+  background: rgba(255, 255, 255, 0.45);
+  border: 1px solid rgba(150, 140, 120, 0.3); 
   display: flex; align-items: center; justify-content: center; position: relative;
   cursor: pointer; transition: all 0.2s;
 }
 .board-cell:hover { 
-  background: rgba(20,15,10,0.5);
+  background: rgba(255,255,255,0.7);
   transform: translateY(-2px); 
-  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   border-color: rgba(150,120,80,0.5);
   z-index: 10;
 }
@@ -128,16 +135,16 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC'
 .cell-hero { 
   width: 80%; height: 80%; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); object-fit: cover; 
   border: 1px solid rgba(200,170,100,0.4); 
-  box-shadow: 0 4px 12px rgba(0,0,0,0.6), 0 0 0 2px rgba(200,170,100,0.1); 
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2), 0 0 0 2px rgba(200,170,100,0.1); 
 }
 .cell-ghost { 
-  width: 80%; height: 80%; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); object-fit: cover; opacity: 0.25; filter: grayscale(0.9) brightness(0.6); 
+  width: 80%; height: 80%; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); object-fit: cover; opacity: 0.25; filter: grayscale(0.9) brightness(0.75); 
   border: 1px dashed rgba(200,170,100,0.25); 
 }
 .cell-ghost-label { 
   position: absolute; bottom: 4px; right: 4px; font-size: 10px; font-weight: 700; 
-  color: #e0c878; background: rgba(0,0,0,0.6); padding: 2px 5px; border-radius: 4px; 
-  border: 1px solid rgba(200,170,100,0.3); text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+  color: #b8941f; background: rgba(255,255,255,0.7); padding: 2px 5px; border-radius: 4px; 
+  border: 1px solid rgba(200,170,100,0.3); text-shadow: 0 1px 2px rgba(255,255,255,0.8);
 }
 .cell-cost { 
   position: absolute; top: 3px; left: 3px; font-size: 9px; font-weight: 800; 
@@ -154,29 +161,29 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC'
   background: linear-gradient(135deg, #ef5350 0%, #c62828 100%); color: #fff; font-size: 13px; 
   display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0; 
   transition: opacity 0.2s, transform 0.2s; z-index: 3; border: 1px solid rgba(255,255,255,0.5); 
-  box-shadow: 0 2px 6px rgba(0,0,0,0.6); 
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3); 
 }
 .board-cell:hover .cell-remove { opacity: 1; transform: scale(1.1); }
 .board-label { 
   display: block;
   text-align: center; font-size: 11px; font-weight: 700; color: #8a7050; 
   margin-top: 2px; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 2px; 
-  text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+  text-shadow: 0 1px 2px rgba(255,255,255,0.8);
 }
 
 /* Right panel: hero pool - warm dark */
-.right-panel { width: 300px; flex-shrink: 0; background: linear-gradient(180deg, #16120e 0%, #1a1612 100%); border-left: 1px solid rgba(90,70,45,0.3); padding: 12px; overflow-y: auto; overflow-x: hidden; color: #d0c8b8; }
-@media (max-width: 768px) { .right-panel { width: 100%; border-left: none; border-top: 1px solid rgba(90,70,45,0.3); } }
+.right-panel { width: 300px; flex-shrink: 0; background: linear-gradient(180deg, #faf8f5 0%, #f5f3ef 100%); border-left: 1px solid rgba(180,170,150,0.3); padding: 12px; overflow-y: auto; overflow-x: hidden; color: #333; }
+@media (max-width: 768px) { .right-panel { width: 100%; border-left: none; border-top: 1px solid rgba(180,170,150,0.3); } }
 .cost-tabs { display: flex; gap: 4px; margin-bottom: 10px; flex-wrap: wrap; }
-.cost-tab { padding: 4px 10px; font-size: 12px; border-radius: 6px; cursor: pointer; border: 1px solid rgba(90,70,45,0.4); background: rgba(0,0,0,0.2); color: #a09070; transition: all 0.2s; }
-.cost-tab:hover { border-color: #e0c878; color: #e0c878; }
-.cost-tab.active { background: linear-gradient(135deg, #e0c878, #b8941f); color: #1a1510; border-color: #e0c878; font-weight: 700; }
+.cost-tab { padding: 4px 10px; font-size: 12px; border-radius: 6px; cursor: pointer; border: 1px solid rgba(180,170,150,0.4); background: rgba(0,0,0,0.05); color: #888; transition: all 0.2s; }
+.cost-tab:hover { border-color: #c8941f; color: #c8941f; }
+.cost-tab.active { background: linear-gradient(135deg, #c8941f, #b8941f); color: #1a1510; border-color: #c8941f; font-weight: 700; }
 .hero-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
 .hero-item { display: flex; flex-direction: column; align-items: center; cursor: pointer; padding: 4px; border-radius: 6px; transition: background 0.15s; position: relative; }
-.hero-item:hover { background: rgba(255,255,255,0.05); }
+.hero-item:hover { background: rgba(0,0,0,0.05); }
 .hero-item.on-board { opacity: 0.3; }
 .hero-item img { width: 44px; height: 44px; border-radius: 8px; object-fit: cover; }
-.hero-name { font-size: 10px; text-align: center; margin-top: 2px; color: #b0a898; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; }
+.hero-name { font-size: 10px; text-align: center; margin-top: 2px; color: #666; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; }
 .cost-badge { position: absolute; top: 2px; left: 2px; font-size: 9px; font-weight: 700; color: #fff; padding: 1px 3px; border-radius: 3px; z-index: 2; }
 .cost-badge.c1 { background: var(--c1); } .cost-badge.c2 { background: var(--c2); } .cost-badge.c3 { background: var(--c3); }
 .cost-badge.c4 { background: var(--c4); } .cost-badge.c5 { background: var(--c5); }
@@ -184,29 +191,29 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC'
 /* Bottom recommendations - warm dark */
 .bottom-panel { 
   height: 130px; flex-shrink: 0; 
-  background: linear-gradient(180deg, #1a1612 0%, #16120e 100%); 
-  border-top: 1px solid rgba(90,70,45,0.3); 
+  background: linear-gradient(180deg, #faf8f5 0%, #f5f3ef 100%); 
+  border-top: 1px solid rgba(180,170,150,0.3); 
   padding: 10px 16px; 
   overflow: hidden;
 }
-.bottom-title { font-size: 13px; font-weight: 700; margin-bottom: 6px; color: #e0c878; }
+.bottom-title { font-size: 13px; font-weight: 700; margin-bottom: 6px; color: #c8941f; }
 .rec-scroll { display: flex; gap: 8px; overflow-x: auto; height: calc(100% - 24px); padding-bottom: 4px; }
 .rec-scroll::-webkit-scrollbar { height: 4px; }
 .rec-scroll::-webkit-scrollbar-thumb { background: rgba(90,70,45,0.4); border-radius: 2px; }
 .rec-hero { display: flex; flex-direction: column; align-items: center; cursor: pointer; padding: 4px; border-radius: 6px; transition: background 0.15s; position: relative; min-width: 56px; }
-.rec-hero:hover { background: rgba(255,255,255,0.05); }
+.rec-hero:hover { background: rgba(0,0,0,0.05); }
 .rec-hero img { width: 44px; height: 44px; border-radius: 8px; object-fit: cover; }
-.rec-hero .name { font-size: 10px; text-align: center; margin-top: 2px; color: #b0a898; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; }
+.rec-hero .name { font-size: 10px; text-align: center; margin-top: 2px; color: #666; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; }
 
 /* Recommended comps - warm */
-.rec-comp { padding: 8px; border-radius: 8px; border: 1px solid rgba(90,70,45,0.3); margin-bottom: 6px; cursor: pointer; transition: background 0.15s, border-color 0.15s; background: rgba(0,0,0,0.15); color: #d0c8b8; }
-.rec-comp:hover { background: rgba(255,255,255,0.03); border-color: #e0c878; }
-.rec-comp.active { border-color: #e0c878; background: rgba(224,200,120,0.08); }
+.rec-comp { padding: 8px; border-radius: 8px; border: 1px solid rgba(180,170,150,0.3); margin-bottom: 6px; cursor: pointer; transition: background 0.15s, border-color 0.15s; background: rgba(0,0,0,0.03); color: #333; }
+.rec-comp:hover { background: rgba(0,0,0,0.05); border-color: #c8941f; }
+.rec-comp.active { border-color: #c8941f; background: rgba(224,200,120,0.12); }
 
 /* Modal - warm dark */
-.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(8px); }
 .modal-overlay.active { display: flex; }
-.modal { background: linear-gradient(135deg, #1a1612 0%, #16120e 100%); border-radius: 12px; max-width: 400px; width: 90%; max-height: 80vh; overflow-y: auto; padding: 16px; border: 1px solid rgba(90,70,45,0.4); box-shadow: 0 20px 60px rgba(0,0,0,0.5); color: #d0c8b8; }
+.modal { background: linear-gradient(135deg, #fff 0%, #f5f0e8 100%); border-radius: 12px; max-width: 400px; width: 90%; max-height: 80vh; overflow-y: auto; padding: 16px; border: 1px solid rgba(180,170,150,0.4); box-shadow: 0 20px 60px rgba(0,0,0,0.15); color: #333; }
 .modal-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
 .modal-header img { width: 48px; height: 48px; border-radius: 8px; }
 .modal-header .name { font-size: 16px; font-weight: 700; color: var(--text); }
@@ -498,336 +505,3 @@ function renderEquipPanel() {
     if (backupIds.length) {
       html += `<div class="eq-items" style="margin-top:4px"><span style="color:var(--text2);font-weight:700;font-size:11px;">备选：</span>${renderEquipList(backupIds)}</div>`;
     }
-    html += `</div>`;
-  }
-
-  const allEquipIds = new Set();
-  if (ce) ce[1].forEach(e => allEquipIds.add(e));
-  if (cr && cr.main) cr.main.split(',').forEach(e => allEquipIds.add(e));
-  if (c.equip_order) c.equip_order.split(',').forEach(e => allEquipIds.add(e));
-  const combineInfo = [];
-  allEquipIds.forEach(eid => {
-    const parts = EQUIP_COMBINE[eid];
-    if (parts) {
-      combineInfo.push(`<span class="eq-item"><img src="${equipImg(parts[0])}" onerror="this.style.display='none'">${EQUIP[parts[0]]}</span><span class="eq-arrow">+</span><span class="eq-item"><img src="${equipImg(parts[1])}" onerror="this.style.display='none'">${EQUIP[parts[1]]}</span><span class="eq-arrow">=</span><span class="eq-item"><img src="${equipImg(eid)}" onerror="this.style.display='none'">${EQUIP[eid]}</span>`);
-    }
-  });
-  if (combineInfo.length) {
-    html += `<div class="eq-section"><div class="eq-label">🔧 散件合成</div>`;
-    html += `<div class="eq-items" style="flex-direction:column;gap:8px;">${combineInfo.join('')}</div></div>`;
-  }
-
-  if (c.equip_order) {
-    const eqIds = c.equip_order.split(',');
-    html += `<div class="eq-section"><div class="eq-label">⚔️ 选秀优先级</div>`;
-    html += `<div class="eq-items">${renderEquipList(eqIds)}</div></div>`;
-  }
-
-  if (c.equip_info) {
-    html += `<div class="eq-section"><div class="eq-label">📝 装备思路</div><div class="eq-text">${c.equip_info}</div></div>`;
-  }
-
-  if (c.d_time) {
-    html += `<div class="eq-section"><div class="eq-label">💰 D牌</div><div class="eq-d">${c.d_time}</div></div>`;
-  }
-
-  if (c.early) {
-    html += `<div class="eq-section"><div class="eq-label">📋 运营</div><div class="eq-text">${c.early}</div></div>`;
-  }
-
-  if (c.level3?.length) {
-    html += `<div class="eq-section"><div class="eq-label">🎯 追三</div><div class="eq-text">${c.level3.map(id=>HERO[id]||id).join('、')}</div></div>`;
-  }
-
-  if (c.hex_info) {
-    html += `<div class="eq-section"><div class="eq-label">✨ 海克斯</div><div class="eq-text">${c.hex_info}</div></div>`;
-  }
-
-  html += `</div>`;
-  el.innerHTML = html;
-}
-
-function renderEquipList(ids) {
-  return ids.map((eid,j) => `<span class="eq-item"><img src="${equipImg(eid)}" alt="" onerror="this.style.display='none'">${EQUIP[eid]||eid}</span>${j<ids.length-1?'<span class="eq-arrow">→</span>':''}`).join('');
-}
-
-// ===== RENDER: BOTTOM RECOMMENDATIONS =====
-function renderBottomRecs() {
-  const el = document.getElementById('rec-scroll');
-  const title = document.getElementById('bottom-title');
-  if (!activeComp) {
-    title.textContent = '🛒 推荐购买';
-    el.innerHTML = '<div style="font-size:12px;color:var(--text3);padding:10px 0;">拖动英雄到棋盘，查看推荐</div>';
-    return;
-  }
-  const c = activeComp;
-  const onBoard = new Set(Object.values(board));
-  const missing = c.heroes.filter(id => !onBoard.has(id));
-  if (missing.length === 0) {
-    title.textContent = `🎉 ${c.name} - 已集齐`;
-    el.innerHTML = '<div style="font-size:12px;color:var(--neon);padding:10px 0;font-weight:700;">阵容已集齐！</div>';
-    return;
-  }
-  title.textContent = `🛒 ${c.name} - 建议购买 (${missing.length}个缺位)`;
-  el.innerHTML = missing.map(id => {
-    const cost = COST[id] || 1;
-    return `<div class="rec-hero" onclick="addHero('${id}')">
-      <span class="cost-badge c${cost}">${cost}</span>
-      <img src="${img(id)}" alt="${HERO[id]}">
-      <div class="name">${HERO[id]}</div>
-    </div>`;
-  }).join('');
-}
-
-// ===== HERO INFO MODAL =====
-function showHeroInfo(heroId) {
-  const overlay = document.getElementById('modal-overlay');
-  const header = document.getElementById('modal-header');
-  const body = document.getElementById('modal-body');
-  const cost = COST[heroId] || 1;
-  const name = HERO[heroId] || heroId;
-
-  header.innerHTML = `
-    <img src="${img(heroId)}" alt="${name}">
-    <div><div class="name">${name}</div><div class="cost">${cost}费</div></div>
-    <button class="modal-close" onclick="closeModal()">×</button>
-  `;
-
-  let html = '';
-  if (activeComp) {
-    const carryEquip = activeComp.carry_equips?.[heroId];
-    if (carryEquip) {
-      html += `<div class="modal-section"><div class="modal-label">🌟 主C装备</div><div class="eq-items">${renderEquipList(carryEquip)}</div></div>`;
-    }
-  }
-  const usedIn = comps.filter(c => c.heroes.includes(heroId)).slice(0, 5);
-  if (usedIn.length) {
-    html += `<div class="modal-section"><div class="modal-label">📋 常用阵容</div><div class="eq-text">${usedIn.map(c => c.name).join('、')}</div></div>`;
-  }
-  body.innerHTML = html || '<div class="eq-text">暂无详细信息</div>';
-  overlay.classList.add('active');
-}
-
-function closeModal(e) {
-  if (!e || e.target.id === 'modal-overlay') {
-    document.getElementById('modal-overlay').classList.remove('active');
-  }
-}
-
-// ===== DRAG & DROP =====
-function dragStartPool(e) {
-  dragHero = e.currentTarget.dataset.heroId;
-  dragFrom = 'pool';
-  e.dataTransfer.effectAllowed = 'copy';
-}
-function dragStartBoard(e) {
-  const el = e.currentTarget;
-  if (!el.dataset.key) return;
-  dragHero = board[el.dataset.key];
-  dragFrom = 'board';
-  dragFromKey = el.dataset.key;
-  e.dataTransfer.effectAllowed = 'move';
-}
-function dragOver(e) { e.preventDefault(); e.currentTarget.classList.add('drag-over'); e.dataTransfer.dropEffect = dragFrom==='pool'?'copy':'move'; }
-function dragLeave(e) { e.currentTarget.classList.remove('drag-over'); }
-function drop(e) {
-  e.preventDefault(); e.currentTarget.classList.remove('drag-over');
-  if (!dragHero) return;
-  const row = parseInt(e.currentTarget.dataset.row || e.currentTarget.closest('.board-cell').dataset.row);
-  const col = parseInt(e.currentTarget.dataset.col || e.currentTarget.closest('.board-cell').dataset.col);
-  const key = `${row},${col}`;
-  if (dragFrom === 'board') {
-    if (dragFromKey === key) { resetDrag(); return; }
-    if (board[key]) { board[dragFromKey] = board[key]; } else { delete board[dragFromKey]; }
-  }
-  board[key] = dragHero;
-  resetDrag(); renderBoard();
-}
-function resetDrag() { dragHero = null; dragFrom = null; dragFromKey = null; }
-
-// ===== TOUCH =====
-function touchStart(e) {
-  const el = e.currentTarget;
-  const heroId = el.dataset.heroId || board[el.dataset.key];
-  if (!heroId) { e.preventDefault(); return; }
-  dragHero = heroId; touchDragFrom = el;
-  touchStartX = e.touches[0].clientX; touchStartY = e.touches[0].clientY;
-  isTouchDrag = false; e.preventDefault();
-}
-function touchMove(e) {
-  if (!dragHero || !touchDragFrom) return;
-  const x = e.touches[0].clientX, y = e.touches[0].clientY;
-  const dx = x - touchStartX, dy = y - touchStartY;
-  if (!isTouchDrag && (Math.abs(dx) > 8 || Math.abs(dy) > 8)) {
-    isTouchDrag = true;
-    if (!touchDragEl) {
-      touchDragEl = document.createElement('div');
-      touchDragEl.style.cssText = 'position:fixed;z-index:9999;width:48px;height:48px;border-radius:10px;pointer-events:none;opacity:0.85;box-shadow:0 4px 20px rgba(0,0,0,0.2);';
-      touchDragEl.innerHTML = `<img src="${img(dragHero)}" style="width:100%;height:100%;border-radius:10px;object-fit:cover">`;
-      document.body.appendChild(touchDragEl);
-    }
-  }
-  if (isTouchDrag && touchDragEl) { touchDragEl.style.left = (x-24)+'px'; touchDragEl.style.top = (y-24)+'px'; }
-  e.preventDefault();
-}
-function touchEnd(e) {
-  if (!dragHero || !touchDragFrom) { resetTouch(); return; }
-  touchHandled = false;
-  if (isTouchDrag && touchDragEl) {
-    const ct = e.changedTouches[0]; let targetEl = document.elementFromPoint(ct.clientX, ct.clientY);
-    while (targetEl && !targetEl.classList.contains('board-cell')) { targetEl = targetEl.parentElement; }
-    if (targetEl) {
-      const row = targetEl.dataset.row; const col = targetEl.dataset.col;
-      if (row !== undefined && col !== undefined) {
-        const key = `${row},${col}`;
-        if (touchDragFrom.classList.contains('board-cell')) {
-          const fromKey = touchDragFrom.dataset.key;
-          if (fromKey !== key) { if (board[key]) { board[fromKey] = board[key]; } else { delete board[fromKey]; } }
-        }
-        board[key] = dragHero; renderBoard();
-      }
-    }
-    touchDragEl.remove(); touchDragEl = null;
-  } else {
-    if (touchDragFrom.classList.contains('hero-item')) { addHero(dragHero); touchHandled = true; }
-    else if (touchDragFrom.classList.contains('board-cell')) { const key = touchDragFrom.dataset.key; if (board[key]) { removeHero(key); touchHandled = true; } }
-  }
-  e.preventDefault(); resetTouch();
-}
-function resetTouch() { if (touchDragEl) { touchDragEl.remove(); touchDragEl = null; } dragHero = null; touchDragFrom = null; isTouchDrag = false; setTimeout(()=>{touchHandled=false;},500); }
-
-// ===== ACTIONS =====
-function addHero(id) {
-  // 若已在棋盘，全部下场
-  const keys = Object.keys(board).filter(k => board[k] === id);
-  if (keys.length) { keys.forEach(k => delete board[k]); renderBoard(); return; }
-  // 否则上场
-  for (let r = 0; r < ROWS; r++) { for (let c = 0; c < COLS; c++) { const key = `${r},${c}`; if (!board[key]) { board[key] = id; renderBoard(); return; } } }
-}
-function removeHero(key) { delete board[key]; renderBoard(); }
-function setCost(c) { activeCost = c; renderPool(); }
-function setPopulation(p) { population = parseInt(p); renderBoard(); }
-function clearBoard() { board = {}; activeComp = null; renderBoard(); }
-
-// ===== RECOMMENDATION LOGIC =====
-function getSortedComps() {
-  const onBoard = new Set(Object.values(board));
-  return comps.map(c => {
-    const have = c.heroes.filter(id => onBoard.has(id));
-    const miss = c.heroes.filter(id => !onBoard.has(id));
-    const pct = c.heroes.length ? Math.round(have.length/c.heroes.length*100) : 0;
-    return {...c, have, miss, pct};
-  }).sort((a,b) => b.pct-a.pct || ({S:3,A:2,B:1})[b.quality]-({S:3,A:2,B:1})[a.quality]);
-}
-
-function autoRecommend() {
-  const scored = getSortedComps();
-  if (!scored.length) return;
-  if (Object.keys(board).length === 0) return;
-  const best = scored[0];
-  if (best.pct > 0) applyComp(best);
-}
-
-function applyComp(c) {
-  activeComp = c;
-  const placements = {};
-  (c.hero_locations || []).forEach(h => {
-    if (h.location) {
-      const [row, col] = h.location.split(',').map(Number);
-      placements[`${row-1},${col-1}`] = h.hero_id;
-    }
-  });
-  c.placements = placements;
-  renderBoard();
-}
-
-// ===== DATA LOADING =====
-const CACHE_KEY = 'jcc-builder-data-v2';
-const CACHE_EXPIRY = 24 * 60 * 60 * 1000;
-
-function getCachedData() {
-  const cached = localStorage.getItem(CACHE_KEY);
-  if (!cached) return null;
-  try { const {season,mode,data,timestamp} = JSON.parse(cached); if (Date.now()-timestamp > CACHE_EXPIRY) return null; return {season,mode,data}; }
-  catch(e) { return null; }
-}
-function setCachedData(season, mode, data) { localStorage.setItem(CACHE_KEY, JSON.stringify({season,mode,data,timestamp:Date.now()})); }
-
-async function loadData() {
-  try {
-    let data;
-    const cached = getCachedData();
-    if (cached) { data = cached.data; }
-    else {
-      const url = `https://game.gtimg.cn/images/lol/act/jkzlkauto/json/lineupJson/m${currentSeason}/11/${currentMode}/lineup_detail_total.json`;
-      const res = await fetch(url); data = await res.json(); setCachedData(currentSeason, currentMode, data);
-    }
-    if (data.lineup_list && data.lineup_list.length > 0) {
-      currentSeason = parseInt(data.lineup_list[0].season) || currentSeason;
-      currentMode = parseInt(data.lineup_list[0].mode) || currentMode;
-    }
-    function toKeyId(heroId) {
-      const s = String(heroId); const keyId = s.startsWith('1') ? s.slice(1) : s;
-      return LINEUP_ID_MAP[keyId] !== undefined ? LINEUP_ID_MAP[keyId] : keyId;
-    }
-    const heroUsage = {};
-    data.lineup_list.forEach(item => {
-      const d = JSON.parse(item.detail || '{}');
-      Object.values(d.levelMap || {}).forEach(levelHeroes => {
-        levelHeroes.forEach(h => { const keyId = toKeyId(h.hero_id); if (keyId === null) return; heroUsage[keyId] = (heroUsage[keyId]||0)+1; });
-      });
-    });
-    const nameToBestId = {};
-    Object.entries(heroUsage).forEach(([keyId,count]) => {
-      const name = BASE_HERO[keyId] || '未知';
-      if (!nameToBestId[name] || heroUsage[nameToBestId[name]] < count) nameToBestId[name] = keyId;
-    });
-    const bestIds = new Set(Object.values(nameToBestId));
-    HERO = {}; COST = {};
-    bestIds.forEach(keyId => { if (BASE_HERO[keyId]) { HERO[keyId] = BASE_HERO[keyId]; COST[keyId] = BASE_COST[keyId] || 1; } });
-
-    comps = data.lineup_list.map(item => {
-      const d = JSON.parse(item.detail || '{}');
-      const heroes = (d.levelMap?.['9'] || []).map(h => toKeyId(h.hero_id)).filter(Boolean);
-      const ce = {};
-      (d.levelMap?.['9'] || []).forEach(h => { const keyId = toKeyId(h.hero_id); if (keyId && h.is_carry_hero && h.equipment_id) ce[keyId] = h.equipment_id.split(','); });
-      const hero_locations = (d.hero_location || []).map(h => ({...h, hero_id: toKeyId(h.hero_id)})).filter(h => h.hero_id !== null);
-      return {
-        name: d.line_name || '?', quality: item.quality || 'B',
-        heroes, carry_equips: ce,
-        level3: d.level_3_heros ? d.level_3_heros.split(',').filter(Boolean).map(toKeyId) : [],
-        d_time: d.d_time || '', early: d.early_info || '',
-        equip_order: d.equipment_order || '',
-        equip_info: d.equipment_info || '',
-        carry_replace: d.carry_hero_equip_replace || {},
-        hex_info: d.hex_info || '',
-        early_heros: (d.y21_early_heros || []).map(h => ({...h, hero_id: toKeyId(h.hero_id)})).filter(h => h.hero_id !== null),
-        metaphase_heros: (d.y21_metaphase_heros || []).map(h => ({...h, hero_id: toKeyId(h.hero_id)})).filter(h => h.hero_id !== null),
-        hero_locations
-      };
-    });
-
-    renderPopTabs(); renderBoard(); renderPool(); renderRecComps();
-  } catch (e) {
-    console.error('Load data failed:', e);
-  }
-}
-
-// ===== WHEEL POPULATION =====
-document.addEventListener('wheel', (e) => {
-  const boardWrap = document.getElementById('board');
-  if (!boardWrap || !boardWrap.contains(e.target)) return;
-  e.preventDefault();
-  const idx = POP_OPTIONS.indexOf(population);
-  if (e.deltaY > 0 && idx < POP_OPTIONS.length - 1) setPopulation(POP_OPTIONS[idx + 1]);
-  else if (e.deltaY < 0 && idx > 0) setPopulation(POP_OPTIONS[idx - 1]);
-}, { passive: false });
-
-// ===== INIT =====
-HERO = {...BASE_HERO}; COST = {...BASE_COST};
-renderPopTabs(); renderBoard(); renderPool();
-loadData();
-</script>
-
-</body>
-</html>
