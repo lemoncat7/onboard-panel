@@ -30,17 +30,20 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC'
 /* Main layout */
 .main-layout { flex: 1; display: flex; gap: 0; overflow: hidden; min-height: 0; }
 @media (max-width: 768px) {
-  .main-layout { flex-direction: column; }
+  .main-layout { flex-direction: column; overflow-y: auto; }
 }
 
 /* Mobile */
 @media (max-width: 768px) {
-  .center-panel { min-height: 220px; overflow: auto; }
-  .board-wrap { padding: 4px; overflow: visible; }
-  .board { padding: 4px; gap: 3px; }
-  .board-row { gap: 3px; }
-  .board-cell { width: 40px; height: 35px; }
-  .cell-hero, .cell-ghost { width: 80%; height: 80%; }
+  html, body { overflow: auto; height: auto; }
+  .left-panel { width: 100%; height: auto; min-height: 80px; max-height: 120px; border-right: none; border-bottom: 1px solid rgba(90,70,45,0.3); }
+  .center-panel { min-height: 300px; overflow: visible; flex-shrink: 0; display: block; }
+  .right-panel { width: 100%; height: auto; min-height: 180px; border-left: none; border-top: 1px solid rgba(90,70,45,0.3); }
+  .board-wrap { display: block; height: auto; flex: none; padding: 8px; overflow: visible; background-image: none !important; background-color: #1a1510; }
+  .board { display: block; height: auto; padding: 0; gap: 0; position: static; }
+  .board-row { display: flex; gap: 3px; margin-bottom: 3px; margin-left: 0 !important; }
+  .board-cell { width: 40px; height: 40px; clip-path: none; border-radius: 4px; }
+  .cell-hero, .cell-ghost { width: 80%; height: 80%; clip-path: none; border-radius: 3px; }
   .cell-cost { font-size: 7px; padding: 1px 2px; border-radius: 2px; }
   .cell-ghost-label { font-size: 8px; padding: 1px 2px; }
   .cell-remove { width: 16px; height: 16px; font-size: 10px; top: -5px; right: -5px; }
@@ -48,7 +51,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC'
 
 /* Left panel: equip - leather/wood style */
 .left-panel { width: 280px; flex-shrink: 0; background: linear-gradient(180deg, #16120e 0%, #1a1612 100%); border-right: 1px solid rgba(90,70,45,0.3); padding: 12px; overflow-y: auto; overflow-x: hidden; color: #d0c8b8; }
-@media (max-width: 768px) { .left-panel { width: 100%; height: 200px; border-right: none; border-bottom: 1px solid rgba(90,70,45,0.3); } }
 .panel-title { font-size: 14px; font-weight: 700; margin-bottom: 10px; color: #e0c878; text-shadow: 0 0 8px rgba(224,200,120,0.2); }
 
 .eq-panel { font-size: 12px; }
