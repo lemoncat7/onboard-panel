@@ -35,21 +35,24 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC'
 
 /* Mobile */
 @media (max-width: 768px) {
-  html, body { display: block; height: auto; overflow: auto; }
-  body { display: block !important; }
-  .main-layout { display: block; height: auto; overflow: visible; }
-  .left-panel { width: 100%; height: auto; min-height: 80px; max-height: 120px; border-right: none; border-bottom: 1px solid rgba(90,70,45,0.3); overflow: auto; }
-  .center-panel { display: block; width: 100%; height: auto; min-height: 300px; overflow: visible; flex: none !important; }
-  .right-panel { width: 100%; height: auto; min-height: 180px; border-left: none; border-top: 1px solid rgba(90,70,45,0.3); overflow: auto; }
-  .board-wrap { display: block; height: auto; padding: 8px; overflow: visible; background-image: none !important; background-color: #1a1510; }
-  .board { display: block; height: auto; padding: 0; position: static; overflow: visible; }
-  .board-row { display: flex; gap: 3px; margin-bottom: 3px; margin-left: 0 !important; overflow: visible; }
-  .board-cell { width: 40px; height: 40px; clip-path: none; border-radius: 4px; flex-shrink: 0; overflow: visible; }
+  /* 只改格子大小，不破坏布局 */
+  .board-cell { width: 40px; height: 40px; clip-path: none; border-radius: 4px; }
   .cell-hero, .cell-ghost { width: 80%; height: 80%; clip-path: none; border-radius: 3px; }
   .cell-cost { font-size: 7px; padding: 1px 2px; border-radius: 2px; }
   .cell-ghost-label { font-size: 8px; padding: 1px 2px; }
   .cell-remove { width: 16px; height: 16px; font-size: 10px; top: -5px; right: -5px; }
-  .bottom-panel { height: auto; min-height: 100px; padding: 8px; overflow: visible; }
+  .board-row { gap: 3px; margin-left: 0 !important; }
+  .board { padding: 4px; gap: 3px; }
+  .board-wrap { background-image: none !important; background-color: #1a1510; }
+  /* 推荐区域缩小 */
+  .rec-scroll { height: auto; }
+  .rec-hero { min-width: 40px; }
+  .rec-hero img { width: 32px; height: 32px; }
+  .rec-comp { margin-bottom: 4px; padding: 6px; }
+  /* 装备区域不限制 */
+  .eq-items { gap: 4px; }
+  .eq-item { font-size: 10px; }
+  .eq-item img { width: 16px; height: 16px; }
 }
 
 /* Left panel: equip - leather/wood style */
