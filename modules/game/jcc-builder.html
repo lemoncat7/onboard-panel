@@ -690,7 +690,7 @@ function touchEnd(e) {
     }
     touchDragEl.remove(); touchDragEl = null;
   } else {
-    if (touchDragFrom.classList.contains('hero-item') && !touchDragFrom.classList.contains('on-board')) { addHero(dragHero); touchHandled = true; }
+    if (touchDragFrom.classList.contains('hero-item')) { addHero(dragHero); touchHandled = true; }
     else if (touchDragFrom.classList.contains('board-cell')) { const key = touchDragFrom.dataset.key; if (board[key]) { removeHero(key); touchHandled = true; } }
   }
   e.preventDefault(); resetTouch();
