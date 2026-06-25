@@ -648,7 +648,6 @@ function resetDrag() { dragHero = null; dragFrom = null; dragFromKey = null; }
 // ===== TOUCH =====
 function touchStart(e) {
   const el = e.currentTarget;
-  if (el.classList.contains('on-board')) { e.preventDefault(); return; }
   const heroId = el.dataset.heroId || board[el.dataset.key];
   if (!heroId) { e.preventDefault(); return; }
   dragHero = heroId; touchDragFrom = el;
