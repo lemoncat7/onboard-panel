@@ -446,6 +446,18 @@ const server = http.createServer(async (req, res) => {
       return;
     }
   }
+  // === game 模块静态资源 ===
+  if (url.startsWith('/game/')) {
+    const fileName = url.slice('/game/'.length);
+    const gameDir = path.join(__dirname, 'modules/game');
+    const filePath = path.join(gameDir, fileName);
+    const ext = path.extname(fileName).toLowerCase();
+    const ct = ext === '.png' ? 'image/png' : ext === '.jpg' || ext === '.jpeg' ? 'image/jpeg' : ext === '.svg' ? 'image/svg+xml' : ext === '.js' ? 'application/javascript' : ext === '.css' ? 'text/css' : 'text/html';
+    if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
+      serveFile(res, filePath, ct);
+      return;
+    }
+  }
 
 
   // === 模块路由 ===
