@@ -194,6 +194,63 @@
       margin-top: 8px;
     }
 
+    /* Board Info */
+    .board-info {
+      margin-top: 12px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px 16px;
+      display: none;
+    }
+    .board-info.active { display: block; }
+    .board-info .info-title {
+      font-size: 14px; font-weight: 800;
+      color: var(--text);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .board-info .info-title .tier {
+      font-size: 11px; font-weight: 800;
+      padding: 2px 8px; border-radius: 6px;
+      color: #fff;
+    }
+    .board-info .info-title .tier.S { background: linear-gradient(135deg, #fbbf24, #ef4444); }
+    .board-info .info-title .tier.A { background: linear-gradient(135deg, #6366f1, #8b5cf6); }
+    .board-info .info-title .tier.B { background: linear-gradient(135deg, #64748b, #94a3b8); }
+    .board-info .info-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+    .board-info .info-row:last-child { margin-bottom: 0; }
+    .board-info .info-label {
+      font-size: 11px; color: var(--text2); font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      margin-bottom: 6px;
+      width: 100%;
+    }
+    .board-info .eq-chip {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 5px 10px; border-radius: 8px;
+      background: linear-gradient(135deg, rgba(124, 58, 237, 0.08), rgba(2, 132, 199, 0.06));
+      border: 1px solid rgba(124, 58, 237, 0.15);
+      font-size: 12px; color: #7c3aed; font-weight: 600;
+    }
+    .board-info .eq-chip img { width: 18px; height: 18px; border-radius: 4px; }
+    .board-info .eq-arrow { color: var(--text2); font-size: 11px; }
+    .board-info .info-text {
+      font-size: 13px; color: #4b5563; line-height: 1.7;
+      width: 100%;
+    }
+    .board-info .d-time {
+      font-size: 13px; font-weight: 700; color: var(--neon);
+    }
+
     /* Cost Tabs */
     .cost-tabs {
       display: flex;
@@ -450,6 +507,7 @@
   <div class="board-wrap" id="board"></div>
   <div class="pop-count" id="pop-count">已放置 <span class="current">0</span>/9</div>
   <div class="board-note" id="board-note">点击下方英雄，添加到棋盘</div>
+  <div class="board-info" id="board-info"></div>
 </div>
 
 <!-- 2. Hero Pool -->
@@ -622,15 +680,82 @@ function renderBoard() {
 
   const note = document.getElementById('board-note');
   if (activeComp) {
-    const needed = activeComp.heroes.length;
-    const warn = needed > population ? ` (⚠️ 推荐${needed}人口，当前${population})` : '';
-    note.textContent = `当前阵容：${activeComp.name} | ${needed}人口${warn}`;
+    note.textContent = `已选中：${activeComp.name}`;
   } else {
     note.textContent = '点击下方英雄，添加到棋盘';
   }
 
+  renderBoardInfo();
   renderPool();
   renderRecs();
+}
+
+function renderBoardInfo() {
+  const el = document.getElementById('board-info');
+  if (!activeComp) {
+    el.classList.remove('active');
+    return;
+  }
+  const c = activeComp;
+  let html = '';
+  // 标题
+  const tierClass = c.quality || 'B';
+  html += `<div class="info-title"><span class="tier ${tierClass}">${tierClass}</span>${c.name}</div>`;
+  // 人口警告
+  const needed = c.heroes.length;
+  if (needed > population) {
+    html += `<div class="info-row" style="margin-bottom:12px"><span style="color:var(--danger);font-size:13px;font-weight:700;">⚠️ 推荐${needed}人口，当前设置${population}</span></div>`;
+  }
+  // 主C装备
+  const ce = Object.entries(c.carry_equips||{})[0];
+  if (ce) {
+    html += `<div class="info-label">🌟 主C ${HERO[ce[0]]||ce[0]}</div>`;
+    html += `<div class="info-row">${ce[1].map((e,j)=>`<span class="eq-chip"><img src="${equipImg(e)}" alt="" onerror="this.style.display='none'">${EQUIP[e]||e}</span>${j<ce[1].length-1?'<span class="eq-arrow">→</span>':''}`).join('')}</div>`;
+  }
+  // carry_hero_equip_replace
+  const cr = c.carry_replace;
+  if (cr && cr.main) {
+    const mainIds = cr.main.split(',');
+    const backupIds = cr.backup ? cr.backup.split(',') : [];
+    html += `<div class="info-label">🎒 主C推荐</div>`;
+    html += `<div class="info-row"><span style="color:var(--neon);font-weight:700;font-size:12px;">核心：</span>${mainIds.map(eid=>`<span class="eq-chip"><img src="${equipImg(eid)}" alt="" onerror="this.style.display='none'">${EQUIP[eid]||eid}</span>`).join('<span class="eq-arrow">→</span>')}</div>`;
+    if (backupIds.length) {
+      html += `<div class="info-row" style="margin-top:4px"><span style="color:var(--text2);font-weight:700;font-size:12px;">备选：</span>${backupIds.map(eid=>`<span class="eq-chip"><img src="${equipImg(eid)}" alt="" onerror="this.style.display='none'">${EQUIP[eid]||eid}</span>`).join('<span class="eq-arrow">→</span>')}</div>`;
+    }
+  }
+  // 选秀优先级
+  if (c.equip_order) {
+    const eqIds = c.equip_order.split(',');
+    html += `<div class="info-label">⚔️ 选秀优先级</div>`;
+    html += `<div class="info-row">${eqIds.map((eid,j)=>`<span class="eq-chip"><img src="${equipImg(eid)}" alt="" onerror="this.style.display='none'">${EQUIP[eid]||eid}</span>${j<eqIds.length-1?'<span class="eq-arrow">→</span>':''}`).join('')}</div>`;
+  }
+  // 装备思路
+  if (c.equip_info) {
+    html += `<div class="info-label">📝 装备思路</div>`;
+    html += `<div class="info-text">${c.equip_info}</div>`;
+  }
+  // D牌
+  if (c.d_time) {
+    html += `<div class="info-label">💰 D牌</div>`;
+    html += `<div class="info-row"><span class="d-time">${c.d_time}</span></div>`;
+  }
+  // 运营
+  if (c.early) {
+    html += `<div class="info-label">📋 运营</div>`;
+    html += `<div class="info-text">${c.early}</div>`;
+  }
+  // 追三
+  if (c.level3?.length) {
+    html += `<div class="info-label">🎯 追三</div>`;
+    html += `<div class="info-text">${c.level3.map(id=>HERO[id]||id).join('、')}</div>`;
+  }
+  // 海克斯
+  if (c.hex_info) {
+    html += `<div class="info-label">✨ 海克斯</div>`;
+    html += `<div class="info-text">${c.hex_info}</div>`;
+  }
+  el.innerHTML = html;
+  el.classList.add('active');
 }
 
 function renderPool() {
@@ -754,7 +879,7 @@ function addHero(id) {
 function removeHero(key) { delete board[key]; renderBoard(); }
 function setCost(c) { activeCost = c; renderPool(); }
 function setPopulation(p) { population = parseInt(p); renderBoard(); }
-function clearBoard() { board = {}; activeComp = null; renderBoard(); }
+function clearBoard() { board = {}; activeComp = null; renderBoard(); renderBoardInfo(); }
 
 async function loadData() {
   document.getElementById('recs').innerHTML = '<div class="empty"><div class="icon">⏳</div><div>加载中...</div></div>';
@@ -900,6 +1025,12 @@ function getSortedComps() {
 function renderRecs() {
   const el = document.getElementById('recs');
   const onBoard = new Set(Object.values(board));
+  // 保存已展开的卡片索引
+  const openCards = new Set();
+  document.querySelectorAll('.rec-card.open').forEach(card => {
+    const id = card.id;
+    if (id && id.startsWith('rc')) openCards.add(parseInt(id.replace('rc', '')));
+  });
   if (!comps.length) {
     el.innerHTML = '<div class="empty"><div class="icon">⏳</div><div>加载中...</div></div>';
     return;
@@ -952,6 +1083,11 @@ function renderRecs() {
       </div>
     </div>`;
   }).join('');
+  // 恢复已展开的卡片
+  openCards.forEach(i => {
+    const card = document.getElementById('rc'+i);
+    if (card) card.classList.add('open');
+  });
 }
 
 // ===== CACHE =====
