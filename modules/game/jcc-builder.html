@@ -33,6 +33,19 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC'
   .main-layout { flex-direction: column; }
 }
 
+/* Mobile */
+@media (max-width: 768px) {
+  .center-panel { min-height: 220px; overflow: auto; }
+  .board-wrap { padding: 4px; overflow: visible; }
+  .board { padding: 4px; gap: 3px; }
+  .board-row { gap: 3px; }
+  .board-cell { width: 40px; height: 35px; }
+  .cell-hero, .cell-ghost { width: 80%; height: 80%; }
+  .cell-cost { font-size: 7px; padding: 1px 2px; border-radius: 2px; }
+  .cell-ghost-label { font-size: 8px; padding: 1px 2px; }
+  .cell-remove { width: 16px; height: 16px; font-size: 10px; top: -5px; right: -5px; }
+}
+
 /* Left panel: equip - leather/wood style */
 .left-panel { width: 280px; flex-shrink: 0; background: linear-gradient(180deg, #16120e 0%, #1a1612 100%); border-right: 1px solid rgba(90,70,45,0.3); padding: 12px; overflow-y: auto; overflow-x: hidden; color: #d0c8b8; }
 @media (max-width: 768px) { .left-panel { width: 100%; height: 200px; border-right: none; border-bottom: 1px solid rgba(90,70,45,0.3); } }
