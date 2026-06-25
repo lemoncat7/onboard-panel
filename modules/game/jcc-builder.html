@@ -56,53 +56,17 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC'
 
 /* Center: board */
 .center-panel { flex: 1; min-width: 0; display: flex; flex-direction: column; overflow: hidden; position: relative; background: #0d0a08; }
-/* 金铲铲棋盘外框 - 厚重木质边框 */
+/* 棋盘主体 - 背景图替换所有CSS伪元素 */
 .board-wrap { 
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 32px;
+  padding: 16px;
   position: relative;
   overflow: hidden;
-  /* 外框木质纹理 */
-  background: 
-    linear-gradient(180deg, #2a1e14 0%, #3d2a1a 30%, #2a1e14 60%, #322215 100%);
-  border: 8px solid #4a3520;
-  border-radius: 20px;
-  box-shadow: 
-    inset 0 0 60px rgba(0,0,0,0.5),
-    0 8px 32px rgba(0,0,0,0.6),
-    0 0 0 1px rgba(120,90,55,0.3);
-  margin: 12px;
-}
-/* 内框装饰线 */
-.board-wrap::after {
-  content: '';
-  position: absolute;
-  inset: 12px;
-  border-radius: 12px;
-  border: 2px solid rgba(80,60,35,0.4);
-  pointer-events: none;
-  z-index: 0;
-}
-/* 棋盘石板地面 - 模拟石砖拼接 */
-.board-wrap::before {
-  content: '';
-  position: absolute;
-  inset: 24px;
-  border-radius: 12px;
-  background:
-    /* 石缝网格 */
-    linear-gradient(90deg, transparent 63px, rgba(0,0,0,0.35) 63px, rgba(0,0,0,0.35) 66px, transparent 66px),
-    linear-gradient(0deg, transparent 63px, rgba(0,0,0,0.35) 63px, rgba(0,0,0,0.35) 66px, transparent 66px),
-    /* 石板底色 - 暗灰棕 */
-    linear-gradient(180deg, #1e1810 0%, #241c14 50%, #1e1810 100%);
-  background-size: 66px 66px, 66px 66px, 100% 100%;
-  pointer-events: none;
-  box-shadow: inset 0 0 30px rgba(0,0,0,0.6);
-  z-index: 0;
+  background: #0d0a08;
 }
 .board-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; position: relative; z-index: 1; background: rgba(20,12,6,0.7); padding: 6px 12px; border-radius: 8px; border: 1px solid rgba(90,70,45,0.3); }
 .board-comp-name { font-size: 13px; font-weight: 700; color: #e0c878; }
@@ -110,54 +74,48 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC'
 .board-status .current { font-weight: 700; color: #e0c878; }
 .board-status .over { color: var(--danger); }
 
-.board { display: flex; flex-direction: column; gap: 2px; position: relative; z-index: 1; padding: 4px; border-radius: 8px; }
-.board-row { display: flex; gap: 2px; justify-content: center; }
-/* 后排草地 - 微绿色 */
-.board-row:nth-child(1) { background: rgba(40,60,30,0.3); border-radius: 8px; padding: 4px 2px; }
-.board-row:nth-child(3) { background: rgba(40,55,30,0.2); border-radius: 8px; padding: 4px 2px; }
-/* 前排石板 - 更灰暗 */
-.board-row:nth-child(5) { background: rgba(30,25,20,0.5); border-radius: 8px; padding: 4px 2px; }
-.board-row:nth-child(7) { background: rgba(25,20,15,0.6); border-radius: 8px; padding: 4px 2px; }
+/* 棋盘 - 4x7 格子覆盖在背景图上 */
+.board { 
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column; gap: 4px; 
+  padding: 6px; border-radius: 12px;
+  /* 棋盘背景图 */
+  background-image: url('board-bg.jpg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+}
+.board-row { display: flex; gap: 4px; justify-content: center; }
 .board-cell {
-  width: 64px; height: 64px; border-radius: 14px;
-  /* 凹陷石板效果 - 边缘深、中心亮 */
-  background: 
-    radial-gradient(ellipse at 50% 40%, rgba(55,45,35,0.95) 0%, rgba(35,28,22,0.98) 60%, rgba(20,16,12,1) 100%);
-  border: 1px solid rgba(60,50,40,0.6); 
-  border-top: 1px solid rgba(80,70,55,0.3);
-  border-bottom: 2px solid rgba(15,12,8,0.9);
+  width: 64px; height: 64px; border-radius: 50%;
+  /* 那低透明底色，让背景图纹理透出来 */
+  background: rgba(20,15,10,0.35);
+  border: 1px solid rgba(120,90,55,0.3); 
   display: flex; align-items: center; justify-content: center; position: relative;
   cursor: pointer; transition: all 0.2s;
-  /* 内凹陷阴影 */
-  box-shadow: 
-    inset 0 2px 4px rgba(0,0,0,0.5),
-    inset 0 -1px 2px rgba(80,70,55,0.15),
-    0 1px 0 rgba(80,70,55,0.1);
 }
 .board-cell:hover { 
+  background: rgba(20,15,10,0.5);
   transform: translateY(-2px); 
-  box-shadow: 
-    inset 0 2px 4px rgba(0,0,0,0.4),
-    inset 0 -1px 2px rgba(100,85,65,0.25),
-    0 4px 12px rgba(0,0,0,0.5),
-    0 0 0 1px rgba(200,170,100,0.15);
-  border-color: rgba(100,85,65,0.5);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  border-color: rgba(150,120,80,0.5);
   z-index: 10;
 }
 .board-cell.drag-over { 
   border-color: var(--gold); 
-  box-shadow: 0 0 16px rgba(212,165,44,0.4), inset 0 0 12px rgba(212,165,44,0.1); 
+  box-shadow: 0 0 16px rgba(212,165,44,0.4); 
   animation: pulse-glow 1s ease-in-out infinite alternate;
   z-index: 10;
 }
 @keyframes pulse-glow { from { box-shadow: 0 0 8px rgba(212,165,44,0.3); } to { box-shadow: 0 0 24px rgba(212,165,44,0.5); } }
 .cell-hero { 
-  width: 54px; height: 54px; border-radius: 12px; object-fit: cover; 
+  width: 54px; height: 54px; border-radius: 50%; object-fit: cover; 
   border: 1px solid rgba(200,170,100,0.4); 
   box-shadow: 0 4px 12px rgba(0,0,0,0.6), 0 0 0 2px rgba(200,170,100,0.1); 
 }
 .cell-ghost { 
-  width: 54px; height: 54px; border-radius: 12px; object-fit: cover; opacity: 0.25; filter: grayscale(0.9) brightness(0.6); 
+  width: 54px; height: 54px; border-radius: 50%; object-fit: cover; opacity: 0.25; filter: grayscale(0.9) brightness(0.6); 
   border: 1px dashed rgba(200,170,100,0.25); 
 }
 .cell-ghost-label { 
